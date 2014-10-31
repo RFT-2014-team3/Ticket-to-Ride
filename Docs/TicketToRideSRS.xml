@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<article xml:lang="hu" xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
+	
+	<info>		
+		<title>Ticket To Ride Követelményspecifikációs Dokumentum</title>
+		<authorgroup>
+			
+			<author>
+				<personname>
+					<firstname>Sándor</firstname>
+					<surname>Bari</surname>
+				</personname>
+				<email>bari.sandor@gmail.com</email>
+			</author>
+			
+			<author>
+				<personname>
+					<firstname>Norbert</firstname>
+					<surname>Boros</surname>
+				</personname>
+				<email></email>
+			</author>
+			
+			<author>
+				<personname>
+					<firstname>Zoltán</firstname>
+					<surname>Kerekes</surname>
+				</personname>
+				<email></email>
+			</author>
+		
+		</authorgroup>
+		
+	</info>
+	<revhistory>
+		<revision>
+			<revnumber>0.1</revnumber>
+			<date>2014-10-30</date>
+			<authorinitials>bs</authorinitials>
+			<revremark>Első dokumentum-váz.</revremark>
+				
+		</revision>		
+		<revision>
+			<revnumber>0.2</revnumber>
+			<date>2014-10-31</date>
+			<authorinitials>bs</authorinitials>
+			<revremark>Dokumentum vázának átdolgozása. 1.1, 1.2 és 1.3 fejezetek elkészítése.</revremark>
+		</revision>
+	</revhistory>
+	
+	<sect1>
+		<title>1. Bevezetés</title>
+		<sect2>
+			<title>1.1 A dokumentum célja</title>
+			<para>A dokumentum célja, hogy a Ticket To Ride nevű társasjátékot implementáló
+			alkalmazás részletes követelményspecifikációját adja. Bemutatja a rendszer használati eseteit,
+			ezáltal képet nyújt a szoftver által nyújtott szolgáltatásokról.</para>
+		</sect2>
+		<sect2>
+			<title>1.2 A projekt áttekintése</title>
+			<para>A projekt célja, hogy A Ticket To Ride nevű társasjátékot implementáló
+			szoftver álljon elő. </para>
+			<para>Az implementált rendszer megvalósítja az akadálymentes, hálózaton
+			keresztül történő játékot a szabályok értelmében legalább 2, legfeljebb 5 játékos
+			számára. Ehhez biztosítja a hagyományos, asztali változatban található elemek virtuális
+			megfelelőit, felügyeli és betartatja a játékszabályokat, menedzseli a játék menetét.</para>
+			<para>A szoftver használatával a játékosok anélkül próbálhatják ki, játszhatják
+			 a Ticket To Ride társasjátékot, hogy ehhez bármilyen más eszközre szükségük lenne.</para>
+		</sect2>
+				
+		<sect2>
+			<title>1.3 A dokumentum általános leírása</title>
+			<para>Az első fejezet a dokumentum és a projekt rövid ismertetőjét tartalmazza, a 
+			projekttel kapcsolatos releváns hivatkozások listáját, valamint egy glosszáriumot,
+			melyben megtalálhatók az egyes szakszavak definíciói.
+			</para>
+			<para>
+			A második fejezet általánosan mutatja be a termék célját és funkcióit, a felhasználókkal
+			kapcsolatos, illetve egyéb feltételezéseket, függőségeket, a projekt megvalósítása
+			során érvényes megszorításokat.
+			</para>
+			<para>
+			A harmadik fejezet tartalmazza a részletes funkcionális és nem-funkcionális követelményspecifikációt,
+			a használati esetek diagramjait, valamint ezen esetek strukturált természetes nyelvi
+			leírását. Ezen túl ebben a fejezetben található a külső interfészek leírása is. 
+			</para>
+		</sect2>
+		<sect2>
+			<title>1.4 Hivatkozások</title>
+			<para></para>
+		</sect2>
+		<glossary xmlns='http://docbook.org/ns/docbook'>
+			
+			<glossdiv><title>E</title>
+				<glossentry xml:id="xml">
+					<glossterm>Example entry</glossterm>
+					<!-- ha kell -->
+					<acronym>EE</acronym>
+					<!-- vagy -->
+					<abbrev>Exmpl.</abbrev>
+					<glossdef>
+						<para>Definition here.</para>
+						
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			</glossary>
+		
+	</sect1>
+	<sect1>
+		<title>2. Általános leírás</title>
+		<sect2>
+			<title>2.1 A termék kilátásai</title>
+			<para></para>
+		</sect2>
+		<sect2>
+			<title>2.2 A termék funkciói</title>
+			<para></para>
+		</sect2>
+		<sect2>
+			<title>2.3 Felhasználói jellemzők</title>
+			<para></para>
+		</sect2>
+		<sect2>
+			<title>2.4 Megszorítások</title>
+			<para></para>
+		</sect2>
+		<sect2>
+			<title>2.5 Feltételezések és függőségek</title>
+			<para></para>
+		</sect2>
+	</sect1>
+	<sect1>
+		<title>3. Specifikus követelmények</title>
+		<sect2>
+			<title>3.1 Külső interfész-követelmények</title>
+			<sect3>
+				<title>3.1.1 Felhasználói interfészek</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.1.2 Hardver interfészek</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.1.3 Szoftver interfészek</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.1.4 Kommunikációs interfészek</title>
+				<para></para>
+			</sect3>
+		</sect2>
+		<sect2>
+			<title>3.2 Funkcionális követelmények</title>
+			
+			<!-- 3.2.1-3.2.x funkcionális követelmények, use case-ek -->
+			<para></para>
+		</sect2>
+		<sect2>
+			<title>3.3 Nem-funkcionális követelmények</title>
+			<!-- 3.3.1-3.3.x nem-funkcionális követelmények, use case-ek -->
+			
+			<sect3>
+				<title>3.3.1 Teljesítmény-követelmények</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.3.2 Tervezési megszorítások</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.3.3 A szoftverrendszer attribútumai</title>
+				<para></para>
+			</sect3>
+			<sect3>
+				<title>3.3.4 Egyéb követelmények</title>
+				<para></para>
+			</sect3>
+		</sect2>
+			
+	</sect1>
+	<sect1>
+		<title>Függelék</title>
+		<para></para>
+	</sect1>
+	<sect1>
+		<title>Index</title>
+		<para></para>
+		<index xmlns="http://docbook.org/ns/docbook">
+			<indexdiv>
+				<title>A</title>
+				<indexentry>
+					<primaryie></primaryie>
+				</indexentry>
+			</indexdiv>
+		</index>
+	</sect1>
+</article>
