@@ -58,6 +58,12 @@
 			<authorinitials>bs</authorinitials>
 			<revremark>1. fejezet, glosszárium befejezése.</revremark>
 		</revision>
+		<revision>
+			<revnumber>0.5</revnumber>
+			<date>2014-11-02</date>
+			<authorinitials>bs</authorinitials>
+			<revremark>Forduló használati esetek, use case diagramok elkészítése.</revremark>
+		</revision>
 	</revhistory>
 	
 	<sect1>
@@ -158,8 +164,18 @@
 						<para>A játék egyik eszköze, olyan kártya, melyen két város neve található és egy pontérték. Ha a játékos 
 						le tud foglalni a két várost összekötõ útvonalat, megkapja a játék végén a jegyen szereplõ pontokat, ellenkezõ
 						esetben ezek levonásra kerülnek pontjaiból.</para>
+						<glossseealso otherterm="jegyPakli">Menetjegy-pakli</glossseealso>
 						<glossseealso otherterm="varos">Város</glossseealso>
 						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+					</glossdef>
+				</glossentry>
+				<glossentry xml:id="jegyPakli">
+					<glossterm>Menetjegy-pakli</glossterm>
+					<glossdef>
+						<para>A játékban nem lévõ menetjegyek paklija, melyekbõl a játékosok 
+						szükség szerint húzhatnak új menetjegyeket.</para>
+						<glossseealso otherterm="jegy">Menetjegy</glossseealso>
+						
 					</glossdef>
 				</glossentry>
 				<glossentry xml:id="mozdony">
@@ -239,13 +255,30 @@
 					<glossdef>
 						<para>Útvonalak lefoglalására használható kártya.</para>
 						<glossseealso otherterm="lefoglalas">Útvonal lefoglalása</glossseealso>
+						<glossseealso otherterm="vagonkartyaPakli">Vagonkártya-pakli</glossseealso>
 					</glossdef>
 				</glossentry>
 				
+				<glossentry xml:id="vagonkartyaPakli">
+					<glossterm>Vagonkártya-pakli</glossterm>
+					<glossdef>
+						<para>Az aktuálisan játékban nem lévõ vagonkártyák lefelé fordított paklija, melyekbõl
+						a játékosok szükség szerint húzhatnak új lapokat.</para>
+						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+					</glossdef>
+				</glossentry>
 				<glossentry xml:id="varos">
 					<glossterm>Város</glossterm>
 					<glossdef>
 						<para>A térképen található egységek, melyeket útvonalak kötnek össze.</para>
+						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+					</glossdef>
+				</glossentry>
+				
+				<glossentry xml:id="vasutiKocsi">
+					<glossterm>Vasúti kocsi</glossterm>
+					<glossdef>
+						<para>A játékos által lefoglalt útvonalakra helyezve jelzi,hogy melyik útvonalat melyik játékos foglalta el.</para>
 						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
 					</glossdef>
 				</glossentry>
@@ -263,7 +296,161 @@
 		</sect2>
 		<sect2>
 			<title>2.2 Funkcionális követelmények</title>
-			<para></para>
+			<sect3>
+			<title>2.2.x Forduló elvégzése</title>
+			<para>A játékos elvégzi akcióját az aktuális fordulóban. Minden forduló során
+			a három lehetséges akció közül pontosan egyet és csak egyet végezhet el.</para>
+			<mediaobject>
+				<imageobject>
+					<imagedata fileref="UML_jpg/fordulo_useCase.jpg" format="JPG" scale="70"/>
+				</imageobject>
+			</mediaobject>
+				<sect4>
+				<title>Forduló elvégézse használati esetek</title>
+					<sect5>
+					
+					<title>Vagonkártya húzása</title>
+					<mediaobject>
+					<imageobject>
+						<imagedata fileref="UML_jpg/fordulo_vagonhuzas.jpg" format="JPG" scale="70"/>
+					</imageobject>
+					</mediaobject>
+						<sect5>
+						<title>Rövid leírás</title>
+						<para>A játékos a fordulóban végrehajtott tevékenységeként 2 vagonkártyát húz.
+						A húzás történhet a pakli tetejérõl, vagy választhat a felfordított lapok közül.</para>
+						</sect5>
+						<sect5>
+						<title>Lépésenkénti leírás</title>
+						<para>A használati eset feltétele, hogy a játékos következzen a játékban, és a vagonkártya-pakliban
+						legyenek még lapok.</para>
+						<orderedlist>
+							<listitem>
+								<para>A játékos húz egy vagonkártyát a pakliból, vagy vehet fel
+								lapot a képpel felfelé lévõ kártyák közül.</para>
+						
+							</listitem>
+							<listitem>
+								<para>Ha a képpel felfelé lévõ kártyák közül húzott, akkor ezek helyére
+								a vagonkártya pakliból új lapot kell húznia.</para>
+							</listitem>
+							<listitem>
+								<para>Ha a játékos mozdony lapot vett fel a felfelé nézõ lapok közül,
+								akkor több kártyát nem húzhat.</para>
+							</listitem>
+							<listitem>
+								<para>Ha a játékos a felvett lap helyére mozdony lapot húzott, azt nem veheti fel második lapnak az aktuális körben.</para>
+							</listitem>
+							<listitem>
+								<para>Ha a húzás eredményeként az 5 felfelé nézõ lap közül 3 mozdony, akkor
+								mind az 5 lapot el kell dobni, helyettük újakat kell húzni.</para>
+							</listitem>
+							<listitem>
+								<para>Ha nem mozdony lapot vett fel, az elsõ két pont megismétlõdik.</para>
+							</listitem>
+							<listitem>
+								<para>Ha a pakli elfogyott és vannak eldobott lapok, akkor azokat megkeverve új
+								paklit kell képezni.</para>
+							</listitem>
+						</orderedlist>
+						</sect5>
+					</sect5>
+					<sect5>
+					<title>Útvonal lefoglalása</title>
+						<mediaobject>
+						<imageobject>
+							<imagedata fileref="UML_jpg/fordulo_utvonallefog.jpg" format="JPG" scale="70"/>
+						</imageobject>
+						</mediaobject>
+						<sect5>
+						<title>Rövid leírás</title>
+						<para>A játékos a fordulóban végrehajtott tevékenységeként elfoglal egy útvonalat a
+						kezében tartott vagonykártyák közül az útvonal hosszának megfelelõ számú, azzal azonos
+						színû útvonalra helyezésével. </para>
+						</sect5>
+						<sect5>
+						<title>Lépésenkénti leírás</title>
+						<para>A játékos akkor foglalhat le egy útvonalat, ha õ következik a játékban, és a kezében
+						van a választott útvonallal azonos színû, annak hosszával megegyezõ számú lap. Szürke színû
+						útvonalak lefoglalására bármilyen színû lap használható. Mozdony lap bármilyen színû útvonal
+						lefoglalására használható.</para>
+						<orderedlist>
+							<listitem>
+								<para>A játékos választ egy útvonalat a táblán.</para>
+							</listitem>
+							<listitem>
+								<para>Ha az útvonalat még senki nem foglalta le, akkor lefoglalhatja.</para>
+							</listitem>
+							<listitem>
+								<para>Ha a választott útvonal dupla, csak egyszer foglalhatja le. Dupla útvonalat akkor is
+								foglalhat, ha egyszer és csak egyszer egy másik játékos már lefoglalta.</para>
+							</listitem>
+							<listitem>
+								<para>A játékos eldob kezébõl az útvonal hosszának megfelelõ számú, azzal azonos színû vagonkártya-lapot.</para>
+							</listitem>
+							<listitem>
+								<para>Szürke útvonal esetén bármilyen színû vagonkártya-lap használható.</para>
+							</listitem>
+							<listitem>
+								<para>Mozdony lap bármilyen szín helyett használható.</para>
+							</listitem>
+							<listitem>
+								<para>A játékos elhelyez az útvonalra az út hosszával megegyezõ számú vasúti kocsit kocsijai közül.</para>
+							</listitem>
+							<listitem>
+								<para>Az útvonal pontértékének megfelelõ számú egységet lép elõre az eredményjelzõ sávon bábujával.</para>
+							</listitem>
+						</orderedlist>
+						</sect5>
+					</sect5>
+					<sect5>
+					<title>Menetjegy húzása</title>
+						<mediaobject>
+						<imageobject>
+							<imagedata fileref="UML_jpg/fordulo_menetjegy.jpg" format="JPG" scale="70"/>
+						</imageobject>
+						</mediaobject>
+						<sect5>
+						<title>Rövid leírás</title>
+						<para>A játékos a fordulóban végrehajtott tevékenységeként 3 menetjegyet húz a menetjegy-pakli
+						tetejérõl. </para>
+						</sect5>
+						<sect5>
+						<title>Lépésenkénti leírás</title>
+						<para>A játékos akkor húzhat menetjegyet, ha õ következik az adott körben, és a menetjegy-pakliban
+						még vannak kártyák. </para>
+						<orderedlist>
+							<listitem>
+								<para>
+									A játékos 3 lapot húz a menetjegy-pakli tetejérõl.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Ha már nincs 3 lap a pakliban, annyit húz, amennyi van.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									A húzott lapok közül legfeljebb kettõt eldobhat, azaz egyet
+									kötelezõ megtartania.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Megtarthatja mind a három húzott lapot.
+								</para>
+							</listitem>
+							<listitem>
+								<para>
+									Ha dobott el lapokat, azokat lefelé fordítva a menetjegy-pakli aljára kell helyeznie.
+								</para>
+							</listitem>
+						</orderedlist>
+						</sect5>
+					</sect5>
+				</sect4>
+			</sect3>
 		</sect2>
 		<sect2>
 			<title>2.3 Felhasználói jellemzõk</title>
