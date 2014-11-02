@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="iso-8859-2"?>
 <article xml:lang="hu" xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
 	
 	<info>		
-		<title>Ticket To Ride KÃ¶vetelmÃ©nyspecifikÃ¡ciÃ³s Dokumentum</title>
+		<title>Ticket To Ride Követelményspecifikációs Dokumentum</title>
 		<authorgroup>
 			
 			<author>
 				<personname>
-					<firstname>SÃ¡ndor</firstname>
+					<firstname>Sándor</firstname>
 					<surname>Bari</surname>
 				</personname>
 				<email>bari.sandor@gmail.com</email>
@@ -23,7 +23,7 @@
 			
 			<author>
 				<personname>
-					<firstname>ZoltÃ¡n</firstname>
+					<firstname>Zoltán</firstname>
 					<surname>Kerekes</surname>
 				</personname>
 				<email></email>
@@ -37,114 +37,255 @@
 			<revnumber>0.1</revnumber>
 			<date>2014-10-30</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>ElsÅ‘ dokumentum-vÃ¡z.</revremark>
+			<revremark>Elsõ dokumentum-váz.</revremark>
 				
 		</revision>		
 		<revision>
 			<revnumber>0.2</revnumber>
 			<date>2014-10-31</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Dokumentum vÃ¡zÃ¡nak Ã¡tdolgozÃ¡sa. 1.1, 1.2 Ã©s 1.3 fejezetek elkÃ©szÃ­tÃ©se.</revremark>
+			<revremark>Dokumentum vázának átdolgozása. 1.1, 1.2 és 1.3 fejezetek elkészítése.</revremark>
 		</revision>
 		<revision>
 			<revnumber>0.3</revnumber>
 			<date>2014-11-01</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Dokumentum struktÃºrÃ¡jÃ¡nak Ã¡talakÃ­tÃ¡sa.</revremark>
+			<revremark>Dokumentum struktúrájának átalakítása.</revremark>
+		</revision>
+		<revision>
+			<revnumber>0.4</revnumber>
+			<date>2014-11-02</date>
+			<authorinitials>bs</authorinitials>
+			<revremark>1. fejezet, glosszárium befejezése.</revremark>
 		</revision>
 	</revhistory>
 	
 	<sect1>
-		<title>1. BevezetÃ©s</title>
+		<title>1. Bevezetés</title>
 		<sect2>
-			<title>1.1 A dokumentum cÃ©lja</title>
-			<para>A dokumentum cÃ©lja, hogy a Ticket To Ride nevÅ± tÃ¡rsasjÃ¡tÃ©kot implementÃ¡lÃ³
-			alkalmazÃ¡s rÃ©szletes kÃ¶vetelmÃ©nyspecifikÃ¡ciÃ³jÃ¡t adja. Bemutatja a rendszer hasznÃ¡lati eseteit,
-			ezÃ¡ltal kÃ©pet nyÃºjt a szoftver Ã¡ltal nyÃºjtott szolgÃ¡ltatÃ¡sokrÃ³l.</para>
+			<title>1.1 A dokumentum célja</title>
+			<para>A dokumentum célja, hogy a Ticket To Ride nevû társasjátékot implementáló
+			alkalmazás részletes követelményspecifikációját adja. Bemutatja a rendszer használati eseteit,
+			ezáltal képet nyújt a szoftver által nyújtott szolgáltatásokról.</para>
 		</sect2>
 		<sect2>
-			<title>1.2 A projekt Ã¡ttekintÃ©se</title>
-			<para>A projekt cÃ©lja, hogy A Ticket To Ride nevÅ± tÃ¡rsasjÃ¡tÃ©kot implementÃ¡lÃ³
-			szoftver Ã¡lljon elÅ‘. </para>
-			<para>Az implementÃ¡lt rendszer megvalÃ³sÃ­tja az akadÃ¡lymentes, hÃ¡lÃ³zaton
-			keresztÃ¼l tÃ¶rtÃ©nÅ‘ jÃ¡tÃ©kot a szabÃ¡lyok Ã©rtelmÃ©ben legalÃ¡bb 2, legfeljebb 5 jÃ¡tÃ©kos
-			szÃ¡mÃ¡ra. Ehhez biztosÃ­tja a hagyomÃ¡nyos, asztali vÃ¡ltozatban talÃ¡lhatÃ³ elemek virtuÃ¡lis
-			megfelelÅ‘it, felÃ¼gyeli Ã©s betartatja a jÃ¡tÃ©kszabÃ¡lyokat, menedzseli a jÃ¡tÃ©k menetÃ©t.</para>
-			<para>A szoftver hasznÃ¡latÃ¡val a jÃ¡tÃ©kosok anÃ©lkÃ¼l prÃ³bÃ¡lhatjÃ¡k ki, jÃ¡tszhatjÃ¡k
-			 a Ticket To Ride tÃ¡rsasjÃ¡tÃ©kot, hogy ehhez bÃ¡rmilyen mÃ¡s eszkÃ¶zre szÃ¼ksÃ©gÃ¼k lenne.</para>
+			<title>1.2 A projekt áttekintése</title>
+			<para>A projekt célja, hogy A Ticket To Ride nevû társasjátékot implementáló
+			szoftver álljon elõ. </para>
+			<para>Az implementált rendszer megvalósítja az akadálymentes, hálózaton
+			keresztül történõ játékot a szabályok értelmében legalább 2, legfeljebb 5 játékos
+			számára. Ehhez biztosítja a hagyományos, asztali változatban található elemek virtuális
+			megfelelõit, felügyeli és betartatja a játékszabályokat, menedzseli a játék menetét.</para>
+			<para>A szoftver használatával a játékosok anélkül próbálhatják ki, játszhatják
+			 a Ticket To Ride társasjátékot, hogy ehhez bármilyen más eszközre szükségük lenne.</para>
 		</sect2>
 				
 		<sect2>
-			<title>1.3 A dokumentum Ã¡ltalÃ¡nos leÃ­rÃ¡sa</title>
-			<para>Az elsÅ‘ fejezet a dokumentum Ã©s a projekt rÃ¶vid ismertetÅ‘jÃ©t tartalmazza, a 
-			projekttel kapcsolatos relevÃ¡ns hivatkozÃ¡sok listÃ¡jÃ¡t, valamint egy glosszÃ¡riumot,
-			melyben megtalÃ¡lhatÃ³k az egyes szakszavak definÃ­ciÃ³i.
+			<title>1.3 A dokumentum általános leírása</title>
+			<para>Az elsõ fejezet a dokumentum és a projekt rövid ismertetõjét tartalmazza, valamint egy glosszáriumot,
+			melyben megtalálhatók az egyes szakszavak, játékkal kapcsolatos fogalmak definíciói.
 			</para>
 			<para>
-			A mÃ¡sodik fejezet Ã¡ltalÃ¡nosan mutatja be a termÃ©k cÃ©ljÃ¡t Ã©s funkciÃ³it, a felhasznÃ¡lÃ³kkal
-			kapcsolatos, illetve egyÃ©b feltÃ©telezÃ©seket, fÃ¼ggÅ‘sÃ©geket, a projekt megvalÃ³sÃ­tÃ¡sa
-			sorÃ¡n Ã©rvÃ©nyes megszorÃ­tÃ¡sokat.
+			A második fejezet általánosan mutatja be a termék célját és funkcióit, a rendszer környezetét.
+			Megadja azoknak a funkcionális és nem-funkcionális követelményeknek a listáját, melyeknek
+			a szoftvernek eleget kell tennie, hogy elfogadható legyen. Az egyes használati eseteket
+			az UML megfelelõ eszközeinek felhasználásával szemlélteti.
 			</para>
 			<para>
-			A harmadik fejezet tartalmazza a rÃ©szletes funkcionÃ¡lis Ã©s nem-funkcionÃ¡lis kÃ¶vetelmÃ©nyspecifikÃ¡ciÃ³t,
-			a hasznÃ¡lati esetek diagramjait, valamint ezen esetek strukturÃ¡lt termÃ©szetes nyelvi
-			leÃ­rÃ¡sÃ¡t. Ezen tÃºl ebben a fejezetben talÃ¡lhatÃ³ a kÃ¼lsÅ‘ interfÃ©szek leÃ­rÃ¡sa is. 
+			A harmadik fejezet tartalmazza a részletes funkcionális és nem-funkcionális követelményspecifikációt
+			táblázatos, strukturált természetes nyelvi formában. A harmadik fejezet célja, hogy a második fejezetben
+			meghatározott követelményeket egyértelmûsítse, elõ- és utófeltételeket, alternatív lefolyási módokat adjon meg.
+			</para>
+			<para>
+			A második és harmadik fejezet egyaránt tartalmazza a követelmények teljes leírását, de ezeket eltérõ módon mutatják be.
 			</para>
 		</sect2>
-		<sect2>
-			<title>1.4 HivatkozÃ¡sok</title>
-			<para></para>
-		</sect2>
+				
 		<glossary xmlns='http://docbook.org/ns/docbook'>
 			
-			<glossdiv><title>E</title>
-				<glossentry xml:id="xml">
-					<glossterm>Example entry</glossterm>
-					<!-- ha kell -->
-					<acronym>EE</acronym>
-					<!-- vagy -->
-					<abbrev>Exmpl.</abbrev>
+			<glossdiv><title>A</title>
+				<glossentry xml:id="akcio">
+					<glossterm>Akció</glossterm>
 					<glossdef>
-						<para>Definition here.</para>
-						
+						<para>A játékos tevékenysége a kör folyamán, mikor õ következik.</para>
+						<glossseealso otherterm="jatekos">Játékos</glossseealso>
+						<glossseealso otherterm="kor">Kör</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
+			<glossdiv><title>E</title>
+				<glossentry xml:id="eredmenyjelzo">
+					<glossterm>Eredményjelzõ sáv</glossterm>
+					<glossdef>
+						<para>A tábla szélét körbevevõ sáv, melyen nyomon követhetõ, hogy az egyes játékosok mennyit utaztak a játék adott pontjáig.</para>
+						<glossseealso otherterm="tabla">Tábla</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>F</title>
+				<glossentry xml:id="fordulo">
+					<glossterm>Forduló</glossterm>
+					<glosssee otherterm="kor" />
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>J</title>
+				<glossentry xml:id="jatekos">
+					<glossterm>Játékos</glossterm>
+					<glossdef>
+						<para>A játékban részt vevõ személyek.</para>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>K</title>
+				<glossentry xml:id="kor">
+					<glossterm>Kör</glossterm>
+					<glossdef>
+						<para>A játék egy idõbeli egysége, mely során minden játékos pontosan egy akciót hajt végre.</para>
+						<glossseealso otherterm="jatekos">Játékos</glossseealso>
+						<glossseealso otherterm="akcio">Akció</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>M</title>
+				<glossentry xml:id="jegy">
+					<glossterm>Menetjegy</glossterm>
+					<glossdef>
+						<para>A játék egyik eszköze, olyan kártya, melyen két város neve található és egy pontérték. Ha a játékos 
+						le tud foglalni a két várost összekötõ útvonalat, megkapja a játék végén a jegyen szereplõ pontokat, ellenkezõ
+						esetben ezek levonásra kerülnek pontjaiból.</para>
+						<glossseealso otherterm="varos">Város</glossseealso>
+						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+					</glossdef>
+				</glossentry>
+				<glossentry xml:id="mozdony">
+					<glossterm>Mozdony lap</glossterm>
+					<glossdef>
+						<para>A vagonkártyák speciális fajtája, mely jokerként bármilyen színû útvonal lefoglalására használható.</para>
+						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>P</title>
+				<glossentry xml:id="pontszam">
+					<glossterm>Pontszám</glossterm>
+					<glossdef>
+						<para>A játék folyamán a játékosok bizonyos akcióik után pontokat szerezhetnek,
+						ezek összessége az adott játékos pontszáma. Segítségével kerül kiválasztásra
+						a játék végén a gyõztes játékos</para>
+						<glossseealso otherterm="akcio">Akció</glossseealso>
+						<glossseealso otherterm="jatekos">Játékos</glossseealso>
+						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+					</glossdef>
+				</glossentry>
+				<glossentry xml:id="pontertek">
+					<glossterm>Pontérték</glossterm>
+					<glossdef>
+						<para>Adott akció után járó pontok mennyisége.</para>
+						<glossseealso otherterm="akcio">Akció</glossseealso>
+						<glossseealso otherterm="pontszam">Pontszám</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			<glossdiv><title>T</title>
+				<glossentry xml:id="tabla">
+					<glossterm>Tábla</glossterm>
+					<glossdef>
+						<para>A játék tere. Szélén az eredményjelzõ sáv található, a táblán a városokat és útvonalakat mutató térkép.</para>
+						<glossseealso otherterm="eredmenyjelzo">Eredményjelzõ sáv</glossseealso>
+						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+						<glossseealso otherterm="varos">Város</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			
+			<glossdiv><title>Ú</title>
+				<glossentry xml:id="utvonal">
+					<glossterm>Útvonal</glossterm>
+					<glossdef>
+						<para>A táblán két várost összekötõ szakasz. Rendelkezik színnel és bizonyos hosszal. Hossza határozza meg a 
+						lefoglalása után járó pontértéket.</para>
+						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+						<glossseealso otherterm="tabla">Tábla</glossseealso>
+						<glossseealso otherterm="lefoglalas">Útvonal lefoglalása</glossseealso>
+					</glossdef>
+				</glossentry>
+				
+				<glossentry xml:id="lefoglalas">
+					<glossterm>Útvonal lefoglalása</glossterm>
+					<glossdef>
+						<para>A játékos az útvonalra helyez annak hosszával megegyezõ számú,
+						színével megegyezõ színû vagonkártyát. Ennek eredményeként megkapja
+						a hossz alapján számított pontértéket.</para>
+						<glossseealso otherterm="jatekos">Játékos</glossseealso>
+						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+			
+			<glossdiv><title>V</title>
+				<glossentry xml:id="vagonkartya">
+					<glossterm>Vagonkártya</glossterm>
+					<glossdef>
+						<para>Útvonalak lefoglalására használható kártya.</para>
+						<glossseealso otherterm="lefoglalas">Útvonal lefoglalása</glossseealso>
+					</glossdef>
+				</glossentry>
+				
+				<glossentry xml:id="varos">
+					<glossterm>Város</glossterm>
+					<glossdef>
+						<para>A térképen található egységek, melyeket útvonalak kötnek össze.</para>
+						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+					</glossdef>
+				</glossentry>
+			</glossdiv>
+			
+		
 			</glossary>
 		
 	</sect1>
 	<sect1>
-		<title>2. ÃltalÃ¡nos leÃ­rÃ¡s</title>
+		<title>2. Általános leírás</title>
 		<sect2>
-			<title>2.1 A rendszer kÃ¶rnyezete</title>
+			<title>2.1 A rendszer környezete</title>
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>2.2 FunkcionÃ¡lis kÃ¶vetelmÃ©nyek</title>
+			<title>2.2 Funkcionális követelmények</title>
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>2.3 FelhasznÃ¡lÃ³i jellemzÅ‘k</title>
+			<title>2.3 Felhasználói jellemzõk</title>
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>2.4 Nem-funkcionÃ¡lis kÃ¶vetelmÃ©nyek</title>
+			<title>2.4 Nem-funkcionális követelmények</title>
 			<para></para>
 		</sect2>
 		
 	</sect1>
 	<sect1>
-		<title>3. RÃ©szletes kÃ¶vetelmÃ©nyspecifikÃ¡ciÃ³</title>
+		<title>3. Részletes követelményspecifikáció</title>
 		
 		<sect2>
-			<title>3.1 FunkcionÃ¡lis kÃ¶vetelmÃ©nyek</title>
+			<title>3.1 Funkcionális követelmények</title>
 			
-			<!-- 3.2.1-3.2.x funkcionÃ¡lis kÃ¶vetelmÃ©nyek, use case-ek -->
+			<!-- 3.2.1-3.2.x funkcionális követelmények, use case-ek -->
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>3.2 Nem-funkcionÃ¡lis kÃ¶vetelmÃ©nyek</title>
+			<title>3.2 Nem-funkcionális követelmények</title>
 			<para></para>
 			
 			
@@ -152,7 +293,7 @@
 			
 	</sect1>
 	<sect1>
-		<title>FÃ¼ggelÃ©k</title>
+		<title>Függelék</title>
 		<para></para>
 	</sect1>
 	<sect1>
