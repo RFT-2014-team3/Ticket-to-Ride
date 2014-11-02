@@ -1,13 +1,13 @@
-<?xml version="1.0" encoding="iso-8859-2"?>
+<?xml version="1.0" encoding="utf-8"?>
 <article xml:lang="hu" xmlns="http://docbook.org/ns/docbook" version="5.0" xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xl="http://www.w3.org/1999/xlink">
 	
 	<info>		
-		<title>Ticket To Ride Követelményspecifikációs Dokumentum</title>
+		<title>Ticket To Ride KĂśvetelmĂŠnyspecifikĂĄciĂłs Dokumentum</title>
 		<authorgroup>
 			
 			<author>
 				<personname>
-					<firstname>Sándor</firstname>
+					<firstname>SĂĄndor</firstname>
 					<surname>Bari</surname>
 				</personname>
 				<email>bari.sandor@gmail.com</email>
@@ -23,7 +23,7 @@
 			
 			<author>
 				<personname>
-					<firstname>Zoltán</firstname>
+					<firstname>ZoltĂĄn</firstname>
 					<surname>Kerekes</surname>
 				</personname>
 				<email></email>
@@ -37,73 +37,73 @@
 			<revnumber>0.1</revnumber>
 			<date>2014-10-30</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Első dokumentum-váz.</revremark>
+			<revremark>ElsĂľ dokumentum-vĂĄz.</revremark>
 				
 		</revision>		
 		<revision>
 			<revnumber>0.2</revnumber>
 			<date>2014-10-31</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Dokumentum vázának átdolgozása. 1.1, 1.2 és 1.3 fejezetek elkészítése.</revremark>
+			<revremark>Dokumentum vĂĄzĂĄnak ĂĄtdolgozĂĄsa. 1.1, 1.2 ĂŠs 1.3 fejezetek elkĂŠszĂ­tĂŠse.</revremark>
 		</revision>
 		<revision>
 			<revnumber>0.3</revnumber>
 			<date>2014-11-01</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Dokumentum struktúrájának átalakítása.</revremark>
+			<revremark>Dokumentum struktĂşrĂĄjĂĄnak ĂĄtalakĂ­tĂĄsa.</revremark>
 		</revision>
 		<revision>
 			<revnumber>0.4</revnumber>
 			<date>2014-11-02</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>1. fejezet, glosszárium befejezése.</revremark>
+			<revremark>1. fejezet, glosszĂĄrium befejezĂŠse.</revremark>
 		</revision>
 		<revision>
 			<revnumber>0.5</revnumber>
 			<date>2014-11-02</date>
 			<authorinitials>bs</authorinitials>
-			<revremark>Forduló használati esetek, use case diagramok elkészítése.</revremark>
+			<revremark>FordulĂł hasznĂĄlati esetek, use case diagramok elkĂŠszĂ­tĂŠse.</revremark>
 		</revision>
 	</revhistory>
 	
 	<sect1>
-		<title>1. Bevezetés</title>
+		<title>1. BevezetĂŠs</title>
 		<sect2>
-			<title>1.1 A dokumentum célja</title>
-			<para>A dokumentum célja, hogy a Ticket To Ride nevű társasjátékot implementáló
-			alkalmazás részletes követelményspecifikációját adja. Bemutatja a rendszer használati eseteit,
-			ezáltal képet nyújt a szoftver által nyújtott szolgáltatásokról.</para>
+			<title>1.1 A dokumentum cĂŠlja</title>
+			<para>A dokumentum cĂŠlja, hogy a Ticket To Ride nevĂť tĂĄrsasjĂĄtĂŠkot implementĂĄlĂł
+			alkalmazĂĄs rĂŠszletes kĂśvetelmĂŠnyspecifikĂĄciĂłjĂĄt adja. Bemutatja a rendszer hasznĂĄlati eseteit,
+			ezĂĄltal kĂŠpet nyĂşjt a szoftver ĂĄltal nyĂşjtott szolgĂĄltatĂĄsokrĂłl.</para>
 		</sect2>
 		<sect2>
-			<title>1.2 A projekt áttekintése</title>
-			<para>A projekt célja, hogy A Ticket To Ride nevű társasjátékot implementáló
-			szoftver álljon elő. </para>
-			<para>Az implementált rendszer megvalósítja az akadálymentes, hálózaton
-			keresztül történő játékot a szabályok értelmében legalább 2, legfeljebb 5 játékos
-			számára. Ehhez biztosítja a hagyományos, asztali változatban található elemek virtuális
-			megfelelőit, felügyeli és betartatja a játékszabályokat, menedzseli a játék menetét.</para>
-			<para>A szoftver használatával a játékosok anélkül próbálhatják ki, játszhatják
-			 a Ticket To Ride társasjátékot, hogy ehhez bármilyen más eszközre szükségük lenne.</para>
+			<title>1.2 A projekt ĂĄttekintĂŠse</title>
+			<para>A projekt cĂŠlja, hogy A Ticket To Ride nevĂť tĂĄrsasjĂĄtĂŠkot implementĂĄlĂł
+			szoftver ĂĄlljon elĂľ. </para>
+			<para>Az implementĂĄlt rendszer megvalĂłsĂ­tja az akadĂĄlymentes, hĂĄlĂłzaton
+			keresztĂźl tĂśrtĂŠnĂľ jĂĄtĂŠkot a szabĂĄlyok ĂŠrtelmĂŠben legalĂĄbb 2, legfeljebb 5 jĂĄtĂŠkos
+			szĂĄmĂĄra. Ehhez biztosĂ­tja a hagyomĂĄnyos, asztali vĂĄltozatban talĂĄlhatĂł elemek virtuĂĄlis
+			megfelelĂľit, felĂźgyeli ĂŠs betartatja a jĂĄtĂŠkszabĂĄlyokat, menedzseli a jĂĄtĂŠk menetĂŠt.</para>
+			<para>A szoftver hasznĂĄlatĂĄval a jĂĄtĂŠkosok anĂŠlkĂźl prĂłbĂĄlhatjĂĄk ki, jĂĄtszhatjĂĄk
+			 a Ticket To Ride tĂĄrsasjĂĄtĂŠkot, hogy ehhez bĂĄrmilyen mĂĄs eszkĂśzre szĂźksĂŠgĂźk lenne.</para>
 		</sect2>
 				
 		<sect2>
-			<title>1.3 A dokumentum általános leírása</title>
-			<para>Az első fejezet a dokumentum és a projekt rövid ismertetőjét tartalmazza, valamint egy glosszáriumot,
-			melyben megtalálhatók az egyes szakszavak, játékkal kapcsolatos fogalmak definíciói.
+			<title>1.3 A dokumentum ĂĄltalĂĄnos leĂ­rĂĄsa</title>
+			<para>Az elsĂľ fejezet a dokumentum ĂŠs a projekt rĂśvid ismertetĂľjĂŠt tartalmazza, valamint egy glosszĂĄriumot,
+			melyben megtalĂĄlhatĂłk az egyes szakszavak, jĂĄtĂŠkkal kapcsolatos fogalmak definĂ­ciĂłi.
 			</para>
 			<para>
-			A második fejezet általánosan mutatja be a termék célját és funkcióit, a rendszer környezetét.
-			Megadja azoknak a funkcionális és nem-funkcionális követelményeknek a listáját, melyeknek
-			a szoftvernek eleget kell tennie, hogy elfogadható legyen. Az egyes használati eseteket
-			az UML megfelelő eszközeinek felhasználásával szemlélteti.
+			A mĂĄsodik fejezet ĂĄltalĂĄnosan mutatja be a termĂŠk cĂŠljĂĄt ĂŠs funkciĂłit, a rendszer kĂśrnyezetĂŠt.
+			Megadja azoknak a funkcionĂĄlis ĂŠs nem-funkcionĂĄlis kĂśvetelmĂŠnyeknek a listĂĄjĂĄt, melyeknek
+			a szoftvernek eleget kell tennie, hogy elfogadhatĂł legyen. Az egyes hasznĂĄlati eseteket
+			az UML megfelelĂľ eszkĂśzeinek felhasznĂĄlĂĄsĂĄval szemlĂŠlteti.
 			</para>
 			<para>
-			A harmadik fejezet tartalmazza a részletes funkcionális és nem-funkcionális követelményspecifikációt
-			táblázatos, strukturált természetes nyelvi formában. A harmadik fejezet célja, hogy a második fejezetben
-			meghatározott követelményeket egyértelműsítse, elő- és utófeltételeket, alternatív lefolyási módokat adjon meg.
+			A harmadik fejezet tartalmazza a rĂŠszletes funkcionĂĄlis ĂŠs nem-funkcionĂĄlis kĂśvetelmĂŠnyspecifikĂĄciĂłt
+			tĂĄblĂĄzatos, strukturĂĄlt termĂŠszetes nyelvi formĂĄban. A harmadik fejezet cĂŠlja, hogy a mĂĄsodik fejezetben
+			meghatĂĄrozott kĂśvetelmĂŠnyeket egyĂŠrtelmĂťsĂ­tse, elĂľ- ĂŠs utĂłfeltĂŠteleket, alternatĂ­v lefolyĂĄsi mĂłdokat adjon meg.
 			</para>
 			<para>
-			A második és harmadik fejezet egyaránt tartalmazza a követelmények teljes leírását, de ezeket eltérő módon mutatják be.
+			A mĂĄsodik ĂŠs harmadik fejezet egyarĂĄnt tartalmazza a kĂśvetelmĂŠnyek teljes leĂ­rĂĄsĂĄt, de ezeket eltĂŠrĂľ mĂłdon mutatjĂĄk be.
 			</para>
 		</sect2>
 				
@@ -111,48 +111,48 @@
 			
 			<glossdiv><title>A</title>
 				<glossentry xml:id="akcio">
-					<glossterm>Akció</glossterm>
+					<glossterm>AkciĂł</glossterm>
 					<glossdef>
-						<para>A játékos tevékenysége a kör folyamán, mikor ő következik.</para>
-						<glossseealso otherterm="jatekos">Játékos</glossseealso>
-						<glossseealso otherterm="kor">Kör</glossseealso>
+						<para>A jĂĄtĂŠkos tevĂŠkenysĂŠge a kĂśr folyamĂĄn, mikor Ăľ kĂśvetkezik.</para>
+						<glossseealso otherterm="jatekos">JĂĄtĂŠkos</glossseealso>
+						<glossseealso otherterm="kor">KĂśr</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>E</title>
 				<glossentry xml:id="eredmenyjelzo">
-					<glossterm>Eredményjelző sáv</glossterm>
+					<glossterm>EredmĂŠnyjelzĂľ sĂĄv</glossterm>
 					<glossdef>
-						<para>A tábla szélét körbevevő sáv, melyen nyomon követhető, hogy az egyes játékosok mennyit utaztak a játék adott pontjáig.</para>
-						<glossseealso otherterm="tabla">Tábla</glossseealso>
+						<para>A tĂĄbla szĂŠlĂŠt kĂśrbevevĂľ sĂĄv, melyen nyomon kĂśvethetĂľ, hogy az egyes jĂĄtĂŠkosok mennyit utaztak a jĂĄtĂŠk adott pontjĂĄig.</para>
+						<glossseealso otherterm="tabla">TĂĄbla</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>F</title>
 				<glossentry xml:id="fordulo">
-					<glossterm>Forduló</glossterm>
+					<glossterm>FordulĂł</glossterm>
 					<glosssee otherterm="kor" />
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>J</title>
 				<glossentry xml:id="jatekos">
-					<glossterm>Játékos</glossterm>
+					<glossterm>JĂĄtĂŠkos</glossterm>
 					<glossdef>
-						<para>A játékban részt vevő személyek.</para>
+						<para>A jĂĄtĂŠkban rĂŠszt vevĂľ szemĂŠlyek.</para>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>K</title>
 				<glossentry xml:id="kor">
-					<glossterm>Kör</glossterm>
+					<glossterm>KĂśr</glossterm>
 					<glossdef>
-						<para>A játék egy időbeli egysége, mely során minden játékos pontosan egy akciót hajt végre.</para>
-						<glossseealso otherterm="jatekos">Játékos</glossseealso>
-						<glossseealso otherterm="akcio">Akció</glossseealso>
+						<para>A jĂĄtĂŠk egy idĂľbeli egysĂŠge, mely sorĂĄn minden jĂĄtĂŠkos pontosan egy akciĂłt hajt vĂŠgre.</para>
+						<glossseealso otherterm="jatekos">JĂĄtĂŠkos</glossseealso>
+						<glossseealso otherterm="akcio">AkciĂł</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
@@ -161,19 +161,19 @@
 				<glossentry xml:id="jegy">
 					<glossterm>Menetjegy</glossterm>
 					<glossdef>
-						<para>A játék egyik eszköze, olyan kártya, melyen két város neve található és egy pontérték. Ha a játékos 
-						le tud foglalni a két várost összekötő útvonalat, megkapja a játék végén a jegyen szereplő pontokat, ellenkező
-						esetben ezek levonásra kerülnek pontjaiból.</para>
+						<para>A jĂĄtĂŠk egyik eszkĂśze, olyan kĂĄrtya, melyen kĂŠt vĂĄros neve talĂĄlhatĂł ĂŠs egy pontĂŠrtĂŠk. Ha a jĂĄtĂŠkos 
+						le tud foglalni a kĂŠt vĂĄrost ĂśsszekĂśtĂľ Ăştvonalat, megkapja a jĂĄtĂŠk vĂŠgĂŠn a jegyen szereplĂľ pontokat, ellenkezĂľ
+						esetben ezek levonĂĄsra kerĂźlnek pontjaibĂłl.</para>
 						<glossseealso otherterm="jegyPakli">Menetjegy-pakli</glossseealso>
-						<glossseealso otherterm="varos">Város</glossseealso>
-						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+						<glossseealso otherterm="varos">VĂĄros</glossseealso>
+						<glossseealso otherterm="pontertek">PontĂŠrtĂŠk</glossseealso>
 					</glossdef>
 				</glossentry>
 				<glossentry xml:id="jegyPakli">
 					<glossterm>Menetjegy-pakli</glossterm>
 					<glossdef>
-						<para>A játékban nem lévő menetjegyek paklija, melyekből a játékosok 
-						szükség szerint húzhatnak új menetjegyeket.</para>
+						<para>A jĂĄtĂŠkban nem lĂŠvĂľ menetjegyek paklija, melyekbĂľl a jĂĄtĂŠkosok 
+						szĂźksĂŠg szerint hĂşzhatnak Ăşj menetjegyeket.</para>
 						<glossseealso otherterm="jegy">Menetjegy</glossseealso>
 						
 					</glossdef>
@@ -181,69 +181,69 @@
 				<glossentry xml:id="mozdony">
 					<glossterm>Mozdony lap</glossterm>
 					<glossdef>
-						<para>A vagonkártyák speciális fajtája, mely jokerként bármilyen színű útvonal lefoglalására használható.</para>
-						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+						<para>A vagonkĂĄrtyĂĄk speciĂĄlis fajtĂĄja, mely jokerkĂŠnt bĂĄrmilyen szĂ­nĂť Ăştvonal lefoglalĂĄsĂĄra hasznĂĄlhatĂł.</para>
+						<glossseealso otherterm="vagonkartya">VagonkĂĄrtya</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>P</title>
 				<glossentry xml:id="pontszam">
-					<glossterm>Pontszám</glossterm>
+					<glossterm>PontszĂĄm</glossterm>
 					<glossdef>
-						<para>A játék folyamán a játékosok bizonyos akcióik után pontokat szerezhetnek,
-						ezek összessége az adott játékos pontszáma. Segítségével kerül kiválasztásra
-						a játék végén a győztes játékos</para>
-						<glossseealso otherterm="akcio">Akció</glossseealso>
-						<glossseealso otherterm="jatekos">Játékos</glossseealso>
-						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
+						<para>A jĂĄtĂŠk folyamĂĄn a jĂĄtĂŠkosok bizonyos akciĂłik utĂĄn pontokat szerezhetnek,
+						ezek ĂśsszessĂŠge az adott jĂĄtĂŠkos pontszĂĄma. SegĂ­tsĂŠgĂŠvel kerĂźl kivĂĄlasztĂĄsra
+						a jĂĄtĂŠk vĂŠgĂŠn a gyĂľztes jĂĄtĂŠkos</para>
+						<glossseealso otherterm="akcio">AkciĂł</glossseealso>
+						<glossseealso otherterm="jatekos">JĂĄtĂŠkos</glossseealso>
+						<glossseealso otherterm="pontertek">PontĂŠrtĂŠk</glossseealso>
 					</glossdef>
 				</glossentry>
 				<glossentry xml:id="pontertek">
-					<glossterm>Pontérték</glossterm>
+					<glossterm>PontĂŠrtĂŠk</glossterm>
 					<glossdef>
-						<para>Adott akció után járó pontok mennyisége.</para>
-						<glossseealso otherterm="akcio">Akció</glossseealso>
-						<glossseealso otherterm="pontszam">Pontszám</glossseealso>
+						<para>Adott akciĂł utĂĄn jĂĄrĂł pontok mennyisĂŠge.</para>
+						<glossseealso otherterm="akcio">AkciĂł</glossseealso>
+						<glossseealso otherterm="pontszam">PontszĂĄm</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			<glossdiv><title>T</title>
 				<glossentry xml:id="tabla">
-					<glossterm>Tábla</glossterm>
+					<glossterm>TĂĄbla</glossterm>
 					<glossdef>
-						<para>A játék tere. Szélén az eredményjelző sáv található, a táblán a városokat és útvonalakat mutató térkép.</para>
-						<glossseealso otherterm="eredmenyjelzo">Eredményjelző sáv</glossseealso>
-						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
-						<glossseealso otherterm="varos">Város</glossseealso>
+						<para>A jĂĄtĂŠk tere. SzĂŠlĂŠn az eredmĂŠnyjelzĂľ sĂĄv talĂĄlhatĂł, a tĂĄblĂĄn a vĂĄrosokat ĂŠs Ăştvonalakat mutatĂł tĂŠrkĂŠp.</para>
+						<glossseealso otherterm="eredmenyjelzo">EredmĂŠnyjelzĂľ sĂĄv</glossseealso>
+						<glossseealso otherterm="utvonal">Ătvonal</glossseealso>
+						<glossseealso otherterm="varos">VĂĄros</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
 			
 			
-			<glossdiv><title>Ú</title>
+			<glossdiv><title>Ă</title>
 				<glossentry xml:id="utvonal">
-					<glossterm>Útvonal</glossterm>
+					<glossterm>Ătvonal</glossterm>
 					<glossdef>
-						<para>A táblán két várost összekötő szakasz. Rendelkezik színnel és bizonyos hosszal. Hossza határozza meg a 
-						lefoglalása után járó pontértéket.</para>
-						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
-						<glossseealso otherterm="tabla">Tábla</glossseealso>
-						<glossseealso otherterm="lefoglalas">Útvonal lefoglalása</glossseealso>
+						<para>A tĂĄblĂĄn kĂŠt vĂĄrost ĂśsszekĂśtĂľ szakasz. Rendelkezik szĂ­nnel ĂŠs bizonyos hosszal. Hossza hatĂĄrozza meg a 
+						lefoglalĂĄsa utĂĄn jĂĄrĂł pontĂŠrtĂŠket.</para>
+						<glossseealso otherterm="pontertek">PontĂŠrtĂŠk</glossseealso>
+						<glossseealso otherterm="tabla">TĂĄbla</glossseealso>
+						<glossseealso otherterm="lefoglalas">Ătvonal lefoglalĂĄsa</glossseealso>
 					</glossdef>
 				</glossentry>
 				
 				<glossentry xml:id="lefoglalas">
-					<glossterm>Útvonal lefoglalása</glossterm>
+					<glossterm>Ătvonal lefoglalĂĄsa</glossterm>
 					<glossdef>
-						<para>A játékos az útvonalra helyez annak hosszával megegyező számú,
-						színével megegyező színű vagonkártyát. Ennek eredményeként megkapja
-						a hossz alapján számított pontértéket.</para>
-						<glossseealso otherterm="jatekos">Játékos</glossseealso>
-						<glossseealso otherterm="pontertek">Pontérték</glossseealso>
-						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
-						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+						<para>A jĂĄtĂŠkos az Ăştvonalra helyez annak hosszĂĄval megegyezĂľ szĂĄmĂş,
+						szĂ­nĂŠvel megegyezĂľ szĂ­nĂť vagonkĂĄrtyĂĄt. Ennek eredmĂŠnyekĂŠnt megkapja
+						a hossz alapjĂĄn szĂĄmĂ­tott pontĂŠrtĂŠket.</para>
+						<glossseealso otherterm="jatekos">JĂĄtĂŠkos</glossseealso>
+						<glossseealso otherterm="pontertek">PontĂŠrtĂŠk</glossseealso>
+						<glossseealso otherterm="utvonal">Ătvonal</glossseealso>
+						<glossseealso otherterm="vagonkartya">VagonkĂĄrtya</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
@@ -251,35 +251,35 @@
 			
 			<glossdiv><title>V</title>
 				<glossentry xml:id="vagonkartya">
-					<glossterm>Vagonkártya</glossterm>
+					<glossterm>VagonkĂĄrtya</glossterm>
 					<glossdef>
-						<para>Útvonalak lefoglalására használható kártya.</para>
-						<glossseealso otherterm="lefoglalas">Útvonal lefoglalása</glossseealso>
-						<glossseealso otherterm="vagonkartyaPakli">Vagonkártya-pakli</glossseealso>
+						<para>Ătvonalak lefoglalĂĄsĂĄra hasznĂĄlhatĂł kĂĄrtya.</para>
+						<glossseealso otherterm="lefoglalas">Ătvonal lefoglalĂĄsa</glossseealso>
+						<glossseealso otherterm="vagonkartyaPakli">VagonkĂĄrtya-pakli</glossseealso>
 					</glossdef>
 				</glossentry>
 				
 				<glossentry xml:id="vagonkartyaPakli">
-					<glossterm>Vagonkártya-pakli</glossterm>
+					<glossterm>VagonkĂĄrtya-pakli</glossterm>
 					<glossdef>
-						<para>Az aktuálisan játékban nem lévő vagonkártyák lefelé fordított paklija, melyekből
-						a játékosok szükség szerint húzhatnak új lapokat.</para>
-						<glossseealso otherterm="vagonkartya">Vagonkártya</glossseealso>
+						<para>Az aktuĂĄlisan jĂĄtĂŠkban nem lĂŠvĂľ vagonkĂĄrtyĂĄk lefelĂŠ fordĂ­tott paklija, melyekbĂľl
+						a jĂĄtĂŠkosok szĂźksĂŠg szerint hĂşzhatnak Ăşj lapokat.</para>
+						<glossseealso otherterm="vagonkartya">VagonkĂĄrtya</glossseealso>
 					</glossdef>
 				</glossentry>
 				<glossentry xml:id="varos">
-					<glossterm>Város</glossterm>
+					<glossterm>VĂĄros</glossterm>
 					<glossdef>
-						<para>A térképen található egységek, melyeket útvonalak kötnek össze.</para>
-						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+						<para>A tĂŠrkĂŠpen talĂĄlhatĂł egysĂŠgek, melyeket Ăştvonalak kĂśtnek Ăśssze.</para>
+						<glossseealso otherterm="utvonal">Ătvonal</glossseealso>
 					</glossdef>
 				</glossentry>
 				
 				<glossentry xml:id="vasutiKocsi">
-					<glossterm>Vasúti kocsi</glossterm>
+					<glossterm>VasĂşti kocsi</glossterm>
 					<glossdef>
-						<para>A játékos által lefoglalt útvonalakra helyezve jelzi,hogy melyik útvonalat melyik játékos foglalta el.</para>
-						<glossseealso otherterm="utvonal">Útvonal</glossseealso>
+						<para>A jĂĄtĂŠkos ĂĄltal lefoglalt Ăştvonalakra helyezve jelzi,hogy melyik Ăştvonalat melyik jĂĄtĂŠkos foglalta el.</para>
+						<glossseealso otherterm="utvonal">Ătvonal</glossseealso>
 					</glossdef>
 				</glossentry>
 			</glossdiv>
@@ -289,161 +289,161 @@
 		
 	</sect1>
 	<sect1>
-		<title>2. Általános leírás</title>
+		<title>ĂltalĂĄnos leĂ­rĂĄs</title>
 		<sect2>
-			<title>2.1 A rendszer környezete</title>
+			<title>A rendszer kĂśrnyezete</title>
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>2.2 Funkcionális követelmények</title>
+			<title>FunkcionĂĄlis kĂśvetelmĂŠnyek</title>
 			<sect3>
-			<title>2.2.x Forduló elvégzése</title>
-			<para>A játékos elvégzi akcióját az aktuális fordulóban. Minden forduló során
-			a három lehetséges akció közül pontosan egyet és csak egyet végezhet el.</para>
+			<title>FordulĂł elvĂŠgzĂŠse</title>
+			<para>A jĂĄtĂŠkos elvĂŠgzi akciĂłjĂĄt az aktuĂĄlis fordulĂłban. Minden fordulĂł sorĂĄn
+			a hĂĄrom lehetsĂŠges akciĂł kĂśzĂźl pontosan egyet ĂŠs csak egyet vĂŠgezhet el.</para>
 			<mediaobject>
 				<imageobject>
 					<imagedata fileref="UML_jpg/fordulo_useCase.jpg" format="JPG" scale="70"/>
 				</imageobject>
 			</mediaobject>
 				<sect4>
-				<title>Forduló elvégézse használati esetek</title>
+				<title>FordulĂł elvĂŠgĂŠzse hasznĂĄlati esetek</title>
 					<sect5>
 					
-					<title>Vagonkártya húzása</title>
+					<title>VagonkĂĄrtya hĂşzĂĄsa</title>
 					<mediaobject>
 					<imageobject>
 						<imagedata fileref="UML_jpg/fordulo_vagonhuzas.jpg" format="JPG" scale="70"/>
 					</imageobject>
 					</mediaobject>
 						<sect5>
-						<title>Rövid leírás</title>
-						<para>A játékos a fordulóban végrehajtott tevékenységeként 2 vagonkártyát húz.
-						A húzás történhet a pakli tetejéről, vagy választhat a felfordított lapok közül.</para>
+						<title>RĂśvid leĂ­rĂĄs</title>
+						<para>A jĂĄtĂŠkos a fordulĂłban vĂŠgrehajtott tevĂŠkenysĂŠgekĂŠnt 2 vagonkĂĄrtyĂĄt hĂşz.
+						A hĂşzĂĄs tĂśrtĂŠnhet a pakli tetejĂŠrĂľl, vagy vĂĄlaszthat a felfordĂ­tott lapok kĂśzĂźl.</para>
 						</sect5>
 						<sect5>
-						<title>Lépésenkénti leírás</title>
-						<para>A használati eset feltétele, hogy a játékos következzen a játékban, és a vagonkártya-pakliban
-						legyenek még lapok.</para>
+						<title>LĂŠpĂŠsenkĂŠnti leĂ­rĂĄs</title>
+						<para>A hasznĂĄlati eset feltĂŠtele, hogy a jĂĄtĂŠkos kĂśvetkezzen a jĂĄtĂŠkban, ĂŠs a vagonkĂĄrtya-pakliban
+						legyenek mĂŠg lapok.</para>
 						<orderedlist>
 							<listitem>
-								<para>A játékos húz egy vagonkártyát a pakliból, vagy vehet fel
-								lapot a képpel felfelé lévő kártyák közül.</para>
+								<para>A jĂĄtĂŠkos hĂşz egy vagonkĂĄrtyĂĄt a paklibĂłl, vagy vehet fel
+								lapot a kĂŠppel felfelĂŠ lĂŠvĂľ kĂĄrtyĂĄk kĂśzĂźl.</para>
 						
 							</listitem>
 							<listitem>
-								<para>Ha a képpel felfelé lévő kártyák közül húzott, akkor ezek helyére
-								a vagonkártya pakliból új lapot kell húznia.</para>
+								<para>Ha a kĂŠppel felfelĂŠ lĂŠvĂľ kĂĄrtyĂĄk kĂśzĂźl hĂşzott, akkor ezek helyĂŠre
+								a vagonkĂĄrtya paklibĂłl Ăşj lapot kell hĂşznia.</para>
 							</listitem>
 							<listitem>
-								<para>Ha a játékos mozdony lapot vett fel a felfelé néző lapok közül,
-								akkor több kártyát nem húzhat.</para>
+								<para>Ha a jĂĄtĂŠkos mozdony lapot vett fel a felfelĂŠ nĂŠzĂľ lapok kĂśzĂźl,
+								akkor tĂśbb kĂĄrtyĂĄt nem hĂşzhat.</para>
 							</listitem>
 							<listitem>
-								<para>Ha a játékos a felvett lap helyére mozdony lapot húzott, azt nem veheti fel második lapnak az aktuális körben.</para>
+								<para>Ha a jĂĄtĂŠkos a felvett lap helyĂŠre mozdony lapot hĂşzott, azt nem veheti fel mĂĄsodik lapnak az aktuĂĄlis kĂśrben.</para>
 							</listitem>
 							<listitem>
-								<para>Ha a húzás eredményeként az 5 felfelé néző lap közül 3 mozdony, akkor
-								mind az 5 lapot el kell dobni, helyettük újakat kell húzni.</para>
+								<para>Ha a hĂşzĂĄs eredmĂŠnyekĂŠnt az 5 felfelĂŠ nĂŠzĂľ lap kĂśzĂźl 3 mozdony, akkor
+								mind az 5 lapot el kell dobni, helyettĂźk Ăşjakat kell hĂşzni.</para>
 							</listitem>
 							<listitem>
-								<para>Ha nem mozdony lapot vett fel, az első két pont megismétlődik.</para>
+								<para>Ha nem mozdony lapot vett fel, az elsĂľ kĂŠt pont megismĂŠtlĂľdik.</para>
 							</listitem>
 							<listitem>
-								<para>Ha a pakli elfogyott és vannak eldobott lapok, akkor azokat megkeverve új
-								paklit kell képezni.</para>
+								<para>Ha a pakli elfogyott ĂŠs vannak eldobott lapok, akkor azokat megkeverve Ăşj
+								paklit kell kĂŠpezni.</para>
 							</listitem>
 						</orderedlist>
 						</sect5>
 					</sect5>
 					<sect5>
-					<title>Útvonal lefoglalása</title>
+					<title>Ătvonal lefoglalĂĄsa</title>
 						<mediaobject>
 						<imageobject>
 							<imagedata fileref="UML_jpg/fordulo_utvonallefog.jpg" format="JPG" scale="70"/>
 						</imageobject>
 						</mediaobject>
 						<sect5>
-						<title>Rövid leírás</title>
-						<para>A játékos a fordulóban végrehajtott tevékenységeként elfoglal egy útvonalat a
-						kezében tartott vagonykártyák közül az útvonal hosszának megfelelő számú, azzal azonos
-						színű útvonalra helyezésével. </para>
+						<title>RĂśvid leĂ­rĂĄs</title>
+						<para>A jĂĄtĂŠkos a fordulĂłban vĂŠgrehajtott tevĂŠkenysĂŠgekĂŠnt elfoglal egy Ăştvonalat a
+						kezĂŠben tartott vagonykĂĄrtyĂĄk kĂśzĂźl az Ăştvonal hosszĂĄnak megfelelĂľ szĂĄmĂş, azzal azonos
+						szĂ­nĂť Ăştvonalra helyezĂŠsĂŠvel. </para>
 						</sect5>
 						<sect5>
-						<title>Lépésenkénti leírás</title>
-						<para>A játékos akkor foglalhat le egy útvonalat, ha ő következik a játékban, és a kezében
-						van a választott útvonallal azonos színű, annak hosszával megegyező számú lap. Szürke színű
-						útvonalak lefoglalására bármilyen színű lap használható. Mozdony lap bármilyen színű útvonal
-						lefoglalására használható.</para>
+						<title>LĂŠpĂŠsenkĂŠnti leĂ­rĂĄs</title>
+						<para>A jĂĄtĂŠkos akkor foglalhat le egy Ăştvonalat, ha Ăľ kĂśvetkezik a jĂĄtĂŠkban, ĂŠs a kezĂŠben
+						van a vĂĄlasztott Ăştvonallal azonos szĂ­nĂť, annak hosszĂĄval megegyezĂľ szĂĄmĂş lap. SzĂźrke szĂ­nĂť
+						Ăştvonalak lefoglalĂĄsĂĄra bĂĄrmilyen szĂ­nĂť lap hasznĂĄlhatĂł. Mozdony lap bĂĄrmilyen szĂ­nĂť Ăştvonal
+						lefoglalĂĄsĂĄra hasznĂĄlhatĂł.</para>
 						<orderedlist>
 							<listitem>
-								<para>A játékos választ egy útvonalat a táblán.</para>
+								<para>A jĂĄtĂŠkos vĂĄlaszt egy Ăştvonalat a tĂĄblĂĄn.</para>
 							</listitem>
 							<listitem>
-								<para>Ha az útvonalat még senki nem foglalta le, akkor lefoglalhatja.</para>
+								<para>Ha az Ăştvonalat mĂŠg senki nem foglalta le, akkor lefoglalhatja.</para>
 							</listitem>
 							<listitem>
-								<para>Ha a választott útvonal dupla, csak egyszer foglalhatja le. Dupla útvonalat akkor is
-								foglalhat, ha egyszer és csak egyszer egy másik játékos már lefoglalta.</para>
+								<para>Ha a vĂĄlasztott Ăştvonal dupla, csak egyszer foglalhatja le. Dupla Ăştvonalat akkor is
+								foglalhat, ha egyszer ĂŠs csak egyszer egy mĂĄsik jĂĄtĂŠkos mĂĄr lefoglalta.</para>
 							</listitem>
 							<listitem>
-								<para>A játékos eldob kezéből az útvonal hosszának megfelelő számú, azzal azonos színű vagonkártya-lapot.</para>
+								<para>A jĂĄtĂŠkos eldob kezĂŠbĂľl az Ăştvonal hosszĂĄnak megfelelĂľ szĂĄmĂş, azzal azonos szĂ­nĂť vagonkĂĄrtya-lapot.</para>
 							</listitem>
 							<listitem>
-								<para>Szürke útvonal esetén bármilyen színű vagonkártya-lap használható.</para>
+								<para>SzĂźrke Ăştvonal esetĂŠn bĂĄrmilyen szĂ­nĂť vagonkĂĄrtya-lap hasznĂĄlhatĂł.</para>
 							</listitem>
 							<listitem>
-								<para>Mozdony lap bármilyen szín helyett használható.</para>
+								<para>Mozdony lap bĂĄrmilyen szĂ­n helyett hasznĂĄlhatĂł.</para>
 							</listitem>
 							<listitem>
-								<para>A játékos elhelyez az útvonalra az út hosszával megegyező számú vasúti kocsit kocsijai közül.</para>
+								<para>A jĂĄtĂŠkos elhelyez az Ăştvonalra az Ăşt hosszĂĄval megegyezĂľ szĂĄmĂş vasĂşti kocsit kocsijai kĂśzĂźl.</para>
 							</listitem>
 							<listitem>
-								<para>Az útvonal pontértékének megfelelő számú egységet lép előre az eredményjelző sávon bábujával.</para>
+								<para>Az Ăştvonal pontĂŠrtĂŠkĂŠnek megfelelĂľ szĂĄmĂş egysĂŠget lĂŠp elĂľre az eredmĂŠnyjelzĂľ sĂĄvon bĂĄbujĂĄval.</para>
 							</listitem>
 						</orderedlist>
 						</sect5>
 					</sect5>
 					<sect5>
-					<title>Menetjegy húzása</title>
+					<title>Menetjegy hĂşzĂĄsa</title>
 						<mediaobject>
 						<imageobject>
 							<imagedata fileref="UML_jpg/fordulo_menetjegy.jpg" format="JPG" scale="70"/>
 						</imageobject>
 						</mediaobject>
 						<sect5>
-						<title>Rövid leírás</title>
-						<para>A játékos a fordulóban végrehajtott tevékenységeként 3 menetjegyet húz a menetjegy-pakli
-						tetejéről. </para>
+						<title>RĂśvid leĂ­rĂĄs</title>
+						<para>A jĂĄtĂŠkos a fordulĂłban vĂŠgrehajtott tevĂŠkenysĂŠgekĂŠnt 3 menetjegyet hĂşz a menetjegy-pakli
+						tetejĂŠrĂľl. </para>
 						</sect5>
 						<sect5>
-						<title>Lépésenkénti leírás</title>
-						<para>A játékos akkor húzhat menetjegyet, ha ő következik az adott körben, és a menetjegy-pakliban
-						még vannak kártyák. </para>
+						<title>LĂŠpĂŠsenkĂŠnti leĂ­rĂĄs</title>
+						<para>A jĂĄtĂŠkos akkor hĂşzhat menetjegyet, ha Ăľ kĂśvetkezik az adott kĂśrben, ĂŠs a menetjegy-pakliban
+						mĂŠg vannak kĂĄrtyĂĄk. </para>
 						<orderedlist>
 							<listitem>
 								<para>
-									A játékos 3 lapot húz a menetjegy-pakli tetejéről.
+									A jĂĄtĂŠkos 3 lapot hĂşz a menetjegy-pakli tetejĂŠrĂľl.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									Ha már nincs 3 lap a pakliban, annyit húz, amennyi van.
+									Ha mĂĄr nincs 3 lap a pakliban, annyit hĂşz, amennyi van.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									A húzott lapok közül legfeljebb kettőt eldobhat, azaz egyet
-									kötelező megtartania.
+									A hĂşzott lapok kĂśzĂźl legfeljebb kettĂľt eldobhat, azaz egyet
+									kĂśtelezĂľ megtartania.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									Megtarthatja mind a három húzott lapot.
+									Megtarthatja mind a hĂĄrom hĂşzott lapot.
 								</para>
 							</listitem>
 							<listitem>
 								<para>
-									Ha dobott el lapokat, azokat lefelé fordítva a menetjegy-pakli aljára kell helyeznie.
+									Ha dobott el lapokat, azokat lefelĂŠ fordĂ­tva a menetjegy-pakli aljĂĄra kell helyeznie.
 								</para>
 							</listitem>
 						</orderedlist>
@@ -453,34 +453,337 @@
 			</sect3>
 		</sect2>
 		<sect2>
-			<title>2.3 Felhasználói jellemzők</title>
+			<title>FelhasznĂĄlĂłi jellemzĂľk</title>
 			<para></para>
 		</sect2>
 		<sect2>
-			<title>2.4 Nem-funkcionális követelmények</title>
+			<title>Nem-funkcionĂĄlis kĂśvetelmĂŠnyek</title>
 			<para></para>
 		</sect2>
 		
 	</sect1>
 	<sect1>
-		<title>3. Részletes követelményspecifikáció</title>
-		
+		<title>RĂŠszletes kĂśvetelmĂŠnyspecifikĂĄciĂł</title>
+		<para>
 		<sect2>
-			<title>3.1 Funkcionális követelmények</title>
-			
-			<!-- 3.2.1-3.2.x funkcionális követelmények, use case-ek -->
-			<para></para>
+			<title>FunkcionĂĄlis kĂśvetelmĂŠnyek</title>
+			<para>
+			<sect3>
+			<title>A jĂĄtĂŠk elĹkĂŠszĂ­tĂŠse</title>
+			<para>
+				<table frame='all'>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<tbody>
+							<row>
+								<entry><emphasis role='bold'>Use Case</emphasis></entry>
+								<entry>A jĂĄtĂŠk elĹkĂŠszĂ­tĂŠse</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>XRef</emphasis></entry>
+								<entry></entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Trigger</emphasis></entry>
+								<entry>A jĂĄtĂŠk elindul</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>ElĹfeltĂŠtel</emphasis></entry>
+								<entry>A szerveren 2-5 jĂĄtĂŠkos tartĂłzkodik</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>LefolyĂĄs</emphasis></entry>
+								<entry>
+									<orderedlist>
+										<listitem>MegjelenĂ­tjĂźk a jĂĄtĂŠkteret.</listitem>
+										<listitem>Minden jĂĄtĂŠkos vĂĄlaszt egy szĂ­nt.</listitem>
+										<listitem>A jĂĄtĂŠkosok megkapjĂĄk a szĂ­nhez tartozĂł 45 vasĂşti kocsit, ĂŠs az eredmĂŠnyjelzĹ bĂĄbut.</listitem>
+										<listitem>A bĂĄbujĂĄt mindenki a tĂĄbla szĂŠlĂŠn kĂśrbefutĂł eredmĂŠnyjelzĹ sĂĄv startmezĹjĂŠre helyezi.</listitem>
+										<listitem>A vagonkĂĄrtyĂĄkat megkeverjĂźk ĂŠs minden jĂĄtĂŠkosnak osztunk 4-et. A megmaradĂł vagonkĂĄrtyĂĄkat a tĂĄbla mellĂŠ tesszĂźk ĂŠs 5-Ăśt kĂŠppel felfelĂŠ fordĂ­tunk.</listitem>
+										<listitem>A 'Leghosszabb ĂśsszefĂźggĹ Ăştvonal' kĂĄrtyĂĄt kĂŠppel felfelĂŠ a tĂĄbla mellĂŠ tesszĂźk.</listitem>
+										<listitem>A menetjegy kĂĄrtyĂĄkat megkeverjĂźk ĂŠs minden jĂĄtĂŠkos kap 3-at.</listitem>
+										<listitem>Minden jĂĄtĂŠkos megnĂŠzi a menetjegy kĂĄrtyĂĄit ĂŠs eldĂśnti, hogy melyiket tartja meg. LegalĂĄbb 2 kĂĄrtyĂĄt meg kell tartani. A jĂĄtĂŠkosok nem lĂĄthatjĂĄk egymĂĄs menetjegy kĂĄrtyĂĄit.</listitem>
+										<listitem>A visszaadott menetjegy kĂĄrtyĂĄkat a menetjegy kĂĄrtya-pakli aljĂĄra tesszĂźk. A paklit a tĂĄbla mellĂŠ helyezzĂźk.</listitem>
+									</orderedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>AlternatĂ­v lefolyĂĄs</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Exception Path</emphasis></entry>
+								<entry>A jĂĄtĂŠkosok bĂĄrmikor kilĂŠphetnek a jĂĄtĂŠkbĂłl.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>UtĂłfeltĂŠtel</emphasis></entry>
+								<entry>A jĂĄtĂŠkot az a jĂĄtĂŠkos kezdi, aki a legtĂśbbet utazott.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>EgyĂŠb</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+			</sect3>
+			</para>
+			<para>
+			<sect3>
+			<title>VagonkĂĄrtya hĂşzĂĄsa</title>
+			<para>
+				<table frame='all'>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<tbody>
+							<row>
+								<entry><emphasis role='bold'>Use Case</emphasis></entry>
+								<entry>VagonkĂĄrtya hĂşzĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>XRef</emphasis></entry>
+								<entry>2.2.1.1.1. VagonkĂĄrtya hĂşzĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Trigger</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos vagonkĂĄrtyĂĄt hĂşz a kĂśrben</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>ElĹfeltĂŠtel</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos kĂśvetkezik lĂŠpni ĂŠs tud vagonkĂĄrtyĂĄt hĂşzni</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>LefolyĂĄs</emphasis></entry>
+								<entry>
+									<orderedlist>
+										<listitem>A jĂĄtĂŠkosnak kĂŠt kĂĄrtyĂĄt kell hĂşznia.</listitem>
+										<listitem>A jĂĄtĂŠkos kĂŠppel lefelĂŠ lĂŠvĹ kĂĄrtyĂĄt vesz fel.</listitem>
+										<listitem>A jĂĄtĂŠkos felveszi a 2. lapot is. Folytatjuk az 2. lĂŠpĂŠsnĂŠl.</listitem>
+									</orderedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>AlternatĂ­v lefolyĂĄs</emphasis></entry>
+								<entry>
+									A jĂĄtĂŠkos dĂśnthet Ăşgy, hogy kĂŠppel felfelĂŠ lĂŠvĹ kĂĄrtyĂĄt vesz fel:
+									<itemizedlist>
+										<listitem>2. A jĂĄtĂŠkos kĂŠppel felfelĂŠ lĂŠvĹ kĂĄrtyĂĄt vesz fel.</listitem>
+										<listitem>3. A jĂĄtĂŠkos a felvett lap helyĂŠre hĂşz egy mĂĄsik lapot a paklibĂłl.</listitem>
+									</itemizedlist>
+
+									Ha a jĂĄtĂŠkos elsĹ kĂĄrtyĂĄnak a felfelĂŠ nĂŠzĹ lapok kĂśzĂźl mozdony lapot vĂĄlaszt (feltĂŠve, hogy van ilyen a pakliban), akkor tĂśbb lapot mĂĄr nem hĂşzhat.
+									Ha a mĂĄsodik kĂĄrtyakĂŠnt, a paklibĂłl hĂşzott lap mozdony, a jĂĄtĂŠkos nem veheti fel.
+									Ha az 5 felfelĂŠ nĂŠzĹ lap kĂśzĂźl 3 mozdony, el kell dobni Ĺket ĂŠs 5 Ăşjat hĂşzni helyettĂźk.
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Exception Path</emphasis></entry>
+								<entry>A jĂĄtĂŠkosok bĂĄrmikor kilĂŠphetnek a jĂĄtĂŠkbĂłl.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>UtĂłfeltĂŠtel</emphasis></entry>
+								<entry>Az ĂłramutatĂł jĂĄrĂĄsĂĄnak megfelelĹen kĂśvetkezĹ jĂĄtĂŠkos kĂśvetkezik lĂŠpni.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>EgyĂŠb</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+			</sect3>
+			</para>
+			<sect3>
+			<title>Ătvonal lefoglalĂĄsa</title>
+			<para>
+				<table frame='all'>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<tbody>
+							<row>
+								<entry><emphasis role='bold'>Use Case</emphasis></entry>
+								<entry>Ătvonal lefoglalĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>XRef</emphasis></entry>
+								<entry>2.2.1.1.4 Ătvonal lefoglalĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Trigger</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos kivĂĄlasztja a lefoglalni kĂ­vĂĄnt Ăştvonalat.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>ElĹfeltĂŠtel</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos kĂśvetkezik lĂŠpni. A jĂĄtĂŠkosnak van az Ăştvonal lefoglalĂĄsĂĄhoz szĂźksĂŠges szĂĄmĂş ĂŠs szĂ­nĹą vagonkĂĄrtyĂĄja. Dupla Ăştvonal esetĂŠn: Ha 2 vagy 3 jĂĄtĂŠkos jĂĄtszik: mĂŠg nincs lefoglalva egyik Ăştvonal sem. Ha tĂśbb jĂĄtĂŠkos jĂĄtszik: vagy nincs lefoglalva egyik Ăştvonal sem, vagy az egyik Ăştvonal egy mĂĄsik jĂĄtĂŠkos ĂĄltal van lefoglalva.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>LefolyĂĄs</emphasis></entry>
+								<entry>
+									<orderedlist>
+										<listitem>A jĂĄtĂŠkos kijĂĄtszik az Ăştvonal lefoglalĂĄsĂĄhoz szĂźksĂŠges szĂĄmĂş ĂŠs szĂ­nĹą vagonkĂĄrtyĂĄt.</listitem>
+										<listitem>A jĂĄtĂŠkos a sajĂĄt szĂ­nĂŠnek megfelelĹ vasĂşti kocsit helyez az Ăştvonal minden egyes mezĹjĂŠre.</listitem>
+										<listitem>A jĂĄtĂŠkos a lefoglalt Ăştvonal ĂŠrtĂŠkĂŠnek megfelelĹ szĂĄmĂş mezĹt lĂŠp elĹre a bĂĄbujĂĄval az eredmĂŠnyjelzĹ sĂĄvon.</listitem>
+									</orderedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>AlternatĂ­v lefolyĂĄs</emphasis></entry>
+								<entry>
+									SzĂźrke szĂ­nĹą Ăştvonal esetĂŠn bĂĄrmely, azonos szĂ­nĹą vagonkĂĄrtyĂĄk hasznĂĄlhatĂłak.
+									Mozdony lap bĂĄrmilyen szĂ­nĹą vagonkĂĄrtya helyett felhasznĂĄlhatĂł.
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Exception Path</emphasis></entry>
+								<entry>A jĂĄtĂŠkosok bĂĄrmikor kilĂŠphetnek a jĂĄtĂŠkbĂłl.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>UtĂłfeltĂŠtel</emphasis></entry>
+								<entry>Az ĂłramutatĂł jĂĄrĂĄsĂĄnak megfelelĹen kĂśvetkezĹ jĂĄtĂŠkos kĂśvetkezik lĂŠpni.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>EgyĂŠb</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+			</sect3>
+
+			<sect3>
+			<title>Menetjegy hĂşzĂĄsa</title>
+			<para>
+				<table frame='all'>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<tbody>
+							<row>
+								<entry><emphasis role='bold'>Use Case</emphasis></entry>
+								<entry>Menetjegy hĂşzĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>XRef</emphasis></entry>
+								<entry>2.2.1.1.7 Menetjegy hĂşzĂĄsa</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Trigger</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos menetjegykĂĄrtyĂĄt hĂşz a kĂśrben</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>ElĹfeltĂŠtel</emphasis></entry>
+								<entry>Az adott jĂĄtĂŠkos kĂśvetkezik lĂŠpni. A menetjegy kĂĄrtya-pakli nem Ăźres.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>LefolyĂĄs</emphasis></entry>
+								<entry>
+									<orderedlist>
+										<listitem>A jĂĄtĂŠkos hĂşz 3 lapot a menetjegy kĂĄrtya-pakli tetejĂŠrĹl.</listitem>
+										<listitem>A jĂĄtĂŠkosnak a hĂşzott lapokbĂłl legalĂĄbb 1-et meg kell tartania.</listitem>
+										<listitem>A jĂĄtĂŠkos ĂĄltal visszaadott lapokat a pakli aljĂĄra tesszĂźk.</listitem>
+									</orderedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>AlternatĂ­v lefolyĂĄs</emphasis></entry>
+								<entry>
+									ElĹfordulhat, hogy 3-nĂĄl kevesebb lap van a menetjegy kĂĄrtya-pakliban.
+									<itemizedlist>
+										<listitem>1. A jĂĄtĂŠkos annyi lapot hĂşz a menetjegy kĂĄrtya-pakli tetejĂŠrĹl, amennyit tud.</listitem>
+									</itemizedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Exception Path</emphasis></entry>
+								<entry>A jĂĄtĂŠkosok bĂĄrmikor kilĂŠphetnek a jĂĄtĂŠkbĂłl.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>UtĂłfeltĂŠtel</emphasis></entry>
+								<entry>Az ĂłramutatĂł jĂĄrĂĄsĂĄnak megfelelĹen kĂśvetkezĹ jĂĄtĂŠkos kĂśvetkezik lĂŠpni.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>EgyĂŠb</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+			</sect3>
+
+			<sect3>
+			<title>A jĂĄtĂŠk vĂŠge</title>
+			<para>
+				<table frame='all'>
+					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
+						<tbody>
+							<row>
+								<entry><emphasis role='bold'>Use Case</emphasis></entry>
+								<entry>A jĂĄtĂŠk vĂŠge</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>XRef</emphasis></entry>
+								<entry></entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Trigger</emphasis></entry>
+								<entry>Van olyan jĂĄtĂŠkos, akinek 0, 1, vagy 2 vasĂşti kocsija van</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>ElĹfeltĂŠtel</emphasis></entry>
+								<entry>LegalĂĄbb 1 kĂśr lement a jĂĄtĂŠkbĂłl</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>LefolyĂĄs</emphasis></entry>
+								<entry>
+									<orderedlist>
+										<listitem>Minden jĂĄtĂŠkos mĂŠg vĂŠgrehajt egy kĂśrt, majd kiszĂĄmĂ­tjuk a vĂŠgeredmĂŠnyt.</listitem>
+										<listitem>A jĂĄtĂŠkos pontszĂĄmĂĄhoz hozzĂĄadjuk azon menetjegy kĂĄrtyĂĄk ĂŠrtĂŠkĂŠt, amelyeket a jĂĄtĂŠkos teljesĂ­tett.</listitem>
+										<listitem>A jĂĄtĂŠkos pontszĂĄmĂĄbĂłl levonjuk azon menetjegy kĂĄrtyĂĄk ĂŠrtĂŠkĂŠt, amelyeket a jĂĄtĂŠkos nem teljesĂ­tett.</listitem>
+										<listitem>Az a jĂĄtĂŠkos, amelynek sikerĂźlt a leghosszabb ĂśsszefĂźggĹ Ăştvonalat lĂŠtrehoznia, megkapja a bĂłnuszkĂĄrtyĂĄt ĂŠs a vele jĂĄrĂł 10 pontot.</listitem>
+										<listitem>A jĂĄtĂŠkot az nyeri, aki a legtĂśbb pontot szerezte.</listitem>
+									</orderedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>AlternatĂ­v lefolyĂĄs</emphasis></entry>
+								<entry>
+									ElĹfordulhat, hogy holtverseny alakul ki a leghosszabb Ăşt tekintetĂŠben.
+									<itemizedlist>
+										<listitem>4. Minden jĂĄtĂŠkos megkapja a 10 pontot, aki a holtversenyben ĂŠrintett.</listitem>
+									</itemizedlist>
+
+									ElĹfordulhat, hogy holtverseny alakul ki a vĂŠgsĹ pontszĂĄm tekintetĂŠben.
+									<itemizedlist>
+										<listitem>5. Az a jĂĄtĂŠkos nyer, aki a legtĂśbb menetjegy kĂĄrtyĂĄt teljesĂ­tette. Ha mĂŠg ez sem dĂśnt, akkor a leghosszabb Ăştvonalat lĂŠtrehozĂł jĂĄtĂŠkos nyer.</listitem>
+									</itemizedlist>
+								</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>Exception Path</emphasis></entry>
+								<entry>A jĂĄtĂŠkosok bĂĄrmikor kilĂŠphetnek a jĂĄtĂŠkbĂłl.</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>UtĂłfeltĂŠtel</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+							<row>
+								<entry><emphasis role='bold'>EgyĂŠb</emphasis></entry>
+								<entry>Nincs</entry>
+							</row>
+						</tbody>
+					</tgroup>
+				</table>
+			</para>
+			</sect3>
 		</sect2>
-		<sect2>
-			<title>3.2 Nem-funkcionális követelmények</title>
+<!--		<sect2>
+			<title>3.2 Nem-funkcionĂĄlis kĂśvetelmĂŠnyek</title>
 			<para></para>
-			
-			
-		</sect2>
+		</sect2>-->
+		</para>
 			
 	</sect1>
 	<sect1>
-		<title>Függelék</title>
+		<title>FĂźggelĂŠk</title>
 		<para></para>
 	</sect1>
 	<sect1>
