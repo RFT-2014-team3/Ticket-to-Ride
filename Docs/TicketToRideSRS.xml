@@ -75,6 +75,12 @@
 			<authorinitials>kz</authorinitials>
 			<revremark>2.1, 2.2.1, 2.2.3, 2.3, 2.4 fejezetek elkészítése.</revremark>
 		</revision>
+		<revision>
+			<revnumber>0.8</revnumber>
+			<date>2014-11-03</date>
+			<authorinitials>bs</authorinitials>
+			<revremark>Karakterkódolás javítása. 2.2.2 xref.</revremark>
+		</revision>
 	</revhistory>
 	
 	<sect1>
@@ -308,10 +314,10 @@
 				<imagedata fileref="UML_jpg/rendszer_kornyezete.png" format="PNG" scale="100"/>
 			</imageobject>
 			</mediaobject>
-			<para>Egy Játék és egy Játékos együttesen alkot egy rendszert, melyből egyidejűleg 2-5 szükséges a működéshez.
-			A rendszerek a Hálózat kezelőn keresztül csatlakoznak és kommunikálnak egymással.
+			<para>Egy Játék és egy Játékos együttesen alkot egy rendszert, játékosból egyszerre 2-5 szükséges a játékhoz.
+			A rendszerek csatlakozását és egymással való kommunikációjukat a Hálózati modul felügyeli.
 			A Játékos a Játékot a számítógép beviteli eszközeivel irányítja.</para>
-			<para>A Játék három összetevőből áll: Grafikus felhasználói felület, Üzleti logika és Hálózat kezelő.</para>
+			<para>A Játék három alkotóeleme: Grafikus felhasználói felület, Üzleti logika és Hálózati modul.</para>
 		</sect2>
 		<sect2>
 			<title>2.2 Funkcionális követelmények</title>
@@ -329,15 +335,16 @@
 				</imageobject>
 			</mediaobject>
 				<sect4>
-				<title>Forduló elvégézse használati esetek</title>
+				<title>Forduló elvégzése használati esetek</title>
 					<sect5>
 					
-					<title>Vagonkártya húzása</title>
+					<title>2.2.2.1 Vagonkártya húzása</title>
 					<mediaobject>
 					<imageobject>
 						<imagedata fileref="UML_jpg/fordulo_vagonhuzas.jpg" format="JPG" scale="70"/>
 					</imageobject>
 					</mediaobject>
+					</sect5>
 						<sect5>
 						<title>Rövid leírás</title>
 						<para>A játékos a fordulóban végrehajtott tevékenységeként 2 vagonkártyát húz.
@@ -377,14 +384,19 @@
 							</listitem>
 						</orderedlist>
 						</sect5>
-					</sect5>
+						<sect5>
+							<title>Xref</title>
+							<para>3.1.2</para>
+						</sect5>
+						
 					<sect5>
-					<title>Útvonal lefoglalása</title>
+					<title>2.2.2.2 Útvonal lefoglalása</title>
 						<mediaobject>
 						<imageobject>
 							<imagedata fileref="UML_jpg/fordulo_utvonallefog.jpg" format="JPG" scale="70"/>
 						</imageobject>
 						</mediaobject>
+						</sect5>
 						<sect5>
 						<title>Rövid leírás</title>
 						<para>A játékos a fordulóban végrehajtott tevékenységeként elfoglal egy útvonalat a
@@ -425,14 +437,18 @@
 							</listitem>
 						</orderedlist>
 						</sect5>
-					</sect5>
+						<sect5>
+							<title>Xref</title>
+							<para>3.1.3</para>
+						</sect5>
 					<sect5>
-					<title>Menetjegy húzása</title>
+					<title>2.2.2.3 Menetjegy húzása</title>
 						<mediaobject>
 						<imageobject>
 							<imagedata fileref="UML_jpg/fordulo_menetjegy.jpg" format="JPG" scale="70"/>
 						</imageobject>
 						</mediaobject>
+						</sect5>
 						<sect5>
 						<title>Rövid leírás</title>
 						<para>A játékos a fordulóban végrehajtott tevékenységeként 3 menetjegyet húz a menetjegy-pakli
@@ -471,7 +487,10 @@
 							</listitem>
 						</orderedlist>
 						</sect5>
-					</sect5>
+						<sect5>
+							<title>Xref</title>
+							<para>3.1.4</para>
+						</sect5>
 				</sect4>
 			</sect3>
 			<sect3>
@@ -496,14 +515,15 @@
 		<sect2>
 			<title>3.1 Funkcionális követelmények</title>
 			<sect3>
-			<title>3.1.1 A játék előkészítése</title>
+			<title>3.1.1 Játék kezdése</title>
 			<para>
 				<table frame='all'>
+				<title>Játék kezdése</title>
 					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
 						<tbody>
 							<row>
 								<entry><emphasis role='bold'>Use Case</emphasis></entry>
-								<entry>A játék előkészítése</entry>
+								<entry>A játék kezdése</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
@@ -514,7 +534,7 @@
 								<entry>A játék elindul</entry>
 							</row>
 							<row>
-								<entry><emphasis role='bold'>Előfeltétel</emphasis></entry>
+								<entry><emphasis role='bold'>Feltétel</emphasis></entry>
 								<entry>A szerveren 2-5 játékos tartózkodik</entry>
 							</row>
 							<row>
@@ -523,10 +543,10 @@
 									<orderedlist>
 										<listitem><para>Megjelenítjük a játékteret.</para></listitem>
 										<listitem><para>Minden játékos választ egy színt.</para></listitem>
-										<listitem><para>A játékosok megkapják a színhez tartozó 45 vasúti kocsit, és az eredményjelző bábut.</para></listitem>
-										<listitem><para>A bábuját mindenki a tábla szélén körbefutó eredményjelző sáv startmezőjére helyezi.</para></listitem>
+										<listitem><para>A játékosok megkapják a színhez tartozó 45 vasúti kocsit, és a játékos eredményét mutató bábut.</para></listitem>
+										<listitem><para>A bábuját mindenki a tábla szélén körbefutó eredménysáv startpontjára helyezi.</para></listitem>
 										<listitem><para>A vagonkártyákat megkeverjük és minden játékosnak osztunk 4-et. A megmaradó vagonkártyákat a tábla mellé tesszük és 5-öt képpel felfelé fordítunk.</para></listitem>
-										<listitem><para>A 'Leghosszabb összefüggő útvonal' kártyát képpel felfelé a tábla mellé tesszük.</para></listitem>
+										<listitem><para>A leghosszabb összetartozó útvonalat mutató kártyát képpel felfelé a tábla mellé tesszük.</para></listitem>
 										<listitem><para>A menetjegy kártyákat megkeverjük és minden játékos kap 3-at.</para></listitem>
 										<listitem><para>Minden játékos megnézi a menetjegy kártyáit és eldönti, hogy melyiket tartja meg. Legalább 2 kártyát meg kell tartani. A játékosok nem láthatják egymás menetjegy kártyáit.</para></listitem>
 										<listitem><para>A visszaadott menetjegy kártyákat a menetjegy kártya-pakli aljára tesszük. A paklit a tábla mellé helyezzük.</para></listitem>
@@ -558,6 +578,7 @@
 			<title>3.1.2 Vagonkártya húzása</title>
 			<para>
 				<table frame='all'>
+				<title>Vagonkártya húzása</title>
 					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
 						<tbody>
 							<row>
@@ -566,14 +587,14 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
-								<entry>2.2.1.1.1. Vagonkártya húzása</entry>
+								<entry>2.2.2.1 Vagonkártya húzása</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Trigger</emphasis></entry>
 								<entry>Az adott játékos vagonkártyát húz a körben</entry>
 							</row>
 							<row>
-								<entry><emphasis role='bold'>Előfeltétel</emphasis></entry>
+								<entry><emphasis role='bold'>Feltétel</emphasis></entry>
 								<entry>Az adott játékos következik lépni és tud vagonkártyát húzni</entry>
 							</row>
 							<row>
@@ -581,7 +602,7 @@
 								<entry>
 									<orderedlist>
 										<listitem><para>A játékosnak két kártyát kell húznia.</para></listitem>
-										<listitem><para>A játékos képpel lefelé lévő kártyát vesz fel.</para></listitem>
+										<listitem><para>A játékos képpel lefelé fordított kártyát vesz fel.</para></listitem>
 										<listitem><para>A játékos felveszi a 2. lapot is. Folytatjuk az 2. lépésnél.</para></listitem>
 									</orderedlist>
 								</entry>
@@ -589,15 +610,15 @@
 							<row>
 								<entry><emphasis role='bold'>Alternatív lefolyás</emphasis></entry>
 								<entry>
-									A játékos dönthet úgy, hogy képpel felfelé lévő kártyát vesz fel:
+									A játékos dönthet úgy, hogy képpel felfelé fordított kártyát vesz fel:
 									<itemizedlist>
-										<listitem><para>2. A játékos képpel felfelé lévő kártyát vesz fel.</para></listitem>
+										<listitem><para>2. A játékos képpel felfelé fordított kártyát vesz fel.</para></listitem>
 										<listitem><para>3. A játékos a felvett lap helyére húz egy másik lapot a pakliból.</para></listitem>
 									</itemizedlist>
 
-									Ha a játékos első kártyának a felfelé néző lapok közül mozdony lapot választ (feltéve, hogy van ilyen a pakliban), akkor több lapot már nem húzhat.
+									Ha a játékos elsô kártyának a felfelé fordított lapok közül mozdony lapot választ (feltéve, hogy van ilyen a pakliban), akkor több lapot már nem húzhat.
 									Ha a második kártyaként, a pakliból húzott lap mozdony, a játékos nem veheti fel.
-									Ha az 5 felfelé néző lap közül 3 mozdony, el kell dobni őket és 5 újat húzni helyettük.
+									Ha az 5 felfelé fordított lap közül 3 mozdony, el kell dobni azokat és 5 újat húzni helyettük.
 								</entry>
 							</row>
 							<row>
@@ -606,7 +627,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Utófeltétel</emphasis></entry>
-								<entry>Az óramutató járásának megfelelően következő játékos következik lépni.</entry>
+								<entry>Az óramutató járásá szerinti következô játékos lépni.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Egyéb</emphasis></entry>
@@ -621,6 +642,7 @@
 			<title>3.1.3 Útvonal lefoglalása</title>
 			<para>
 				<table frame='all'>
+				<title>Útvonal lefoglalása</title>
 					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
 						<tbody>
 							<row>
@@ -629,31 +651,31 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
-								<entry>2.2.1.1.4 Útvonal lefoglalása</entry>
+								<entry>2.2.2.2 Útvonal lefoglalása</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Trigger</emphasis></entry>
 								<entry>Az adott játékos kiválasztja a lefoglalni kívánt útvonalat.</entry>
 							</row>
 							<row>
-								<entry><emphasis role='bold'>Előfeltétel</emphasis></entry>
-								<entry>Az adott játékos következik lépni. A játékosnak van az útvonal lefoglalásához szükséges számú és színű vagonkártyája. Dupla útvonal esetén: Ha 2 vagy 3 játékos játszik: még nincs lefoglalva egyik útvonal sem. Ha több játékos játszik: vagy nincs lefoglalva egyik útvonal sem, vagy az egyik útvonal egy másik játékos által van lefoglalva.</entry>
+								<entry><emphasis role='bold'>Feltétel</emphasis></entry>
+								<entry>Az adott játékos következik lépni. A játékosnak van az útvonal lefoglalásához szükséges számú vagonkártyája az útvonal színével azonos színben. Dupla útvonal esetén: Ha 2 vagy 3 játékos játszik: még nincs lefoglalva egyik útvonal sem. Ha több játékos játszik: vagy nincs lefoglalva egyik útvonal sem, vagy az egyik útvonal egy másik játékos által van lefoglalva.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Lefolyás</emphasis></entry>
 								<entry>
 									<orderedlist>
-										<listitem><para>A játékos kijátszik az útvonal lefoglalásához szükséges számú és színű vagonkártyát.</para></listitem>
-										<listitem><para>A játékos a saját színének megfelelő vasúti kocsit helyez az útvonal minden egyes mezőjére.</para></listitem>
-										<listitem><para>A játékos a lefoglalt útvonal értékének megfelelő számú mezőt lép előre a bábujával az eredményjelző sávon.</para></listitem>
+										<listitem><para>A játékos kijátszik az útvonal lefoglalásához szükséges számú vagonkártyát annak színével azonos színben.</para></listitem>
+										<listitem><para>A játékos a saját színének megfelelô vasúti kocsit helyez az útvonal minden egyes mezôjére.</para></listitem>
+										<listitem><para>A játékos a lefoglalt útvonal értékével azonos számú mezôt lép a bábujával az eredménysávon.</para></listitem>
 									</orderedlist>
 								</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Alternatív lefolyás</emphasis></entry>
 								<entry>
-									Szürke színű útvonal esetén bármely, azonos színű vagonkártyák használhatóak.
-									Mozdony lap bármilyen színű vagonkártya helyett felhasználható.
+									Szürke útvonal esetén bármely, azonos színnel rendelkezô vagonkártyák használhatóak.
+									Mozdony lap bármilyen tetszôleges vagonkártya helyett felhasználható.
 								</entry>
 							</row>
 							<row>
@@ -662,7 +684,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Utófeltétel</emphasis></entry>
-								<entry>Az óramutató járásának megfelelően következő játékos következik lépni.</entry>
+								<entry>Az óramutató járása szerint következô játékos lépni.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Egyéb</emphasis></entry>
@@ -678,6 +700,7 @@
 			<title>3.1.4 Menetjegy húzása</title>
 			<para>
 				<table frame='all'>
+				<title>Menetjegy húzása</title>
 					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
 						<tbody>
 							<row>
@@ -686,21 +709,21 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
-								<entry>2.2.1.1.7 Menetjegy húzása</entry>
+								<entry>2.2.2.3 Menetjegy húzása</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Trigger</emphasis></entry>
 								<entry>Az adott játékos menetjegykártyát húz a körben</entry>
 							</row>
 							<row>
-								<entry><emphasis role='bold'>Előfeltétel</emphasis></entry>
+								<entry><emphasis role='bold'>Feltétel</emphasis></entry>
 								<entry>Az adott játékos következik lépni. A menetjegy kártya-pakli nem üres.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Lefolyás</emphasis></entry>
 								<entry>
 									<orderedlist>
-										<listitem><para>A játékos húz 3 lapot a menetjegy kártya-pakli tetejéről.</para></listitem>
+										<listitem><para>A játékos húz 3 lapot a menetjegy kártya-pakliból.</para></listitem>
 										<listitem><para>A játékosnak a húzott lapokból legalább 1-et meg kell tartania.</para></listitem>
 										<listitem><para>A játékos által visszaadott lapokat a pakli aljára tesszük.</para></listitem>
 									</orderedlist>
@@ -709,9 +732,9 @@
 							<row>
 								<entry><emphasis role='bold'>Alternatív lefolyás</emphasis></entry>
 								<entry>
-									Előfordulhat, hogy 3-nál kevesebb lap van a menetjegy kártya-pakliban.
+									Ha 3-nál kevesebb lap van a menetjegy kártya-pakliban.
 									<itemizedlist>
-										<listitem><para>1. A játékos annyi lapot húz a menetjegy kártya-pakli tetejéről, amennyit tud.</para></listitem>
+										<listitem><para>1. A játékos annyi lapot húz a menetjegy kártya-pakliból, amennyit tud.</para></listitem>
 									</itemizedlist>
 								</entry>
 							</row>
@@ -721,7 +744,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Utófeltétel</emphasis></entry>
-								<entry>Az óramutató járásának megfelelően következő játékos következik lépni.</entry>
+								<entry>Az óramutató járása szerint következô játékos lép.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Egyéb</emphasis></entry>
@@ -737,6 +760,7 @@
 			<title>3.1.5 A játék vége</title>
 			<para>
 				<table frame='all'>
+				<title>Játék vége</title>
 					<tgroup cols='2' align='left' colsep='1' rowsep='1'>
 						<tbody>
 							<row>
@@ -752,7 +776,7 @@
 								<entry>Van olyan játékos, akinek 0, 1, vagy 2 vasúti kocsija van</entry>
 							</row>
 							<row>
-								<entry><emphasis role='bold'>Előfeltétel</emphasis></entry>
+								<entry><emphasis role='bold'>Feltétel</emphasis></entry>
 								<entry>Legalább 1 kör lement a játékból</entry>
 							</row>
 							<row>
@@ -762,7 +786,7 @@
 										<listitem><para>Minden játékos még végrehajt egy kört, majd kiszámítjuk a végeredményt.</para></listitem>
 										<listitem><para>A játékos pontszámához hozzáadjuk azon menetjegy kártyák értékét, amelyeket a játékos teljesített.</para></listitem>
 										<listitem><para>A játékos pontszámából levonjuk azon menetjegy kártyák értékét, amelyeket a játékos nem teljesített.</para></listitem>
-										<listitem><para>Az a játékos, amelynek sikerült a leghosszabb összefüggő útvonalat létrehoznia, megkapja a bónuszkártyát és a vele járó 10 pontot.</para></listitem>
+										<listitem><para>Az a játékos, amelynek sikerült a leghosszabb összefüggô útvonalat létrehoznia, megkapja a bónuszkártyát és a vele járó 10 pontot.</para></listitem>
 										<listitem><para>A játékot az nyeri, aki a legtöbb pontot szerezte.</para></listitem>
 									</orderedlist>
 								</entry>
@@ -770,12 +794,12 @@
 							<row>
 								<entry><emphasis role='bold'>Alternatív lefolyás</emphasis></entry>
 								<entry>
-									Előfordulhat, hogy holtverseny alakul ki a leghosszabb út tekintetében.
+									Ha holtverseny alakul ki a leghosszabb út tekintetében.
 									<itemizedlist>
 										<listitem><para>4. Minden játékos megkapja a 10 pontot, aki a holtversenyben érintett.</para></listitem>
 									</itemizedlist>
 
-									Előfordulhat, hogy holtverseny alakul ki a végső pontszám tekintetében.
+									Ha holtverseny alakul ki a pontszám tekintetében.
 									<itemizedlist>
 										<listitem><para>5. Az a játékos nyer, aki a legtöbb menetjegy kártyát teljesítette. Ha még ez sem dönt, akkor a leghosszabb útvonalat létrehozó játékos nyer.</para></listitem>
 									</itemizedlist>
