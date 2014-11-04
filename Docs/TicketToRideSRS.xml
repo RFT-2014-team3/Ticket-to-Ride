@@ -73,13 +73,19 @@
 			<revnumber>0.7</revnumber>
 			<date>2014-11-03</date>
 			<authorinitials>kz</authorinitials>
-			<revremark>2.1, 2.2.1, 2.2.3, 2.3, 2.4 fejezetek elkészítése.</revremark>
+			<revremark>2.1, 2.3, 2.4 fejezetek elkészítése.</revremark>
 		</revision>
 		<revision>
 			<revnumber>0.8</revnumber>
 			<date>2014-11-03</date>
 			<authorinitials>bs</authorinitials>
 			<revremark>Karakterkódolás javítása. 2.2.2 xref.</revremark>
+		</revision>
+		<revision>
+			<revnumber>0.9</revnumber>
+			<date>2014-11-04</date>
+			<authorinitials>kz</authorinitials>
+			<revremark>Funkcionális követelmények fejezet (2.2.1, 2.2.3) befejezése.</revremark>
 		</revision>
 	</revhistory>
 	
@@ -314,16 +320,40 @@
 				<imagedata fileref="UML_jpg/rendszer_kornyezete.png" format="PNG" scale="100"/>
 			</imageobject>
 			</mediaobject>
-			<para>Egy Játék és egy Játékos együttesen alkot egy rendszert, játékosból egyszerre 2-5 szükséges a játékhoz.
+			<para>Egy játék és egy játékos együttesen alkot egy rendszert, játékosból egyszerre 2-5 szükséges a játékhoz.
 			A rendszerek csatlakozását és egymással való kommunikációjukat a Hálózati modul felügyeli.
-			A Játékos a Játékot a számítógép beviteli eszközeivel irányítja.</para>
-			<para>A Játék három alkotóeleme: Grafikus felhasználói felület, Üzleti logika és Hálózati modul.</para>
+			A játékos a játékot a számítógép beviteli eszközeivel irányítja.</para>
+			<para>A játék három alkotóeleme: Grafikus felhasználói felület, Üzleti logika és Hálózati modul.</para>
 		</sect2>
 		<sect2>
 			<title>2.2 Funkcionális követelmények</title>
 			<sect3>
-				<title>2.2.1 Játék kezdete</title>
-				<para><!-- TODO:kz --></para>
+				<title>2.2.1 Játék kezdése</title>
+				<mediaobject>
+				<imageobject>
+					<imagedata fileref="UML_jpg/jatek_kezdese.png" format="PNG" scale="100"/>
+				</imageobject>
+				</mediaobject>
+				<sect4>
+					<title>Rövid leírás</title>
+					<para>Kiosztják a lapokat, elhelyezik a táblára a maradék lapokat és az eredményjelzõ bábukat.</para>
+				</sect4>
+				<sect4>
+					<title>Lépésenkénti leírás</title>
+					<para>A használati eset feltétele, hogy 2-5 játékos már a szerveren tartózkodik.</para>
+					<orderedlist>
+						<listitem><para>Minden játékos választ egy színt.</para></listitem>
+						<listitem><para>Minden játékos megkapja a vasúti kocsijait és az eredményjelzõ bábuját.</para></listitem>
+						<listitem><para>A játékosok az eredményjelzõ bábukat elhelyezik a táblán az eredményjelzõ sáv indulópontjára.</para></listitem>
+						<listitem><para>A vagonkártyákat megkeverjük. Minden játékos kap 4-4 darabot és 5-öt képpel felfelé fordítva a pálya mellé helyezünk.</para></listitem>
+						<listitem><para>A leghosszabb összetartozó útvonalat mutató kártyát képpel felfelé a tábla mellé tesszük.</para></listitem>
+						<listitem><para>A menetjegy kártyákat megkeverjük és minden játékos kap 3-at, melybõl visszaadhatnak 1-2 darabot.</para></listitem>
+					</orderedlist>
+				</sect4>
+				<sect4>
+					<title>Xref</title>
+					<para>3.1.1</para>
+				</sect4>
 			</sect3>
 			<sect3>
 			<title>2.2.2 Forduló elvégzése</title>
@@ -495,7 +525,32 @@
 			</sect3>
 			<sect3>
 				<title>2.2.3 Játék vége</title>
-				<para><!-- TODO:kz --></para>
+				<mediaobject>
+				<imageobject>
+					<imagedata fileref="UML_jpg/jatek_vege.png" format="PNG" scale="100"/>
+				</imageobject>
+				</mediaobject>
+				<sect4>
+					<title>Rövid leírás</title>
+					<para>A játék végéhez érkeztünk, vagyis az egyik játékosnak már csak nagyon kevés vasúti kocsija maradt.
+					Még egy kört lejátszik minden játékos, majd pedig összeszámoljuk a pontokat és kiderül, hogy ki nyert.</para>
+				</sect4>
+				<sect4>
+					<title>Lépésenkénti leírás</title>
+					<para>A használati eset feltétele, hogy Egyik játékosnak teljesen vagy majdnem teljesen elfogytak a vasúti kocsijai.</para>
+					<orderedlist>
+						<listitem><para>Minden játékos végrehajt egy utolsó fordulót.</para></listitem>
+						<listitem><para>A játékos – lefoglalt útvonalakért járó – pontjaihoz hozzáadjuk a játékosnál lévõ teljesített menetjegykártyákért járó pontokat.</para></listitem>
+						<listitem><para>A játékos eddigi pontjaiból kivonjuk a játékosnál lévõ, de teljesítetlen menetjegykártyák pontértékét.</para></listitem>
+						<listitem><para>A leghosszabb összefüggõ útvonallal rendelkezõ játékos megkapja a bónuszkártyát és az érte járó pontot.</para></listitem>
+						<listitem><para>A játékot megnyeri a legtöbb ponttal rendelkezõ játékos.</para></listitem>
+						<listitem><para>Ha holtverseny alakul ki, akkor azt feloldjuk.</para></listitem>
+					</orderedlist>
+				</sect4>
+				<sect4>
+					<title>Xref</title>
+					<para>3.1.5</para>
+				</sect4>
 			</sect3>
 		</sect2>
 		<sect2>
@@ -527,7 +582,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
-								<entry></entry>
+								<entry>2.2.1</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Trigger</emphasis></entry>
@@ -627,7 +682,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Utófeltétel</emphasis></entry>
-								<entry>Az óramutató járásá szerinti következô játékos lépni.</entry>
+								<entry>Az óramutató járása szerinti következô játékos lép.</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Egyéb</emphasis></entry>
@@ -769,7 +824,7 @@
 							</row>
 							<row>
 								<entry><emphasis role='bold'>XRef</emphasis></entry>
-								<entry></entry>
+								<entry>2.2.3</entry>
 							</row>
 							<row>
 								<entry><emphasis role='bold'>Trigger</emphasis></entry>
