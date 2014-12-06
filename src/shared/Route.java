@@ -118,21 +118,21 @@ public enum Route {
 		railColors = Collections.unmodifiableList(tempColorList);
 	}
 	
-	int getLength(){
+	public int getLength(){
 		return length;
 	}
 	
 	/**
 	 * @return Destination cities as an unmodifiable list.
 	 */
-	List<City> getDestinations(){
+	public List<City> getDestinations(){
 		return destinations;
 	}
 	
 	/**
 	 * @return Rails' colors as an unmodifiable list.
 	 */
-	List<TrainColor> getRailColors(){
+	public List<TrainColor> getRailColors(){
 		return railColors;
 	}
 }

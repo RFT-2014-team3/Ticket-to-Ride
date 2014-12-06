@@ -55,14 +55,14 @@ public enum TicketCard {
 	/**
 	 * @return Score value.
 	 */
-	int getValue(){
+	public int getValue(){
 		return value;
 	}
 	
 	/**
 	 * @return Destination cities as an unmodifiable list.
 	 */
-	List<City> getDestinations(){
+	public List<City> getDestinations(){
 		return destinations;
 	}
 }
