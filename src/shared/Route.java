@@ -19,8 +19,8 @@ public enum Route {
 	private int length;
 	/** Destination cities as an unmodifiable list. */
 	private List<City> destinations;
-	/** Trails' colors as an unmodifiable list. */
-	private List<TrainColor> trailColors;
+	/** Rails' colors as an unmodifiable list. */
+	private List<TrainColor> railColors;
 	
 	Route(City destination1, City destination2, int length, TrainColor railColor1){
 		City[] tempColorArray = new City[]{destination1, destination2};
@@ -31,7 +31,7 @@ public enum Route {
 		
 		List<TrainColor> tempColorList = new ArrayList<>();
 		tempColorList.add(railColor1);
-		trailColors = Collections.unmodifiableList(tempColorList);
+		railColors = Collections.unmodifiableList(tempColorList);
 	}
 	
 	Route(City destination1, City destination2, int length, TrainColor railColor1, TrainColor railColor2){
@@ -43,7 +43,7 @@ public enum Route {
 		
 		TrainColor[] tempColorArray = new TrainColor[]{railColor1, railColor2};
 		List<TrainColor> tempColorList = new ArrayList<>(Arrays.asList(tempColorArray));
-		trailColors = Collections.unmodifiableList(tempColorList);
+		railColors = Collections.unmodifiableList(tempColorList);
 	}
 	
 	int getLength(){
@@ -58,9 +58,9 @@ public enum Route {
 	}
 	
 	/**
-	 * @return trails' colors as an unmodifiable list.
+	 * @return Rails' colors as an unmodifiable list.
 	 */
-	List<City> getTrailColors(){
-		return destinations;
+	List<TrainColor> getRailColors(){
+		return railColors;
 	}
 }
