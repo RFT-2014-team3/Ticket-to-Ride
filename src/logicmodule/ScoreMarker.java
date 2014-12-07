@@ -1,10 +1,14 @@
 package logicmodule;
 
+import shared.PlayerColor;
+
 /**
  * @author Kerekes Zoltán
  */
 interface ScoreMarker {
 	Player getOwner();
-	void stepOne();
+	void stepForward();
+	void stepBackward();
 	int getMarkedScore();
+	PlayerColor getColor();
 }

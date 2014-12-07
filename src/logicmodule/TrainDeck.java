@@ -10,6 +10,7 @@ interface TrainDeck {
 	boolean upfaceCardIsLocomotive(int index);
 	boolean upfaceCardIsExists(int index);
 	void discardUpfaceCards();
+	void shuffleDownfaceCards();
 	void shuffleDiscardedCards();
 	void useDiscardedCards();
 	void discardCardIntoDeck(TrainCard card);

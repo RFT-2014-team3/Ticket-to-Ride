@@ -9,4 +9,5 @@ interface TicketDeck {
 	void discardCardIntoDeck(TicketCard card);
 	int getCardsCount();
 	TicketCard drawCard();
+	void shuffleCards();
 }
