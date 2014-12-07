@@ -7,6 +7,8 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Image;
 import java.awt.Insets;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,7 +18,7 @@ import java.util.Properties;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -101,7 +103,6 @@ public class GamePanel extends JPanel {
 		InputStream is = getClass().getClassLoader().getResourceAsStream("route_positions.properties");
 		try {
 			p.load(is);
-			
 			String value = p.getProperty(key);
 			
 			String[] insets = value.split(",");
