@@ -13,12 +13,10 @@ class PlayerImpl implements Player {
 	private List<TrainCard> trainCards;
 	private List<TicketCard> ticketCards;
 	private int remainingTrains = 45;
-	private ScoreMarker scoreMarker;
 	private int score = 0;
 	private PlayerColor color;
 	
-	public PlayerImpl(ScoreMarker scoreMarker) {
-		this.scoreMarker = scoreMarker;
+	public PlayerImpl() {
 		trainCards = new ArrayList<>();
 		ticketCards = new ArrayList<>();
 	}
@@ -61,13 +59,6 @@ class PlayerImpl implements Player {
 	@Override
 	public void addScore(int diff) {
 		score += diff;
-		if(diff > 0){
-			while(scoreMarker.getMarkedScore() < score)
-				scoreMarker.stepForward();
-		} else if(diff < 0) {
-			while(scoreMarker.getMarkedScore() > score)
-				scoreMarker.stepBackward();
-		}
 	}
 
 }

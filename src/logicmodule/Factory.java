@@ -7,17 +7,11 @@ import shared.TrainColor;
  * @author Kerekes Zoltán
  */
 class Factory {
-	static Controller newController(){
-		return new ControllerImpl();
-	}
-	static Player newPlayer(ScoreMarker scoreMarker){
-		return new PlayerImpl(scoreMarker);
+	static Player newPlayer(){
+		return new PlayerImpl();
 	}
 	static Route newRoute(shared.Route route){
 		return new RouteImpl(route);
-	}
-	static ScoreMarker newScoreMarker(Player owner){
-		return new ScoreMarkerImpl(owner);
 	}
 	static TicketDeck newTicketDeck(){
 		return new TicketDeckImpl();

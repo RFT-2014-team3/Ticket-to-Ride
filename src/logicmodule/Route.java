@@ -10,4 +10,5 @@ interface Route {
 	int getLength();
 	List<City> getDestinations();
 	List<Rail> getRails();
+	int getScoreValue();
 }

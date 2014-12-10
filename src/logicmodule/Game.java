@@ -5,8 +5,7 @@ package logicmodule;
  */
 public class Game {
 	public static void main(String[] args) {
-		Controller controller = Factory.newController();
+		GUIHandler controller = Controller.getInstance();
 		//controller.
-		// TODO: [logic] Controller implementation
 	}
 }
