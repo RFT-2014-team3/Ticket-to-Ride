@@ -58,7 +58,7 @@ class PathfinderImpl implements Pathfinder {
 
 	@Override
 	public List<Player> getLongestPathOwners() {
-		// TODO: [logic] getLongestPathOwners()
+		// TODO [logic] getLongestPathOwners()
 		return new ArrayList<>();
 	}
 

@@ -15,19 +15,26 @@ public class Opcode {
 		SELECT_TRAIN_CARD,
 		SELECT_TICKET_DECK,
 		SELECT_CLAIM_ROUTE,
+		UPDATE_YOUR_TURN_STARTED,
+		UPDATE_YOUR_TURN_ENDED,
+		UPDATE_PLAYER_INDEX,
+		UPDATE_ROUTE_CLAIMED,
+		UPDATE_TRAIN_DECK,
+		UPDATE_UPFACE_TRAIN_CARDS,
+		UPDATE_TICKET_DECK,
 	}
 	
 	public static final int SERVER_INDEX = 1;
 	private Sender sender;
-	private int playerIndex;
+	private int senderIndex;
 	private Action action;
 	private int i1, i2, i3, i4;
-	private String s1, s2, s3, s4;
+	private String s1, s2, s3, s4, s5;
 
-	public Opcode(Sender sender, int playerIndex, Action action, 
-			int i1, int i2, int i3, int i4, String s1, String s2, String s3, String s4) {
+	public Opcode(Sender sender, int senderIndex, Action action, 
+			int i1, int i2, int i3, int i4, String s1, String s2, String s3, String s4, String s5) {
 		this.sender = sender;
-		this.playerIndex = playerIndex;
+		this.senderIndex = senderIndex;
 		this.action = action;
 		this.i1 = i1;
 		this.i2 = i2;
@@ -37,16 +44,22 @@ public class Opcode {
 		this.s2 = s2;
 		this.s3 = s3;
 		this.s4 = s4;
+		this.s5 = s5;
 	}
-	public Opcode(Sender sender, int playerIndex, Action action) {
-		this(sender, playerIndex, action, 0, 0, 0, 0, "", "", "", "");
+	public Opcode(Sender sender, int senderIndex, Action action) {
+		this(sender, senderIndex, action, 0, 0, 0, 0, "", "", "", "", "");
 	}
-	public Opcode(Sender sender, int playerIndex, Action action, int i1) {
-		this(sender, playerIndex, action, i1, 0, 0, 0, "", "", "", "");
+	public Opcode(Sender sender, int senderIndex, Action action, int i1) {
+		this(sender, senderIndex, action, i1, 0, 0, 0, "", "", "", "", "");
 	}
-	public Opcode(Sender sender, int playerIndex, Action action, String s1) {
-		this(sender, playerIndex, action, 0, 0, 0, 0, s1, "", "", "");
+	public Opcode(Sender sender, int senderIndex, Action action, String s1) {
+		this(sender, senderIndex, action, 0, 0, 0, 0, s1, "", "", "", "");
 	}
+	public Opcode(Sender sender, int senderIndex, Action action, String s1, String s2, String s3) {
+		this(sender, senderIndex, action, 0, 0, 0, 0, s1, s2, s3, "", "");
+	}
+	
+	
 	
 	
 	
@@ -54,8 +67,8 @@ public class Opcode {
 		return sender;
 	}
 
-	public int getPlayerIndex() {
-		return playerIndex;
+	public int getSenderIndex() {
+		return senderIndex;
 	}
 
 	public Action getAction() {
@@ -92,6 +105,10 @@ public class Opcode {
 
 	public String getS4() {
 		return s4;
+	}
+
+	public String getS5() {
+		return s5;
 	}
 
 }

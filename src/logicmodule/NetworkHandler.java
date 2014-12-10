@@ -1,6 +1,7 @@
 package logicmodule;
 
 /**
+ * Messages from network module to logic module.
  * @author Kerekes Zoltán
  */
 public interface NetworkHandler {

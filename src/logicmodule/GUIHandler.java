@@ -1,6 +1,7 @@
 package logicmodule;
 
 /**
+ * Messages from GUI to logic module.
  * @author Kerekes Zoltán
  */
 public interface GUIHandler {
