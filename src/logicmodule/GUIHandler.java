@@ -1,5 +1,7 @@
 package logicmodule;
 
+import java.util.List;
+
 /**
  * Messages from GUI to logic module.
  * @author Kerekes Zoltán
@@ -18,9 +20,14 @@ public interface GUIHandler {
 	void drawTrainCard(int index);
 	
 	/**
-	 * Draw cards from the ticket card deck.
+	 * Draw 1-3 cards from the ticket card deck.
 	 */
-	void drawTicketCard();
+	void drawTicketCards();
+	
+	/**
+	 * Throw 0-2 ticket cards from the last drawn ones.
+	 */
+	void throwTicketCards(List<shared.TicketCard> cards);
 	
 	/**
 	 * Claim a route.

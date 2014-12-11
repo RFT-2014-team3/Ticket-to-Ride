@@ -5,6 +5,7 @@ package logicmodule;
  */
 interface TrainDeck {
 	int getDownfaceCardsCount();
+	shared.TrainColor getUpfaceCardColor(int index);
 	TrainCard drawDownfaceCard();
 	TrainCard drawUpfaceCard(int index);
 	boolean upfaceCardIsLocomotive(int index);
@@ -13,5 +14,7 @@ interface TrainDeck {
 	void shuffleDownfaceCards();
 	void shuffleDiscardedCards();
 	void useDiscardedCards();
+	void useDiscardedCardsIfDownfacesEmpty();
 	void discardCardIntoDeck(TrainCard card);
+	boolean hasUpfaceNonLocomotiveCard();
 }

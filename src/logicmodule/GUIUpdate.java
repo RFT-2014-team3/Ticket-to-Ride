@@ -33,7 +33,8 @@ public interface GUIUpdate {
 	void updateTrainDeck(int numberOfCards);
 	
 	/**
-	 * Send upface cards's color.
+	 * Send upface cards's color. 
+	 * Length of the list was always 5, so some elements maybe null.
 	 * @param cards upface cards's color
 	 */
 	void updateUpfaceTrainCards(List<shared.TrainColor> cards);
@@ -43,5 +44,36 @@ public interface GUIUpdate {
 	 * @param numberOfCards Remaining cards in the ticket deck.
 	 */
 	void updateTicketDeck(int numberOfCards);
+	
+	/**
+	 * The player gained a train card.
+	 * @param card The card's color.
+	 */
+	void gainTrainCard(shared.TrainColor card);
+	
+	/**
+	 * The player gained a ticket card.
+	 * @param card The card.
+	 */
+	void gainTicketCards(List<shared.TicketCard> cards);
+	
+	/**
+	 * The player used up n train card.
+	 * @param card Card's color.
+	 * @param n Number of cards used up.
+	 */
+	void looseTrainCard(shared.TrainColor card, int n);
+	
+	/**
+	 * The player thrown a ticket card.
+	 * @param card The card.
+	 */
+	void looseTicketCard(shared.TicketCard card);
+	
+	/**
+	 * Send the player's score.
+	 * @param score New score.
+	 */
+	void updateScore(int score);
 	
 }

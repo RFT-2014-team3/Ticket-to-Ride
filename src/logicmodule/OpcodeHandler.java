@@ -33,12 +33,21 @@ public class OpcodeHandler implements NetworkHandler {
 						break;
 						
 					case SELECT_TICKET_DECK:
-						con._drawTicketCard(opc.getSenderIndex());
+						con._drawTicketCards(opc.getSenderIndex());
 						break;
 						
 					case SELECT_CLAIM_ROUTE:
 						con._claimRoute(opc.getSenderIndex(), shared.Route.valueOf(opc.getS1()));
 						break;
+					case SELECT_THROW_TICKET_CARDS:
+						List<shared.TicketCard> cards = new ArrayList<>();
+						if(!opc.getS1().equals("")) 
+							cards.add(shared.TicketCard.valueOf(opc.getS1()));
+						if(!opc.getS2().equals("")) 
+							cards.add(shared.TicketCard.valueOf(opc.getS2()));
+						if(!opc.getS3().equals("")) 
+							cards.add(shared.TicketCard.valueOf(opc.getS3()));
+						con._throwTicketCards(opc.getSenderIndex(), cards);
 				}
 				break;
 				
@@ -78,6 +87,33 @@ public class OpcodeHandler implements NetworkHandler {
 						
 					case UPDATE_TICKET_DECK:
 						con._guiUpdateTicketDeck(opc.getI1());
+						break;
+						
+					case UPDATE_GAIN_TRAIN_CARD:
+						con._guiUpdateGainTrainCard(shared.TrainColor.valueOf(opc.getS1()));
+						break;
+						
+					case UPDATE_GAIN_TICKET_CARDS:
+						List<shared.TicketCard> cards2 = new ArrayList<>();
+						if(!opc.getS1().equals("")) 
+							cards2.add(shared.TicketCard.valueOf(opc.getS1()));
+						if(!opc.getS2().equals("")) 
+							cards2.add(shared.TicketCard.valueOf(opc.getS2()));
+						if(!opc.getS3().equals("")) 
+							cards2.add(shared.TicketCard.valueOf(opc.getS3()));
+						con._guiUpdateGainTicketCards(cards2);
+						break;
+						
+					case UPDATE_LOOSE_TRAIN_CARD:
+						con._guiUpdateLooseTrainCard(shared.TrainColor.valueOf(opc.getS1()), opc.getI1());
+						break;
+						
+					case UPDATE_LOOSE_TICKET_CARD:
+						con._guiUpdateLooseTicketCard(shared.TicketCard.valueOf(opc.getS1()));
+						break;
+						
+					case UPDATE_SCORE:
+						con._guiUpdateScore(opc.getI1());
 						break;
 				}
 				break;

@@ -23,6 +23,7 @@ class TrainDeckImpl implements TrainDeck {
 		}
 		for(int i = 0; i < 14; i++)
 			downfaceCards.add(Factory.newLocomotiveCard());
+		upfaceCards = new TrainCard[5];
 	}
 
 	@Override
@@ -83,4 +84,26 @@ class TrainDeckImpl implements TrainDeck {
 		discardedCards.add(card);
 	}
 
+	@Override
+	public TrainColor getUpfaceCardColor(int index) {
+		return upfaceCards[index].getColor();
+	}
+
+	@Override
+	public boolean hasUpfaceNonLocomotiveCard() {
+		for (TrainCard c : upfaceCards) {
+			if(c != null && !(c instanceof LocomotiveCard))
+				return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void useDiscardedCardsIfDownfacesEmpty() {
+		if(getDownfaceCardsCount() == 0) {
+			shuffleDiscardedCards();
+			useDiscardedCards();
+		}
+	}
+	
 }

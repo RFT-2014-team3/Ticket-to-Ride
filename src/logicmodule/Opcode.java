@@ -15,6 +15,7 @@ public class Opcode {
 		SELECT_TRAIN_CARD,
 		SELECT_TICKET_DECK,
 		SELECT_CLAIM_ROUTE,
+		SELECT_THROW_TICKET_CARDS,
 		UPDATE_YOUR_TURN_STARTED,
 		UPDATE_YOUR_TURN_ENDED,
 		UPDATE_PLAYER_INDEX,
@@ -22,6 +23,11 @@ public class Opcode {
 		UPDATE_TRAIN_DECK,
 		UPDATE_UPFACE_TRAIN_CARDS,
 		UPDATE_TICKET_DECK,
+		UPDATE_GAIN_TRAIN_CARD,
+		UPDATE_GAIN_TICKET_CARDS,
+		UPDATE_LOOSE_TRAIN_CARD,
+		UPDATE_LOOSE_TICKET_CARD,
+		UPDATE_SCORE,
 	}
 	
 	public static final int SERVER_INDEX = 1;
@@ -54,6 +60,9 @@ public class Opcode {
 	}
 	public Opcode(Sender sender, int senderIndex, Action action, String s1) {
 		this(sender, senderIndex, action, 0, 0, 0, 0, s1, "", "", "", "");
+	}
+	public Opcode(Sender sender, int senderIndex, Action action, int i1, String s1) {
+		this(sender, senderIndex, action, i1, 0, 0, 0, s1, "", "", "", "");
 	}
 	public Opcode(Sender sender, int senderIndex, Action action, String s1, String s2, String s3) {
 		this(sender, senderIndex, action, 0, 0, 0, 0, s1, s2, s3, "", "");
