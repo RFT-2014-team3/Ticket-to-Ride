@@ -1,5 +1,9 @@
 package netsubmodul;
 
+import logicmodule.Opcode;
+/**
+ * @author bs
+ */
 public interface IClient {
 
 
@@ -17,10 +21,14 @@ public interface IClient {
 	 * @param obj the gameobject we want to send
 	 * @return boolean value, true if sending was successful
 	 */
-	boolean SendData(MockGameObject obj);
-	
+	boolean SendToAll(Opcode obj);
+
 	/**
-	 * Sends a message to the server, server should notify the next player in this turn.
+	 * Sending info to one of the clients. For ex. signaling to the next player.
+	 *
+	 * @param obj the message to send
+	 * @param clientId the unique id of the client we want to send
+	 * @return boolean true if sending was successful
 	 */
-	void SignalNextPlayer();
+	boolean SendToOne(Opcode obj, int clientId);
 }

@@ -1,9 +1,11 @@
 package logicmodule;
 
+import java.io.Serializable;
+
 /**
  * @author Kerekes Zoltán
  */
-public class Opcode {
+public class Opcode implements Serializable {
 	
 	public enum Sender {
 		GUI,

@@ -1,10 +1,16 @@
 package netsubmodul;
 
+import logicmodule.Opcode;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+/**
+ * @author bs
+ */
 public class Client implements IClient {
 
 	
@@ -47,14 +53,17 @@ public class Client implements IClient {
 		
 	}
 
+
+
 	public static void main(String args[]) {
 		
 		boolean connect = new Client().startClient("127.0.0.1", 9999);
 		
 		if(connect) {
-			System.out.println("Connection succesfull");
+			System.out.println("Connection successful");
 		}
-		
+
+		while(true){}
 	}
 	
 	
@@ -72,15 +81,18 @@ public class Client implements IClient {
 				
 		
 	}
-	
-	public boolean SendData(MockGameObject obj) {
-		// TODO Auto-generated method stub
-		return false;
+
+
+	@Override
+	public boolean SendToAll(Opcode obj) {
+		throw new NotImplementedException();
 	}
 
-	public void SignalNextPlayer() {
-		// TODO Auto-generated method stub
-		
+	@Override
+	public boolean SendToOne(Opcode obj, int clientId) {
+		throw new NotImplementedException();
 	}
+
+
 
 }

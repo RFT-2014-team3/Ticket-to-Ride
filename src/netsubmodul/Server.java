@@ -1,20 +1,17 @@
 package netsubmodul;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
+import logicmodule.Opcode;
+import logicmodule.OpcodeHandler;
+
+import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
 
-import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
-import com.google.gson.stream.JsonWriter;
-
-
+/**
+ * @author bs
+ */
 public class Server implements IServer{
 
 	
@@ -25,19 +22,27 @@ public class Server implements IServer{
 	
 	private Thread listenerThread;
 	private boolean matchStarted;
-	
-	
+	private OpcodeHandler msgHandler;
+
+
+
 	private Server() {
 		
 		GetAddressForLocalhost();
-		connectedClients =  new ArrayList<ClientThread>();
+		connectedClients =  new ArrayList<>();
 		
-	//	communicator = new JSONCommunicator();
+
 	}
+
 	
-	
-	public Server GetServer() {
+	public static Server GetServer() {
 		return instance;
+	}
+
+
+	public void SetMessageHandler(OpcodeHandler handler) {
+
+		instance.msgHandler = handler;
 	}
 
 	public ServerData StartServer(final int port) {
@@ -196,10 +201,10 @@ public class Server implements IServer{
 	
 		
 		private Socket clSocket;
-		private JsonReader iStream;
-		private JsonWriter oStream;
-		private Gson parser;
 		private boolean playing;
+		private ObjectInputStream iStream;
+		private ObjectOutputStream oStream;
+
 		
 		public ClientThread(Socket clientSocket) {
 			
@@ -213,8 +218,8 @@ public class Server implements IServer{
 			
 			try {
 				
-				iStream = new JsonReader( new InputStreamReader (clSocket.getInputStream()) );
-				oStream = new JsonWriter( new OutputStreamWriter(clSocket.getOutputStream()) );
+				iStream =  new ObjectInputStream  (clSocket.getInputStream());
+				oStream =  new ObjectOutputStream (clSocket.getOutputStream());
 				
 			}catch (Exception ex) {
 				
@@ -228,19 +233,14 @@ public class Server implements IServer{
 			while(playing) {
 								
 				try {
-					
-					if(iStream.hasNext()) {
-						MockGameObject test = parser.fromJson(iStream, MockGameObject.class);
-						SendToAll(test);
+
+					Opcode msg = (Opcode) iStream.readObject();
+
+					if(msg != null) {
+
+						ParseMessage( msg );
 					}
-					
-					/*
-					String line;
-					while( (line = iStream.readLine()) != null) {
-						msg.append(line);
-											
-					}
-					messages.add( msg.toString() );*/
+
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -269,18 +269,30 @@ public class Server implements IServer{
 			}
 		}
 		
-		public void Send(MockGameObject msg) {
-			
-			//oStream.write(msg);
-			parser.toJson(msg, MockGameObject.class, oStream);
+		public void Send(Opcode msg) {
+
+			try {
+				oStream.writeObject((Object)msg);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 	
 	}
 	
-	public void SendToAll(MockGameObject info) {
+	public void SendToAll(Opcode info) {
 		
 		for(ClientThread ct : connectedClients) {
 			ct.Send(info);
 		}
+	}
+
+	private void ParseMessage(Opcode msg) {
+
+		if(this.msgHandler != null) {
+
+			msgHandler.decodeOpcode(msg);
+		}
+
 	}
 }

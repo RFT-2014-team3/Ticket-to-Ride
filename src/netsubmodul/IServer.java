@@ -2,17 +2,12 @@ package netsubmodul;
 
 import java.net.*;
 
+/**
+ * @author bs
+ */
 public interface IServer {
 
 
-	/**
-	 * 
-	 * Use this to get server reference. The design of the
-	 * server class follows the singleton pattern, don't try to instantiate it. 
-	 * @return Server server instance, singleton
-	 */
-	Server GetServer();
-	
 	/**
 	 * The servers starts listening on the specified port.
 	 * Note: asynchronous call, returns control to caller, the server listens on another thread.  
