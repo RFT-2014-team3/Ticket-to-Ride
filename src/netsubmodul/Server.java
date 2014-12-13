@@ -1,36 +1,35 @@
 package netsubmodul;
 
 import logicmodule.Opcode;
-import logicmodule.OpcodeHandler;
 
 import java.io.*;
 import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.*;
+import java.util.ListIterator;
+import java.util.SortedSet;
+
 
 /**
  * @author bs
  */
-public class Server implements IServer{
+public class Server extends NetComponent implements IServer {
 
 	
 	private static Server instance = new Server();
+
 	private InetAddress serverAddress;
 	List<ClientThread> connectedClients;
 	private ServerSocket server = null;
-	
 	private Thread listenerThread;
 	private boolean matchStarted;
-	private OpcodeHandler msgHandler;
-
-
+	private boolean running;
+	private boolean listening;
 
 	private Server() {
 		
 		GetAddressForLocalhost();
 		connectedClients =  new ArrayList<>();
-		
 
 	}
 
@@ -40,15 +39,11 @@ public class Server implements IServer{
 	}
 
 
-	public void SetMessageHandler(OpcodeHandler handler) {
-
-		instance.msgHandler = handler;
-	}
-
-	public ServerData StartServer(final int port) {
+	public ServerData startServer(final int port) {
 		
 		try {
-			
+			this.listening = true;
+			this.running = true;
 			listenerThread = new Thread( new Runnable() {
 
 				public void run() {
@@ -57,9 +52,13 @@ public class Server implements IServer{
 				}
 				
 			});
+
 			listenerThread.setDaemon(true);
 			listenerThread.start();
-		
+
+
+
+
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
@@ -69,11 +68,16 @@ public class Server implements IServer{
 	/**
 	 * Clean up threads.
 	 */
-	public void StopServer() {
-		
+	public void stopServer() {
+
+		if(listenerThread.isAlive()) {
+
+			StopServerListening();
+		}
+
+		this.running = false;
 		for(ClientThread ct : connectedClients) {
-			
-			ct.setIsGameRunning(false);
+
 			ct.CloseConnection();
 			try {
 				ct.join();
@@ -92,10 +96,25 @@ public class Server implements IServer{
 
 	public void StartMatch() {
 		
+		StopServerListening();
 		matchStarted = true;
+
+		for(ClientThread ct : connectedClients) {
+
+			ct.setDaemon(true);
+			ct.start();
+		}
 		
+				
+	}
+
+	private void StopServerListening() {
+
+		listening = false;
 		try {
-			server.close();
+			if(server != null)
+				server.close();
+
 			listenerThread.join();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -104,52 +123,19 @@ public class Server implements IServer{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println("Here: " + connectedClients.size());
-		for(ClientThread ct : connectedClients) {
-			
-			ct.setIsGameRunning(true);
-			ct.setDaemon(true);
-			ct.start();
-		}
-		
-				
+
 	}
-	
-	
-	public static void main(String args[])
-	{
-		
-		Server server = new Server();
-		server.StartServer(9999);
-		
-		while(server.listenerThread.isAlive()){}
-		
-		
-		boolean gameRunning = true;
-		
-		while(gameRunning) {
-			gameRunning = false;
-			for(ClientThread clientThread : server.connectedClients ) {
-				if(clientThread.isAlive())
-					gameRunning = true;
-			}
-		}
-		/*
-			try {
-				Thread.sleep(5000);
-				server.StartMatch();
-			} catch (InterruptedException e) {
-				
-				e.printStackTrace();
-			}
-			*/	
-	}
+
 
 	public InetAddress GetServerAddress() {
 		return serverAddress;
 	}
 
-		
+	public boolean isServerRunning() {
+
+		return running;
+	}
+
 	private void GetAddressForLocalhost()
 	{
 		
@@ -164,25 +150,26 @@ public class Server implements IServer{
 	
 	private void ListenToConnections(int port) {
 		
-				
+		int id = 0;
+
 		try {
 			 server = new ServerSocket(port);
 			 
-			while(!matchStarted) {
+			while(!matchStarted && listening) {
 				
-				Socket clientSocket = server.accept(); 
-				
-				
-				connectedClients.add(new ClientThread(clientSocket));
+				Socket clientSocket = server.accept();
+
+				System.out.println(id);
+				connectedClients.add(new ClientThread( clientSocket, id++ ));
 			}
 			
 		} catch (IOException e) {
 			
 			//e.printStackTrace();
-		} 
-		
+		}
 		finally	{
-			
+
+
 			if(server != null) {
 				try {
 					server.close();
@@ -195,32 +182,43 @@ public class Server implements IServer{
 		}
 				
 	}
-	
-	
+
+	public static void main(String args[]) {
+
+		new Server().startServer(9999);
+
+		/**
+		 * Infinite loop for testing - startServer return immediately
+		 */
+		while(true) {}
+
+	}
+
 	private class ClientThread extends Thread {
 	
 		
 		private Socket clSocket;
-		private boolean playing;
 		private ObjectInputStream iStream;
 		private ObjectOutputStream oStream;
-
+		private int id;
 		
-		public ClientThread(Socket clientSocket) {
+		public ClientThread(Socket clientSocket, int id) {
 			
 			this.clSocket = clientSocket; 
-		
+			this.id = id;
 			setupStreams();
+
 		}
 	
 		
 		private void setupStreams() {
 			
 			try {
-				
-				iStream =  new ObjectInputStream  (clSocket.getInputStream());
+
 				oStream =  new ObjectOutputStream (clSocket.getOutputStream());
-				
+				iStream =  new ObjectInputStream  (clSocket.getInputStream());
+
+				oStream.writeObject( id );
 			}catch (Exception ex) {
 				
 			}
@@ -230,33 +228,32 @@ public class Server implements IServer{
 		public void run() {
 				
 				
-			while(playing) {
-								
+			while(running) {
+
 				try {
 
 					Opcode msg = (Opcode) iStream.readObject();
 
-					if(msg != null) {
+					if(msg != null && msg.getRecipientID() == -1000) {
 
-						ParseMessage( msg );
+						msgHandler.decodeOpcode( msg );
+						SendToAll(msg);
+					} else {
+
+						SendToSpecificClient(msg);
 					}
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
-								
+
+
 			}
 				
 			
 		}
-		
-		
-		public void setIsGameRunning(boolean gameState) {
-			this.playing = gameState;
-		}
-		
+
 		public void CloseConnection() {
 			
 			try {
@@ -269,30 +266,78 @@ public class Server implements IServer{
 			}
 		}
 		
-		public void Send(Opcode msg) {
+		public void Send(Object msg) throws IOException {
 
-			try {
-				oStream.writeObject((Object)msg);
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+
+			oStream.writeObject(msg);
+
 		}
-	
+
+		public int getClientThreadId() {
+
+			return this.id;
+		}
+
+
 	}
 	
 	public void SendToAll(Opcode info) {
-		
-		for(ClientThread ct : connectedClients) {
-			ct.Send(info);
+
+
+		synchronized (connectedClients) {
+
+			ListIterator<ClientThread> listIterator = connectedClients.listIterator();
+
+			while (listIterator.hasNext()) {
+
+				ClientThread ct = listIterator.next();
+
+				if(ct.getId() == info.getSenderIndex()) {	//?
+					continue;
+				}
+
+
+				try {
+
+					ct.Send(info);
+
+				} catch (IOException e) {
+					listIterator.remove();
+				}
+
+			}
 		}
+
 	}
 
-	private void ParseMessage(Opcode msg) {
+	public void SendToSpecificClient(Opcode msg) {
 
-		if(this.msgHandler != null) {
 
-			msgHandler.decodeOpcode(msg);
+
+		synchronized (connectedClients) {
+
+			ListIterator<ClientThread> listIterator = connectedClients.listIterator();
+
+			while (listIterator.hasNext()) {
+
+				ClientThread ct = listIterator.next();
+
+				if(ct.getId() == msg.getSenderIndex()) {	//?
+					try {
+
+						ct.Send(msg);
+
+					} catch (IOException e) {
+						listIterator.remove();
+					}
+
+				}
+
+
+			}
 		}
 
 	}
+
+
 }

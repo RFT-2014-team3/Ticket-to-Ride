@@ -14,12 +14,12 @@ public interface IServer {
 	 * @param port the server is listening on this port
 	 * @return the ServerData objects contains info about the connection (ip, port, etc. - exact def. later)
 	 */
-	ServerData StartServer(int port);
+	ServerData startServer(int port);
 
 	/**
 	 * Stops the server.
 	 */
-	void StopServer();
+	void stopServer();
 	
 	/**
 	 * Returns the number of connected clients

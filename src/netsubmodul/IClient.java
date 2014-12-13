@@ -21,7 +21,7 @@ public interface IClient {
 	 * @param obj the gameobject we want to send
 	 * @return boolean value, true if sending was successful
 	 */
-	boolean SendToAll(Opcode obj);
+	boolean Send(Opcode obj);
 
 	/**
 	 * Sending info to one of the clients. For ex. signaling to the next player.

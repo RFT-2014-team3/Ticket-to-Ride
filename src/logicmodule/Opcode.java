@@ -35,6 +35,12 @@ public class Opcode implements Serializable {
 	public static final int SERVER_INDEX = 1;
 	private Sender sender;
 	private int senderIndex;
+
+	/**
+	 * added by
+	 * @author bs
+	 */
+	private int recipientID = -1000; //-1000 = send to all
 	private Action action;
 	private int i1, i2, i3, i4;
 	private String s1, s2, s3, s4, s5;
@@ -71,8 +77,17 @@ public class Opcode implements Serializable {
 	}
 	
 	
-	
-	
+	public void setRecipientID(int id) {
+
+		this.recipientID = id;
+
+	}
+
+	public int getRecipientID() {
+
+		return recipientID;
+	}
+
 	
 	public Sender getSender() {
 		return sender;
