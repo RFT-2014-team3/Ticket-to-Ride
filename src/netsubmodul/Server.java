@@ -26,6 +26,8 @@ public class Server extends NetComponent implements IServer {
 	private boolean running;
 	private boolean listening;
 
+	private final int ServerID = 1;
+
 	private Server() {
 		
 		GetAddressForLocalhost();
@@ -150,7 +152,7 @@ public class Server extends NetComponent implements IServer {
 	
 	private void ListenToConnections(int port) {
 		
-		int id = 0;
+		int id = 2;
 
 		try {
 			 server = new ServerSocket(port);
@@ -234,7 +236,10 @@ public class Server extends NetComponent implements IServer {
 
 					Opcode msg = (Opcode) iStream.readObject();
 
-					if(msg != null && msg.getRecipientID() == -1000) {
+
+					if(msg != null && msg.getRecipientID() == 1) {	//msg to the server
+						msgHandler.decodeOpcode( msg );
+					} else if(msg != null && msg.getRecipientID() == -1000) {
 
 						msgHandler.decodeOpcode( msg );
 						SendToAll(msg);
@@ -281,6 +286,7 @@ public class Server extends NetComponent implements IServer {
 
 	}
 	
+	//TODO: make it nicer -> maybe one method for sending to everybody or one client only, deciding with a flag
 	public void SendToAll(Opcode info) {
 
 
