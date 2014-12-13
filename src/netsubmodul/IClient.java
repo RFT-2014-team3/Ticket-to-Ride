@@ -31,4 +31,11 @@ public interface IClient {
 	 * @return boolean true if sending was successful
 	 */
 	boolean SendToOne(Opcode obj, int clientId);
+
+	/**
+	 *
+	 * Getting the id of the client. Using UUID would be better.
+	 * @return Client ID based on connection order
+	 */
+	int GetClientID();
 }
