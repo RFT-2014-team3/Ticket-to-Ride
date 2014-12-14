@@ -22,7 +22,7 @@ public interface GUIUpdate {
 	 * Send the lastly claimed route's information.
 	 * @param route Which route changed.
 	 * @param colors Lastly changed route's rails' color. Always a list with 
-	 * two element, but the second element is null if route is a single soure.
+	 * two element, but the second element is null if route is a single route.
 	 * Both elements can be null if that route not owned by any player.
 	 */
 	void updateRouteClaimed(shared.Route route, List<shared.PlayerColor> colors);
