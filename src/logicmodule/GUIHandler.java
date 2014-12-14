@@ -39,11 +39,18 @@ public interface GUIHandler {
 	 * Connect to the started server by the specified IP.
 	 * @param ip The server's address.
 	 */
-	void connectToServer(String ip);
+	boolean connectToServer(String ip);
 	
 	/**
 	 * Start the current program as server.
+	 * @return The server's IP address.
 	 */
-	void startNewServer();
+	String startNewServer();
+	
+	/**
+	 * Finish the connection phase. Start the game.
+	 * @return False if not joined enough players.
+	 */
+	boolean startGame();
 	
 }
