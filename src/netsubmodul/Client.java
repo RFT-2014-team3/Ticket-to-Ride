@@ -30,7 +30,7 @@ public class Client extends NetComponent implements IClient {
 		
 		try {
 
-			connection = new Socket("127.0.0.1", port);
+			connection = new Socket(ip, port);
 			oStream = new ObjectOutputStream(connection.getOutputStream());
 			iStream = new ObjectInputStream(connection.getInputStream());
 
