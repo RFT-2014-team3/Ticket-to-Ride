@@ -298,7 +298,7 @@ public class Server extends NetComponent implements IServer {
 
 				ClientThread ct = listIterator.next();
 
-				if(ct.getId() == info.getSenderIndex()) {	//?
+				if(ct.getId() == info.getSenderID()) {	//?
 					continue;
 				}
 
@@ -328,7 +328,7 @@ public class Server extends NetComponent implements IServer {
 
 				ClientThread ct = listIterator.next();
 
-				if(ct.getId() == msg.getSenderIndex()) {	//?
+				if(ct.getId() == msg.getSenderID()) {	//?
 					try {
 
 						ct.Send(msg);
