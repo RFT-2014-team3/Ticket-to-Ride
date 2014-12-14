@@ -38,9 +38,9 @@ public class Opcode implements Serializable {
 	private int i1, i2, i3, i4;
 	private String s1, s2, s3, s4, s5;
 
-	public Opcode(int senderIndex, Action action, int i1, int i2, int i3, int i4, 
+	public Opcode(int senderID, Action action, int i1, int i2, int i3, int i4, 
 			String s1, String s2, String s3, String s4, String s5) {
-		this.senderID = senderIndex;
+		this.senderID = senderID;
 		this.action = action;
 		this.i1 = i1;
 		this.i2 = i2;
@@ -52,20 +52,20 @@ public class Opcode implements Serializable {
 		this.s4 = s4;
 		this.s5 = s5;
 	}
-	public Opcode(int senderIndex, Action action) {
-		this(senderIndex, action, 0, 0, 0, 0, "", "", "", "", "");
+	public Opcode(int senderID, Action action) {
+		this(senderID, action, 0, 0, 0, 0, "", "", "", "", "");
 	}
-	public Opcode(int senderIndex, Action action, int i1) {
-		this(senderIndex, action, i1, 0, 0, 0, "", "", "", "", "");
+	public Opcode(int senderID, Action action, int i1) {
+		this(senderID, action, i1, 0, 0, 0, "", "", "", "", "");
 	}
-	public Opcode(int senderIndex, Action action, String s1) {
-		this(senderIndex, action, 0, 0, 0, 0, s1, "", "", "", "");
+	public Opcode(int senderID, Action action, String s1) {
+		this(senderID, action, 0, 0, 0, 0, s1, "", "", "", "");
 	}
-	public Opcode(int senderIndex, Action action, int i1, String s1) {
-		this(senderIndex, action, i1, 0, 0, 0, s1, "", "", "", "");
+	public Opcode(int senderID, Action action, int i1, String s1) {
+		this(senderID, action, i1, 0, 0, 0, s1, "", "", "", "");
 	}
-	public Opcode(int senderIndex, Action action, String s1, String s2, String s3) {
-		this(senderIndex, action, 0, 0, 0, 0, s1, s2, s3, "", "");
+	public Opcode(int senderID, Action action, String s1, String s2, String s3) {
+		this(senderID, action, 0, 0, 0, 0, s1, s2, s3, "", "");
 	}
 	
 	public void setRecipientID(int id) {

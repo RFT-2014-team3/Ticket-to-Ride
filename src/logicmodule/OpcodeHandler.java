@@ -3,6 +3,7 @@ package logicmodule;
 import java.util.ArrayList;
 import java.util.List;
 import shared.PlayerColor;
+import shared.TicketCard;
 import shared.TrainColor;
 
 /**
@@ -45,13 +46,13 @@ public class OpcodeHandler implements NetworkHandler {
 				con._claimRoute(opc.getSenderID(), shared.Route.valueOf(opc.getS1()));
 				break;
 			case SELECT_THROW_TICKET_CARDS:
-				List<shared.TicketCard> cards = new ArrayList<>();
+				List<TicketCard> cards = new ArrayList<>();
 				if(!opc.getS1().equals("")) 
-					cards.add(shared.TicketCard.valueOf(opc.getS1()));
+					cards.add(TicketCard.valueOf(opc.getS1()));
 				if(!opc.getS2().equals("")) 
-					cards.add(shared.TicketCard.valueOf(opc.getS2()));
+					cards.add(TicketCard.valueOf(opc.getS2()));
 				if(!opc.getS3().equals("")) 
-					cards.add(shared.TicketCard.valueOf(opc.getS3()));
+					cards.add(TicketCard.valueOf(opc.getS3()));
 				con._throwTicketCards(opc.getSenderID(), cards);
 
 			// =====================================================
@@ -93,13 +94,13 @@ public class OpcodeHandler implements NetworkHandler {
 				break;
 
 			case UPDATE_GAIN_TICKET_CARDS:
-				List<shared.TicketCard> cards2 = new ArrayList<>();
+				List<TicketCard> cards2 = new ArrayList<>();
 				if(!opc.getS1().equals("")) 
-					cards2.add(shared.TicketCard.valueOf(opc.getS1()));
+					cards2.add(TicketCard.valueOf(opc.getS1()));
 				if(!opc.getS2().equals("")) 
-					cards2.add(shared.TicketCard.valueOf(opc.getS2()));
+					cards2.add(TicketCard.valueOf(opc.getS2()));
 				if(!opc.getS3().equals("")) 
-					cards2.add(shared.TicketCard.valueOf(opc.getS3()));
+					cards2.add(TicketCard.valueOf(opc.getS3()));
 				con._guiUpdateGainTicketCards(cards2);
 				break;
 
@@ -108,7 +109,7 @@ public class OpcodeHandler implements NetworkHandler {
 				break;
 
 			case UPDATE_LOOSE_TICKET_CARD:
-				con._guiUpdateLooseTicketCard(shared.TicketCard.valueOf(opc.getS1()));
+				con._guiUpdateLooseTicketCard(TicketCard.valueOf(opc.getS1()));
 				break;
 
 			case UPDATE_SCORE:

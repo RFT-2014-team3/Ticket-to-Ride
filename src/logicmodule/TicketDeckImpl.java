@@ -13,7 +13,7 @@ class TicketDeckImpl implements TicketDeck {
 	private List<TicketCard> cards;
 	
 	public TicketDeckImpl() {
-		cards = Arrays.asList(shared.TicketCard.values());
+		cards = Arrays.asList(TicketCard.values());
 	}
 
 	@Override

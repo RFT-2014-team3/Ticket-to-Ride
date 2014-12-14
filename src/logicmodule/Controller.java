@@ -69,7 +69,7 @@ public class Controller implements GUIHandler {
 	}
 	
 	private void broadcastDeckStates() {
-		List<shared.TrainColor> upfaces = new ArrayList<>();
+		List<TrainColor> upfaces = new ArrayList<>();
 		for(int j = 0; j < 5; j++){
 			if(trainDeck.upfaceCardIsExists(j))
 				upfaces.add(trainDeck.getUpfaceCardColor(j));
@@ -270,7 +270,7 @@ public class Controller implements GUIHandler {
 				|| state != State.CHOOSING)
 			return;
 		
-		List<shared.TicketCard> cards = new ArrayList<>();
+		List<TicketCard> cards = new ArrayList<>();
 		for(int i = 0; i < 3; i++){
 			if(ticketDeck.getCardsCount() > 0)
 				cards.add(ticketDeck.drawCard());
@@ -379,7 +379,7 @@ public class Controller implements GUIHandler {
 		gui.updateYourTurnEnded();
 	}
 	
-	private void guiUpdateRouteClaimed(int recipID, shared.Route route, shared.PlayerColor color1, shared.PlayerColor color2) {
+	private void guiUpdateRouteClaimed(int recipID, shared.Route route, PlayerColor color1, PlayerColor color2) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_ROUTE_CLAIMED, 
 					route.name(), 
@@ -388,7 +388,7 @@ public class Controller implements GUIHandler {
 		else
 			_guiUpdateRouteClaimed(route, color1, color2);
 	}
-	void _guiUpdateRouteClaimed(shared.Route route, shared.PlayerColor color1, shared.PlayerColor color2) {
+	void _guiUpdateRouteClaimed(shared.Route route, PlayerColor color1, PlayerColor color2) {
 		List<shared.PlayerColor> colors = new ArrayList<>();
 		colors.add(color1);
 		colors.add(color2);
@@ -406,7 +406,7 @@ public class Controller implements GUIHandler {
 		gui.updateTrainDeck(numberOfCards);
 	}
 	
-	private void guiUpdateUpfaceTrainCards(int recipID, List<shared.TrainColor> cards) {
+	private void guiUpdateUpfaceTrainCards(int recipID, List<TrainColor> cards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_UPFACE_TRAIN_CARDS,
 					0, 0, 0, 0,
@@ -418,7 +418,7 @@ public class Controller implements GUIHandler {
 		else
 			_guiUpdateUpfaceTrainCards(cards);
 	}
-	void _guiUpdateUpfaceTrainCards(List<shared.TrainColor> cards) {
+	void _guiUpdateUpfaceTrainCards(List<TrainColor> cards) {
 		gui.updateUpfaceTrainCards(cards);
 	}
 	
@@ -433,18 +433,18 @@ public class Controller implements GUIHandler {
 		gui.updateTicketDeck(numberOfCards);
 	}
 	
-	private void guiUpdateGainTrainCard(int recipID, shared.TrainColor card) {
+	private void guiUpdateGainTrainCard(int recipID, TrainColor card) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAIN_TRAIN_CARD,
 					card.name()));
 		else
 			_guiUpdateGainTrainCard(card);
 	}
-	void _guiUpdateGainTrainCard(shared.TrainColor card) {
+	void _guiUpdateGainTrainCard(TrainColor card) {
 		gui.gainTrainCard(card);
 	}
 	
-	private void guiUpdateGainTicketCards(int recipID, List<shared.TicketCard> cards) {
+	private void guiUpdateGainTicketCards(int recipID, List<TicketCard> cards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAIN_TICKET_CARDS,
 					cards.get(0) == null ? "" : cards.get(0).name(),
@@ -453,29 +453,29 @@ public class Controller implements GUIHandler {
 		else
 			_guiUpdateGainTicketCards(cards);
 	}
-	void _guiUpdateGainTicketCards(List<shared.TicketCard> cards) {
+	void _guiUpdateGainTicketCards(List<TicketCard> cards) {
 		gui.gainTicketCards(cards);
 	}
 	
-	private void guiUpdateLooseTrainCard(int recipID, shared.TrainColor card, int n) {
+	private void guiUpdateLooseTrainCard(int recipID, TrainColor card, int n) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_LOOSE_TRAIN_CARD,
 					n, card.name()));
 		else
 			_guiUpdateLooseTrainCard(card, n);
 	}
-	void _guiUpdateLooseTrainCard(shared.TrainColor card, int n) {
+	void _guiUpdateLooseTrainCard(TrainColor card, int n) {
 		gui.looseTrainCard(card, n);
 	}
 	
-	private void guiUpdateLooseTicketCard(int recipID, shared.TicketCard card) {
+	private void guiUpdateLooseTicketCard(int recipID, TicketCard card) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_LOOSE_TICKET_CARD,
 					card.name()));
 		else
 			_guiUpdateLooseTicketCard(card);
 	}
-	void _guiUpdateLooseTicketCard(shared.TicketCard card) {
+	void _guiUpdateLooseTicketCard(TicketCard card) {
 		gui.looseTicketCard(card);
 	}
 	
