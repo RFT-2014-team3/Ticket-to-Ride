@@ -16,7 +16,12 @@ public class OpcodeHandler implements NetworkHandler {
 	}
 	
 	public void sendOpcodeTo(int playerIndex, Opcode opcode) {
-		// TODO [logic] hálózati modulon keresztül küldés
+		if(con.isServer()) {
+			opcode.setRecipientID(playerIndex);
+			((netsubmodul.Server)con.server).SendToSpecificClient(opcode);
+		} else {
+			con.client.SendToOne(opcode, playerIndex);
+		}
 	}
 	
 	@Override

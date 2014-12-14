@@ -14,6 +14,8 @@ import shared.TicketCard;
 import shared.TrainColor;
 import view.MainFrame;
 
+// TODO [logic] Maybe need to stop server/client on exit.
+
 /**
  * @author Kerekes Zoltán
  */
@@ -27,11 +29,13 @@ public class Controller implements GUIHandler {
 	
 	private static final Controller instance = new Controller();
 	
+	// TODO [logic] GUIUpdate
 	//private GUIUpdate gui = MainFrame.getInstance();
 	
 	private OpcodeHandler oh = OpcodeHandler.getInstance();
 	private static final int PORT = 9999;
-	private IServer server;
+	IServer server;
+	IClient client;
 	
 	private Pathfinder pf;
 	private Map<shared.Route, Route> routes;
@@ -49,6 +53,10 @@ public class Controller implements GUIHandler {
 		return instance;
 	}
 
+	boolean isServer() {
+		return playerIndex == 1;
+	}
+	
 	private void nextPlayer() {
 		guiUpdateYourTurnEnded(currPlayerIndex);
 		if(currPlayerIndex == players.size())
@@ -165,7 +173,7 @@ public class Controller implements GUIHandler {
 	
 	@Override
 	public boolean connectToServer(String ip) {
-		IClient client = new Client();
+		client = new Client();
 		boolean success = client.startClient(ip, PORT);
 		if(success) {
 			float maxWaitSec = 5;
@@ -185,7 +193,13 @@ public class Controller implements GUIHandler {
 	
 	@Override
 	public boolean startGame() {
-		return server.GetConnectedClients() > 0;
+		if(server.GetConnectedClients() > 0){
+			server.StartMatch();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@Override

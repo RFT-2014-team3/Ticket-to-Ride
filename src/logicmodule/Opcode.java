@@ -77,13 +77,10 @@ public class Opcode implements Serializable {
 	
 	
 	public void setRecipientID(int id) {
-
 		this.recipientID = id;
-
 	}
 
 	public int getRecipientID() {
-
 		return recipientID;
 	}
 
