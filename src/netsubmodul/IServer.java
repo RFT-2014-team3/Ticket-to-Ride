@@ -14,7 +14,7 @@ public interface IServer {
 	 * @param port the server is listening on this port
 	 * @return the ServerData objects contains info about the connection (ip, port, etc. - exact def. later)
 	 */
-	ServerData startServer(int port);
+	void startServer(int port);
 
 	/**
 	 * Stops the server.
@@ -26,8 +26,13 @@ public interface IServer {
 	 * @return number of connected clients
 	 */
 	int GetConnectedClients();
-	
-	InetAddress GetServerAddress();
+
+	/**
+	 * Returns the string representaion of the ip of the host machine
+	 *
+	 * @return IP of the host
+	 */
+	String GetServerAddress();
 	
 	/**
 	 * The game begins, so the server stops listening, because we don't need new players.

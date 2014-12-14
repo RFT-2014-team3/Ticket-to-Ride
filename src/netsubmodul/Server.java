@@ -23,14 +23,17 @@ public class Server extends NetComponent implements IServer {
 	private ServerSocket server = null;
 	private Thread listenerThread;
 	private boolean matchStarted;
+
+
+
 	private boolean running;
 	private boolean listening;
 
-	private final int ServerID = 1;
+	private final int serverID = 1;
 
 	private Server() {
 		
-		GetAddressForLocalhost();
+		getAddressForLocalhost();
 		connectedClients =  new ArrayList<>();
 
 	}
@@ -41,7 +44,7 @@ public class Server extends NetComponent implements IServer {
 	}
 
 
-	public ServerData startServer(final int port) {
+	public void startServer(final int port) {
 		
 		try {
 			this.listening = true;
@@ -58,13 +61,10 @@ public class Server extends NetComponent implements IServer {
 			listenerThread.setDaemon(true);
 			listenerThread.start();
 
-
-
-
 		} catch(Exception ex) {
 			ex.printStackTrace();
 		}
-		return null;
+
 	}
 
 	/**
@@ -74,13 +74,13 @@ public class Server extends NetComponent implements IServer {
 
 		if(listenerThread.isAlive()) {
 
-			StopServerListening();
+			stopServerListening();
 		}
 
 		this.running = false;
 		for(ClientThread ct : connectedClients) {
 
-			ct.CloseConnection();
+			ct.closeConnection();
 			try {
 				ct.join();
 			} catch (InterruptedException e) {
@@ -98,19 +98,12 @@ public class Server extends NetComponent implements IServer {
 
 	public void StartMatch() {
 		
-		StopServerListening();
+		stopServerListening();
 		matchStarted = true;
 
-		for(ClientThread ct : connectedClients) {
-
-			ct.setDaemon(true);
-			ct.start();
-		}
-		
-				
 	}
 
-	private void StopServerListening() {
+	private void stopServerListening() {
 
 		listening = false;
 		try {
@@ -129,8 +122,9 @@ public class Server extends NetComponent implements IServer {
 	}
 
 
-	public InetAddress GetServerAddress() {
-		return serverAddress;
+
+	public String GetServerAddress() {
+		return serverAddress.getHostAddress();
 	}
 
 	public boolean isServerRunning() {
@@ -138,11 +132,21 @@ public class Server extends NetComponent implements IServer {
 		return running;
 	}
 
-	private void GetAddressForLocalhost()
+	public boolean isMatchStarted() {
+		return matchStarted;
+	}
+
+	public boolean isListening() {
+		return listening;
+	}
+
+
+	private void getAddressForLocalhost()
 	{
 		
 		try {
 			serverAddress = InetAddress.getLocalHost();
+
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,8 +165,10 @@ public class Server extends NetComponent implements IServer {
 				
 				Socket clientSocket = server.accept();
 
-				System.out.println(id);
-				connectedClients.add(new ClientThread( clientSocket, id++ ));
+				ClientThread t = new ClientThread( clientSocket, id++ );
+				connectedClients.add(t);
+				t.setDaemon(true);
+				t.start();
 			}
 			
 		} catch (IOException e) {
@@ -185,16 +191,28 @@ public class Server extends NetComponent implements IServer {
 				
 	}
 
-	public static void main(String args[]) {
-
-		new Server().startServer(9999);
-
-		/**
-		 * Infinite loop for testing - startServer return immediately
-		 */
-		while(true) {}
-
-	}
+//	/**
+//	 * Just for testing
+//	 * @param args
+//	 */
+//	public static void main(String args[]) {
+//
+//		Server s = new Server();
+//		s.startServer(9999);
+//
+//		try {
+//			Thread.sleep(30000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//
+//		System.out.println("Starting match");
+//		s.StartMatch();
+//
+//		while(true) {}
+//
+//
+//	}
 
 	private class ClientThread extends Thread {
 	
@@ -234,15 +252,18 @@ public class Server extends NetComponent implements IServer {
 
 				try {
 
+
 					Opcode msg = (Opcode) iStream.readObject();
 
 
-					if(msg != null && msg.getRecipientID() == 1) {	//msg to the server
+					if(msg != null && msg.getRecipientID() == 1 && msgHandler != null) {	//msg to the server
 						msgHandler.decodeOpcode( msg );
 					} else if(msg != null && msg.getRecipientID() == -1000) {
 
-						msgHandler.decodeOpcode( msg );
+						if(msgHandler != null)
+							msgHandler.decodeOpcode( msg );
 						SendToAll(msg);
+
 					} else {
 
 						SendToSpecificClient(msg);
@@ -250,7 +271,7 @@ public class Server extends NetComponent implements IServer {
 
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					//e.printStackTrace();
 				}
 
 
@@ -259,7 +280,7 @@ public class Server extends NetComponent implements IServer {
 			
 		}
 
-		public void CloseConnection() {
+		public void closeConnection() {
 			
 			try {
 				iStream.close();
@@ -298,7 +319,8 @@ public class Server extends NetComponent implements IServer {
 
 				ClientThread ct = listIterator.next();
 
-				if(ct.getId() == info.getSenderID()) {	//?
+				if(ct.getClientThreadId() == info.getSenderID()) {
+
 					continue;
 				}
 
@@ -328,7 +350,7 @@ public class Server extends NetComponent implements IServer {
 
 				ClientThread ct = listIterator.next();
 
-				if(ct.getId() == msg.getSenderID()) {	//?
+				if(ct.getClientThreadId() == msg.getRecipientID()) {
 					try {
 
 						ct.Send(msg);

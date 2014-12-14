@@ -74,16 +74,45 @@ public class Client extends NetComponent implements IClient {
 
 	}
 
-	public static void main(String args[]) {
-
-		new Client().startClient("127.0.0.1", 9999);
-		try {
-			Thread.sleep(10000);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-
-	}
+//	public static void main(String args[]) {
+//
+//		Client test = new Client();
+//		test.startClient("127.0.0.1", 9999);
+//
+//		try {
+//			Thread.sleep(1000);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//
+//		while(true) {}
+//
+//		//test.TestOpcodeSending();
+//
+//
+//	}
+//
+//
+//	private void TestOpcodeSending() {
+//
+//		Opcode message = new Opcode(this.clientID, Opcode.Action.SELECT_CLAIM_ROUTE );
+//		message.setRecipientID(3);
+//		System.out.println("sending");
+//		this.Send(message);
+//
+//		for(int i = 0; i < 4; ++i) {
+//
+//			try {
+//				Thread.sleep(1000);
+//			} catch (InterruptedException e) {
+//				e.printStackTrace();
+//			}
+//			this.Send(message);
+//		}
+//
+//
+//
+//	}
 
 	public void setMessageHandler(OpcodeHandler handler) {
 
@@ -117,7 +146,18 @@ public class Client extends NetComponent implements IClient {
 
 				while(clientInGame) {
 
-					//TODO : do something
+
+					try {
+						Opcode message = (Opcode) iStream.readObject();
+
+						if(msgHandler != null) {
+
+							msgHandler.decodeOpcode(message);
+						}
+
+					} catch(Exception ex) {
+
+					}
 				}
 			}
 			
@@ -146,23 +186,12 @@ public class Client extends NetComponent implements IClient {
 	@Override
 	public boolean SendToOne(Opcode obj, int clientId) {
 
-
-
 		obj.setRecipientID(clientId);
 		Send(obj);
 
 		return true;
 	}
 
-
-	private void ParseMessage(Opcode msg) {
-
-		if(this.msgHandler != null) {
-
-			msgHandler.decodeOpcode(msg);
-		}
-
-	}
 
 
 	public int GetClientID() {
