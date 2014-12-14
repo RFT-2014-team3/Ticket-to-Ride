@@ -41,7 +41,8 @@ public class WaitingScreen extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainFrame.getInstance().setPanel(new GamePanel());
+				if(logicmodule.Controller.getInstance().startGame())
+					MainFrame.getInstance().setPanel(new GamePanel());
 			}
 		});
 		

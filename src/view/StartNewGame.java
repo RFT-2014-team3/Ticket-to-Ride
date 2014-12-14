@@ -25,7 +25,8 @@ public class StartNewGame extends JPanel {
 		
 		mainLabel = new JLabel("Az IP címed:");
 		mainLabel.setFont(new Font(mainLabel.getFont().getName(), Font.PLAIN, 20));
-		ipLabel = new JLabel("127.0.0.1");
+		String ip = logicmodule.Controller.getInstance().startNewServer();
+		ipLabel = new JLabel(ip);
 		ipLabel.setFont(new Font(ipLabel.getFont().getName(), Font.BOLD, 30));
 		
 		proceed = new JButton("Tovább");

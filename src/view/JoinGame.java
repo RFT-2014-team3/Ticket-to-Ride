@@ -36,7 +36,8 @@ public class JoinGame extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				MainFrame.getInstance().setPanel(new WaitingScreen(false));
+				if(logicmodule.Controller.getInstance().connectToServer(ipInput.getText()))
+					MainFrame.getInstance().setPanel(new WaitingScreen(false));
 			}
 		});
 		
