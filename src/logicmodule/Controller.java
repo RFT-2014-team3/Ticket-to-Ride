@@ -168,7 +168,7 @@ public class Controller implements GUIHandler {
 		
 		server = Server.GetServer();
 		server.startServer(PORT);
-		String ip = server.GetServerAddress().getHostAddress();
+		String ip = server.GetServerAddress();
 		return ip;
 	}
 	
