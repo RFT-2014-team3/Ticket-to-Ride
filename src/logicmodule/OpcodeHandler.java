@@ -61,10 +61,6 @@ public class OpcodeHandler implements NetworkHandler {
 						con._guiUpdateYourTurnEnded();
 						break;
 						
-					case UPDATE_PLAYER_INDEX:
-						con._updatePlayerIndex(opc.getI1());
-						break;
-						
 					case UPDATE_ROUTE_CLAIMED:
 						con._guiUpdateRouteClaimed(shared.Route.valueOf(opc.getS1()), 
 								opc.getS2().equals("") ? null : shared.PlayerColor.valueOf(opc.getS2()),

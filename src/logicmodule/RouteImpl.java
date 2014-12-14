@@ -36,6 +36,12 @@ class RouteImpl implements Route {
 		public void setOwner(Player owner) {
 			this.owner = owner;
 		}
+
+		@Override
+		public int getLength() {
+			return route.getLength();
+		}
+		
 	}
 	
 	

@@ -1,5 +1,6 @@
 package logicmodule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -11,11 +12,11 @@ import shared.TrainColor;
 class TrainDeckImpl implements TrainDeck {
 
 	private TrainCard[] upfaceCards;
-	private List<TrainCard> downfaceCards;
-	private List<TrainCard> discardedCards;
+	private List<TrainCard> downfaceCards = new ArrayList<>();;
+	private List<TrainCard> discardedCards = new ArrayList<>();;
 	
 	public TrainDeckImpl() {
-		List<TrainColor> mainColors = Arrays.asList(TrainColor.values());
+		List<TrainColor> mainColors = new ArrayList<>(Arrays.asList(TrainColor.values()));
 		mainColors.remove(TrainColor.GREY);
 		for (TrainColor c : mainColors) {
 			for(int i = 0; i < 12; i++)
@@ -33,6 +34,7 @@ class TrainDeckImpl implements TrainDeck {
 
 	@Override
 	public TrainCard drawDownfaceCard() {
+		useDiscardedCardsIfDownfacesEmpty();
 		return downfaceCards.remove(0);
 	}
 
@@ -40,7 +42,44 @@ class TrainDeckImpl implements TrainDeck {
 	public TrainCard drawUpfaceCard(int index) {
 		TrainCard temp = upfaceCards[index];
 		upfaceCards[index] = null;
+		fillUpfaceCards();
 		return temp;
+	}
+	
+	private void fillUpfaceCards() {
+		if(getDownfaceCardsCount() == 0)
+			return;
+		
+		for (int i = 0; i < 5; i++) {
+			if(!upfaceCardIsExists(i)){
+				useDiscardedCardsIfDownfacesEmpty();
+				if(getDownfaceCardsCount() == 0)
+					break;
+				upfaceCards[i] = drawDownfaceCard();
+			}
+		}
+		checkLocomotiveCount();
+	}
+	
+	private void checkLocomotiveCount() {
+		for(int repeats = 0; repeats < 10; repeats++) {
+			int count = 0;
+			for (int i = 0; i < 5; i++) {
+				if(upfaceCardIsExists(i) && upfaceCardIsLocomotive(i))
+					count++;
+			}
+			if(count < 3)
+				return;
+			discardUpfaceCards();
+			if(getDownfaceCardsCount() < 5) {
+				shuffleDiscardedCards();
+				useDiscardedCards();
+			}
+			if(getDownfaceCardsCount() < 5)
+				return;
+			for (int i = 0; i < 5; i++)
+				upfaceCards[i] = drawDownfaceCard();
+		}
 	}
 
 	@Override
@@ -98,8 +137,7 @@ class TrainDeckImpl implements TrainDeck {
 		return false;
 	}
 
-	@Override
-	public void useDiscardedCardsIfDownfacesEmpty() {
+	private void useDiscardedCardsIfDownfacesEmpty() {
 		if(getDownfaceCardsCount() == 0) {
 			shuffleDiscardedCards();
 			useDiscardedCards();

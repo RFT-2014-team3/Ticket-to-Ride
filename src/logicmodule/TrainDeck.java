@@ -14,7 +14,6 @@ interface TrainDeck {
 	void shuffleDownfaceCards();
 	void shuffleDiscardedCards();
 	void useDiscardedCards();
-	void useDiscardedCardsIfDownfacesEmpty();
 	void discardCardIntoDeck(TrainCard card);
 	boolean hasUpfaceNonLocomotiveCard();
 }

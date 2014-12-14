@@ -21,7 +21,9 @@ public interface GUIUpdate {
 	/**
 	 * Send the lastly claimed route's information.
 	 * @param route Which route changed.
-	 * @param colors Lastly changed route's rails' color.
+	 * @param colors Lastly changed route's rails' color. Always a list with 
+	 * two element, but the second element is null if route is a single soure.
+	 * Both elements can be null if that route not owned by any player.
 	 */
 	void updateRouteClaimed(shared.Route route, List<shared.PlayerColor> colors);
 	
@@ -52,7 +54,7 @@ public interface GUIUpdate {
 	void gainTrainCard(shared.TrainColor card);
 	
 	/**
-	 * The player gained a ticket card.
+	 * The player gained 1-3 ticket cards.
 	 * @param card The card.
 	 */
 	void gainTicketCards(List<shared.TicketCard> cards);

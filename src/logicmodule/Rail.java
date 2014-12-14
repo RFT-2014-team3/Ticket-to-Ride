@@ -9,4 +9,5 @@ interface Rail {
 	TrainColor getColor();
 	Player getOwner();
 	void setOwner(Player owner);
+	int getLength();
 }
