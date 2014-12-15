@@ -4,10 +4,13 @@ import java.awt.Color;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+
+import logicmodule.Controller;
 
 public class PlayerDetailsPanel extends JPanel {
 	
@@ -27,8 +30,7 @@ public class PlayerDetailsPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO pass player ticket cards to constructor
-				PlayerTicketsDialog ptd = new PlayerTicketsDialog();
+				PlayerTicketsDialog ptd = new PlayerTicketsDialog(Controller.getInstance().getMyTicketCards());
 				ptd.setVisible(true);
 			}
 		});
@@ -39,8 +41,7 @@ public class PlayerDetailsPanel extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//TODO pass player train cards to constructor
-				PlayerTrainsDialog ptd = new PlayerTrainsDialog();
+				PlayerTrainsDialog ptd = new PlayerTrainsDialog(Controller.getInstance().getMyTrainCards());
 				ptd.setVisible(true);
 			}
 		});
