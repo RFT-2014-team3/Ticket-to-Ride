@@ -125,6 +125,8 @@ class TrainDeckImpl implements TrainDeck {
 
 	@Override
 	public TrainColor getUpfaceCardColor(int index) {
+		if(upfaceCards[index] == null)
+			return null;
 		return upfaceCards[index].getColor();
 	}
 

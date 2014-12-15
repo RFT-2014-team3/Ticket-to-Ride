@@ -1,5 +1,6 @@
 package logicmodule;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -13,7 +14,7 @@ class TicketDeckImpl implements TicketDeck {
 	private List<TicketCard> cards;
 	
 	public TicketDeckImpl() {
-		cards = Arrays.asList(TicketCard.values());
+		cards = new ArrayList<>(Arrays.asList(TicketCard.values()));
 	}
 
 	@Override
