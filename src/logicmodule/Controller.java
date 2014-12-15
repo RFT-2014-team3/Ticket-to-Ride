@@ -96,7 +96,7 @@ public class Controller implements GUIHandler {
 		for(int i = 0; i < players.size(); i++) {
 			scores.add(players.get(i).getScore());
 		}
-		for(int i = 0; i < players.size(); i++) {
+		for(int i = 1; i <= players.size(); i++) {
 			clientUpdateTicketDeck(i, ticketDeck.getCardsCount());
 			clientUpdateTrainDeck(i, trainDeck.getDownfaceCardsCount());
 			clientUpdateUpfaceTrainCards(i, upfaces);
@@ -107,7 +107,7 @@ public class Controller implements GUIHandler {
 	private boolean spendTrainCards(Rail rail) {
 		int length = rail.getLength();
 		TrainColor railColor = rail.getColor();
-		Player player = players.get(currPlayerID);
+		Player player = players.get(currPlayerID - 1);
 		List<TrainColor> nonGreys = new ArrayList<>();
 		nonGreys.addAll(Arrays.asList(TrainColor.values()));
 		nonGreys.remove(TrainColor.GREY);
@@ -168,7 +168,7 @@ public class Controller implements GUIHandler {
 	}
 	
 	private void checkLastTurn() {
-		for (int i = 1; i < players.size(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			if(!lastTurn && players.get(i).getRemainingTrainsCount() <= 2) {
 				lastTurn = true;
 				lastTurnPlayerID = currPlayerID;
@@ -273,13 +273,13 @@ public class Controller implements GUIHandler {
 
 	@Override
 	public List<TicketCard> getMyTicketCards() {
-		return new ArrayList<>(players.get(playerID).getTicketCards());
+		return new ArrayList<>(players.get(playerID - 1).getTicketCards());
 	}
 
 	@Override
 	public List<Integer> getMyTrainCards() {
 		List<Integer> counts = new ArrayList<>();
-		Player p = players.get(playerID);
+		Player p = players.get(playerID - 1);
 		for (TrainColor c : TrainColor.values()) {
 			counts.add(p.getTrainCardCount(c));
 		}
@@ -323,6 +323,10 @@ public class Controller implements GUIHandler {
 	
 	@Override
 	public String startNewServer() {
+		server = Server.GetServer();
+		if(server.isServerRunning())
+			return server.GetServerAddress();
+		
 		playerID = 1;
 		currPlayerID = 1;
 		for (shared.Route r : shared.Route.values()) {
@@ -333,7 +337,6 @@ public class Controller implements GUIHandler {
 		trainDeck = Factory.newTrainDeck();
 		ticketDeck = Factory.newTicketDeck();
 		
-		server = Server.GetServer();
 		server.setOpcodeHandler(oh);
 		server.startServer(PORT);
 		String ip = server.GetServerAddress();
@@ -418,7 +421,7 @@ public class Controller implements GUIHandler {
 			if(p.getColor() != null && p.getColor() == color)
 				return;
 		
-		players.get(currPlayerID).setColor(color);
+		players.get(currPlayerID - 1).setColor(color);
 		clientUpdateColorChose(playerID, color);
 		nextPlayer();
 	}
@@ -437,7 +440,7 @@ public class Controller implements GUIHandler {
 			return;
 		
 		TrainCard card = trainDeck.drawDownfaceCard();
-		players.get(senderID).addTrainCards(card.getColor(), 1);
+		players.get(senderID - 1).addTrainCards(card.getColor(), 1);
 		clientUpdateGainTrainCard(senderID, card.getColor());
 		broadcastDeckStates();
 		if(state == State.CHOOSING) {
@@ -467,7 +470,7 @@ public class Controller implements GUIHandler {
 			return;
 		
 		TrainCard card = trainDeck.drawUpfaceCard(index);
-		players.get(senderID).addTrainCards(card.getColor(), 1);
+		players.get(senderID - 1).addTrainCards(card.getColor(), 1);
 		clientUpdateGainTrainCard(senderID, card.getColor());
 		broadcastDeckStates();
 		if(state == State.CHOOSING) {
@@ -497,7 +500,7 @@ public class Controller implements GUIHandler {
 			if(ticketDeck.getCardsCount() > 0)
 				cards.add(ticketDeck.drawCard());
 		}
-		players.get(senderID).getTicketCards().addAll(cards);
+		players.get(senderID - 1).getTicketCards().addAll(cards);
 		clientUpdateGainTicketCards(senderID, cards);
 		broadcastDeckStates();
 		state = State.THROWING_TICKET;
@@ -518,7 +521,7 @@ public class Controller implements GUIHandler {
 			ticketDeck.discardCardIntoDeck(c);
 			clientUpdateLooseTicketCard(senderID, c);
 		}
-		players.get(senderID).getTicketCards().removeAll(cards);
+		players.get(senderID - 1).getTicketCards().removeAll(cards);
 		broadcastDeckStates();
 		nextPlayer();
 	}
@@ -536,7 +539,7 @@ public class Controller implements GUIHandler {
 				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
 			return;
 		
-		Player player = players.get(currPlayerID);
+		Player player = players.get(currPlayerID - 1);
 		Route r = routes.get(route);
 		// have enough trains?
 		if(r.getLength() > player.getRemainingTrainsCount())
@@ -591,7 +594,7 @@ public class Controller implements GUIHandler {
 		_clientUpdateColorChose(playerID, color);
 	}
 	void _clientUpdateColorChose(int playerID, PlayerColor color) {
-		players.get(playerID).setColor(color);
+		players.get(playerID - 1).setColor(color);
 		
 		// turn ended?
 		for (Player p : players) {
@@ -708,7 +711,7 @@ public class Controller implements GUIHandler {
 			_clientUpdateGainTrainCard(card);
 	}
 	void _clientUpdateGainTrainCard(TrainColor card) {
-		players.get(playerID).addTrainCards(card, 1);
+		players.get(playerID - 1).addTrainCards(card, 1);
 	}
 	
 	private void clientUpdateGainTicketCards(int recipID, List<TicketCard> cards) {
@@ -721,7 +724,7 @@ public class Controller implements GUIHandler {
 			_clientUpdateGainTicketCards(cards);
 	}
 	void _clientUpdateGainTicketCards(List<TicketCard> cards) {
-		players.get(playerID).getTicketCards().addAll(cards);
+		players.get(playerID - 1).getTicketCards().addAll(cards);
 		lastTicketCards = cards;
 	}
 	
@@ -733,7 +736,7 @@ public class Controller implements GUIHandler {
 			_clientUpdateLooseTrainCard(card, n);
 	}
 	void _clientUpdateLooseTrainCard(TrainColor card, int n) {
-		players.get(playerID).removeTrainCards(card, n);
+		players.get(playerID - 1).removeTrainCards(card, n);
 	}
 	
 	private void clientUpdateLooseTicketCard(int recipID, TicketCard card) {
@@ -744,7 +747,7 @@ public class Controller implements GUIHandler {
 			_clientUpdateLooseTicketCard(card);
 	}
 	void _clientUpdateLooseTicketCard(TicketCard card) {
-		players.get(playerID).getTicketCards().remove(card);
+		players.get(playerID - 1).getTicketCards().remove(card);
 	}
 	
 	private void clientUpdateScores(int recipID, List<Integer> scores) {
@@ -760,7 +763,7 @@ public class Controller implements GUIHandler {
 			_clientUpdateScores(scores);
 	}
 	void _clientUpdateScores(List<Integer> scores) {
-		for (int i = 1; i < players.size(); i++) {
+		for (int i = 0; i < players.size(); i++) {
 			Player p = players.get(i);
 			int currScore = p.getScore();
 			p.addScore(scores.remove(0) - currScore);
