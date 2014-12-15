@@ -138,8 +138,9 @@ public class Client extends NetComponent implements IClient {
 						e.printStackTrace();
 					}
 
-
-					System.out.println(idFromServer);
+					/** Added by: Kerekes Zoltán */
+					Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, idFromServer));
+					
 					clientID = idFromServer;
 				}
 
