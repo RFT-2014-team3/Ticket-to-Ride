@@ -14,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
+import logicmodule.Controller;
+
 public class Route {
 
 	private String id;
@@ -69,7 +71,7 @@ public class Route {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(clickAlphaValue(icon, e.getX(), e.getY()) != 0){
-					System.out.println(id);
+					Controller.getInstance().claimRoute(shared.Route.valueOf(id));
 				} 
 			}
 		});

@@ -2,29 +2,33 @@ package view;
 
 import java.awt.Color;
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import logicmodule.Controller;
+import shared.TrainColor;
+
 public class GameDetailsPanel extends JPanel {
 
 	private JLabel gameDetails;
 	private JLabel ticketsDeck;
 	private JLabel trainsDeck;
+	private List<JLabel> upfaceTrains = new ArrayList<JLabel>();
 	
 	public GameDetailsPanel(){
-		setLayout(new GridLayout(3, 1));
+		setLayout(new GridLayout(8, 1));
 		setBackground(Color.WHITE);
 		
 		gameDetails = new JLabel("Játék adatok");
@@ -57,7 +61,7 @@ public class GameDetailsPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				Controller.getInstance().drawTicketCards();
 			}
 		});
 		
@@ -86,12 +90,48 @@ public class GameDetailsPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				
+				Controller.getInstance().drawTrainCard();
 			}
 		});
 		
 		add(ticketsDeck);
 		add(trainsDeck);
+		
+		for(TrainColor tc : Controller.getInstance().getUpfaceTrainCards()){
+			final JLabel card = new JLabel(new ImageIcon(resize(loadImage("trains/" + tc), 0.25)));
+			card.addMouseListener(new MouseListener() {
+				
+				@Override
+				public void mouseReleased(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mousePressed(MouseEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+				@Override
+				public void mouseExited(MouseEvent e) {
+					trainsDeck.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
+				
+				@Override
+				public void mouseEntered(MouseEvent e) {
+					trainsDeck.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+				
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					Controller.getInstance().drawTrainCard(upfaceTrains.indexOf(card));
+					
+				}
+			});
+			upfaceTrains.add(card);
+			add(card);
+		}
 	}
 	
 	private BufferedImage loadImage(String name){
