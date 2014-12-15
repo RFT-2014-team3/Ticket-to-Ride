@@ -5,10 +5,13 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import logicmodule.Controller;
 
 public class WaitingScreen extends JPanel {
 
@@ -16,6 +19,8 @@ public class WaitingScreen extends JPanel {
 	private final JLabel mainLabel = new JLabel();
 	private final JLabel nofWaiting = new JLabel();
 	private final JButton start = new JButton();
+	Timer timer = new Timer();
+	Controller con = Controller.getInstance();
 	
 	public WaitingScreen(boolean isHost){
 		if(isHost){
@@ -23,6 +28,18 @@ public class WaitingScreen extends JPanel {
 		} else{
 			setClientWaitingScreen();
 		}
+		
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				int nofPlayers = con.getPlayerColors().size();
+				nofWaiting.setText(Integer.toString(nofPlayers));
+				if(con.isGameStarted()){
+					MainFrame.getInstance().setPanel(new GamePanel());
+					this.cancel();
+				}
+			}
+		}, 0, 100);
 	}
 	
 	private void setHostWaitingScreen(){
