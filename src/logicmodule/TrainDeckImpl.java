@@ -12,8 +12,8 @@ import shared.TrainColor;
 class TrainDeckImpl implements TrainDeck {
 
 	private TrainCard[] upfaceCards;
-	private List<TrainCard> downfaceCards = new ArrayList<>();;
-	private List<TrainCard> discardedCards = new ArrayList<>();;
+	private List<TrainCard> downfaceCards = new ArrayList<>();
+	private List<TrainCard> discardedCards = new ArrayList<>();
 	
 	public TrainDeckImpl() {
 		List<TrainColor> mainColors = new ArrayList<>(Arrays.asList(TrainColor.values()));

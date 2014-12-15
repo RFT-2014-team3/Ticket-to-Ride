@@ -11,14 +11,16 @@ import shared.TrainColor;
  */
 public class OpcodeHandler implements NetworkHandler {
 	
-	private static OpcodeHandler instance = new OpcodeHandler();
-	private Controller con = Controller.getInstance();
+	private static final OpcodeHandler instance = new OpcodeHandler();
 	
 	public static OpcodeHandler getInstance() {
 		return instance;
 	}
 	
+	private OpcodeHandler() {}
+	
 	public void sendTo(int playerID, Opcode opcode) {
+		Controller con = Controller.getInstance();
 		if(con.isServer()) {
 			opcode.setRecipientID(playerID);
 			((netsubmodul.Server)con.server).SendToSpecificClient(opcode);
@@ -29,6 +31,7 @@ public class OpcodeHandler implements NetworkHandler {
 	
 	@Override
 	public void decodeOpcode(Opcode opc) {
+		Controller con = Controller.getInstance();
 		switch (opc.getAction()) {
 			case SELECT_TRAIN_DECK:
 				con._drawTrainCard(opc.getSenderID());
@@ -45,6 +48,7 @@ public class OpcodeHandler implements NetworkHandler {
 			case SELECT_CLAIM_ROUTE:
 				con._claimRoute(opc.getSenderID(), shared.Route.valueOf(opc.getS1()));
 				break;
+				
 			case SELECT_THROW_TICKET_CARDS:
 				List<TicketCard> cards = new ArrayList<>();
 				if(!opc.getS1().equals("")) 
@@ -54,25 +58,50 @@ public class OpcodeHandler implements NetworkHandler {
 				if(!opc.getS3().equals("")) 
 					cards.add(TicketCard.valueOf(opc.getS3()));
 				con._throwTicketCards(opc.getSenderID(), cards);
+				break;
 
+			case SELECT_COLOR:
+				con._chooseColor(opc.getSenderID(), shared.PlayerColor.valueOf(opc.getS1()));
+				break;
+				
 			// =====================================================
 
+			case UPDATE_COLOR_CHOSE:
+				con._clientUpdateColorChose(opc.getI1(), shared.PlayerColor.valueOf(opc.getS1()));
+				break;
+				
+			case UPDATE_INIT_TURN_END:
+				con._clientUpdateInitTurnEnd();
+				break;
+				
+			case UPDATE_GAME_FINISHED:
+				con._clientUpdateGameFinished();
+				break;
+				
+			case UPDATE_PLAYER_COUNT:
+				con._clientUpdatePlayerCount(opc.getI1());
+				break;
+				
+			case UPDATE_GAME_STARTED:
+				con._clientUpdateGameStarted();
+				break;
+				
 			case UPDATE_YOUR_TURN_STARTED:
-				con._guiUpdateYourTurnStarted();
+				con._clientUpdateYourTurnStarted();
 				break;
 
 			case UPDATE_YOUR_TURN_ENDED:
-				con._guiUpdateYourTurnEnded();
+				con._clientUpdateYourTurnEnded();
 				break;
 
 			case UPDATE_ROUTE_CLAIMED:
-				con._guiUpdateRouteClaimed(shared.Route.valueOf(opc.getS1()), 
+				con._clientUpdateRouteClaimed(shared.Route.valueOf(opc.getS1()), 
 						opc.getS2().equals("") ? null : PlayerColor.valueOf(opc.getS2()),
 						opc.getS3().equals("") ? null : PlayerColor.valueOf(opc.getS3()));
 				break;
 
 			case UPDATE_TRAIN_DECK:
-				con._guiUpdateTrainDeck(opc.getI1());
+				con._clientUpdateTrainDeck(opc.getI1());
 				break;
 
 			case UPDATE_UPFACE_TRAIN_CARDS:
@@ -82,15 +111,15 @@ public class OpcodeHandler implements NetworkHandler {
 				cards3.add(opc.getS3().equals("") ? null : TrainColor.valueOf(opc.getS3()));
 				cards3.add(opc.getS4().equals("") ? null : TrainColor.valueOf(opc.getS4()));
 				cards3.add(opc.getS5().equals("") ? null : TrainColor.valueOf(opc.getS5()));
-				con._guiUpdateUpfaceTrainCards(cards3);
+				con._clientUpdateUpfaceTrainCards(cards3);
 				break;
 
 			case UPDATE_TICKET_DECK:
-				con._guiUpdateTicketDeck(opc.getI1());
+				con._clientUpdateTicketDeck(opc.getI1());
 				break;
 
 			case UPDATE_GAIN_TRAIN_CARD:
-				con._guiUpdateGainTrainCard(TrainColor.valueOf(opc.getS1()));
+				con._clientUpdateGainTrainCard(TrainColor.valueOf(opc.getS1()));
 				break;
 
 			case UPDATE_GAIN_TICKET_CARDS:
@@ -101,19 +130,25 @@ public class OpcodeHandler implements NetworkHandler {
 					cards2.add(TicketCard.valueOf(opc.getS2()));
 				if(!opc.getS3().equals("")) 
 					cards2.add(TicketCard.valueOf(opc.getS3()));
-				con._guiUpdateGainTicketCards(cards2);
+				con._clientUpdateGainTicketCards(cards2);
 				break;
 
 			case UPDATE_LOOSE_TRAIN_CARD:
-				con._guiUpdateLooseTrainCard(TrainColor.valueOf(opc.getS1()), opc.getI1());
+				con._clientUpdateLooseTrainCard(TrainColor.valueOf(opc.getS1()), opc.getI1());
 				break;
 
 			case UPDATE_LOOSE_TICKET_CARD:
-				con._guiUpdateLooseTicketCard(TicketCard.valueOf(opc.getS1()));
+				con._clientUpdateLooseTicketCard(TicketCard.valueOf(opc.getS1()));
 				break;
 
 			case UPDATE_SCORE:
-				con._guiUpdateScore(opc.getI1());
+				List<Integer> scores = new ArrayList<>();
+				scores.add(opc.getI1());
+				scores.add(opc.getI2());
+				scores.add(opc.getI3());
+				scores.add(opc.getI4());
+				scores.add(opc.getI5());
+				con._clientUpdateScores(scores);
 				break;
 		}
 	}

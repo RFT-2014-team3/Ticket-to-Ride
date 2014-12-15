@@ -6,13 +6,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import netsubmodul.Client;
-import netsubmodul.IClient;
-import netsubmodul.IServer;
 import netsubmodul.Server;
+import shared.City;
 import shared.PlayerColor;
 import shared.TicketCard;
 import shared.TrainColor;
-import view.MainFrame;
 
 // TODO [logic] Maybe need to stop server/client on exit.
 
@@ -29,24 +27,35 @@ public class Controller implements GUIHandler {
 	
 	private static final Controller instance = new Controller();
 	
-	// TODO [logic] GUIUpdate
-	//private GUIUpdate gui = MainFrame.getInstance();
-	
 	private static final int SERVER_ID = Opcode.SERVER_ID;
 	private OpcodeHandler oh = OpcodeHandler.getInstance();
 	private static final int PORT = 9999;
-	IServer server;
-	IClient client;
+	Server server;
+	Client client;
 	
+	// server and client
 	private Pathfinder pf;
-	private Map<shared.Route, Route> routes;
+	private Map<shared.Route, Route> routes = new HashMap<>();
 	private TrainDeck trainDeck;
 	private TicketDeck ticketDeck;
-	private List<Player> players;
+	private List<TicketCard> lastTicketCards = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
 	/** 0 means: not yet set; 1: this is the server; 2..5: this is a client. */
-	private int playerID = 0;
+	private int playerID = 0; 
 	private int currPlayerID = 0;
+	private boolean isMyTurn;
 	private State state = State.THROWING_TICKET;
+	private boolean gameStarted = false;
+	private boolean colorChosingTurn = false;
+	private boolean initialDrawTurn = false;
+	private boolean lastTurn = false;
+	private int lastTurnPlayerID;
+	private boolean gameFinished = false;
+	
+	// client specific
+	private int clientCardsInTrainDeck = 120;
+	private int clientCardsInTicketDeck = 30;
+	private List<TrainColor> clientUpfaceTrainCards;
 	
 	private Controller() {}
 
@@ -59,13 +68,20 @@ public class Controller implements GUIHandler {
 	}
 	
 	private void nextPlayer() {
-		guiUpdateYourTurnEnded(currPlayerID);
+		clientUpdateYourTurnEnded(currPlayerID);
 		if(currPlayerID == players.size())
 			currPlayerID = 1;
 		else
 			currPlayerID++;
 		state = State.CHOOSING;
-		guiUpdateYourTurnStarted(currPlayerID);
+		
+		// init draw turn ended?
+		if(currPlayerID == SERVER_ID && initialDrawTurn)
+			for (int i = 1; i <= players.size(); i++) {
+				clientUpdateInitTurnEnd(i);
+			}
+		
+		clientUpdateYourTurnStarted(currPlayerID);
 	}
 	
 	private void broadcastDeckStates() {
@@ -76,11 +92,15 @@ public class Controller implements GUIHandler {
 			else
 				upfaces.add(null);
 		}
+		List<Integer> scores = new ArrayList<>();
 		for(int i = 0; i < players.size(); i++) {
-			guiUpdateTicketDeck(i, ticketDeck.getCardsCount());
-			guiUpdateTrainDeck(i, trainDeck.getDownfaceCardsCount());
-			guiUpdateUpfaceTrainCards(i, upfaces);
-			guiUpdateScore(i, players.get(i).getScore());
+			scores.add(players.get(i).getScore());
+		}
+		for(int i = 0; i < players.size(); i++) {
+			clientUpdateTicketDeck(i, ticketDeck.getCardsCount());
+			clientUpdateTrainDeck(i, trainDeck.getDownfaceCardsCount());
+			clientUpdateUpfaceTrainCards(i, upfaces);
+			clientUpdateScores(i, scores);
 		}
 	}
 	
@@ -99,13 +119,13 @@ public class Controller implements GUIHandler {
 				// non-locomotives
 				int discarded = Math.min(player.getTrainCardCount(railColor), length);
 				List<TrainCard> cardsToDeck = player.removeTrainCards(railColor, discarded);
-				guiUpdateLooseTrainCard(currPlayerID, railColor, discarded);
+				clientUpdateLooseTrainCard(currPlayerID, railColor, discarded);
 				for (TrainCard tc : cardsToDeck)
 					trainDeck.discardCardIntoDeck(tc); 
 				// locomotives
 				if(discarded < length) {
 					List<TrainCard> cardsToDeck2 = player.removeTrainCards(TrainColor.GREY, length - discarded);
-					guiUpdateLooseTrainCard(currPlayerID, TrainColor.GREY, length - discarded);
+					clientUpdateLooseTrainCard(currPlayerID, TrainColor.GREY, length - discarded);
 					for (TrainCard tc : cardsToDeck2)
 						trainDeck.discardCardIntoDeck(tc); 
 				}
@@ -118,7 +138,7 @@ public class Controller implements GUIHandler {
 			for (TrainColor c : nonGreys) {
 				if(player.getTrainCardCount(c) >= length) {
 					List<TrainCard> cardsToDeck = player.removeTrainCards(c, length);
-					guiUpdateLooseTrainCard(currPlayerID, c, length);
+					clientUpdateLooseTrainCard(currPlayerID, c, length);
 					for (TrainCard tc : cardsToDeck)
 						trainDeck.discardCardIntoDeck(tc);
 					return true;
@@ -130,13 +150,13 @@ public class Controller implements GUIHandler {
 					// non-locomotives
 					int discarded = Math.min(player.getTrainCardCount(c), length);
 					List<TrainCard> cardsToDeck = player.removeTrainCards(c, discarded);
-					guiUpdateLooseTrainCard(currPlayerID, c, discarded);
+					clientUpdateLooseTrainCard(currPlayerID, c, discarded);
 					for (TrainCard tc : cardsToDeck)
 						trainDeck.discardCardIntoDeck(tc); 
 					// locomotives
 					if(discarded < length) {
 						List<TrainCard> cardsToDeck2 = player.removeTrainCards(TrainColor.GREY, length - discarded);
-						guiUpdateLooseTrainCard(currPlayerID, TrainColor.GREY, length - discarded);
+						clientUpdateLooseTrainCard(currPlayerID, TrainColor.GREY, length - discarded);
 						for (TrainCard tc : cardsToDeck2)
 							trainDeck.discardCardIntoDeck(tc); 
 					}
@@ -147,6 +167,155 @@ public class Controller implements GUIHandler {
 		return false;
 	}
 	
+	private void checkLastTurn() {
+		for (int i = 1; i < players.size(); i++) {
+			if(!lastTurn && players.get(i).getRemainingTrainsCount() <= 2) {
+				lastTurn = true;
+				lastTurnPlayerID = currPlayerID;
+				return;
+			}
+		}
+		if(lastTurn && lastTurnPlayerID == currPlayerID)
+			finishGame();
+	}
+	
+	private void finishGame() {
+		for (Player p : pf.getLongestPathOwners()) {
+			p.addScore(10);
+		}
+		for (Player p : players) {
+			for (TicketCard card : p.getTicketCards()) {
+				List<City> dests = card.getDestinations();
+				City cityA = dests.get(0);
+				City cityB = dests.get(1);
+				if(pf.pathExistsBetween(cityA, cityB, p))
+					p.addScore(card.getValue());
+				else
+					p.addScore(-card.getValue());
+			}
+		}
+		for (int i = 1; i <= players.size(); i++) {
+			clientUpdateGameFinished(i);
+		}
+	}
+	
+	
+	// ========================== Requests from GUI. ==========================
+	// <editor-fold desc="implements GUIHandler interface">
+
+	@Override
+	public boolean isGameStarted() {
+		return gameStarted;
+	}
+
+	@Override
+	public boolean isMyTurn() {
+		return isMyTurn;
+	}
+
+	@Override
+	public boolean isInitialDrawTurn() {
+		return initialDrawTurn;
+	}
+
+	@Override
+	public boolean isColorChosingTurn() {
+		return colorChosingTurn;
+	}
+	
+	@Override
+	public boolean isGameFinished() {
+		return gameFinished;
+	}
+	
+	@Override
+	public List<PlayerColor> getRouteOwnerColors(shared.Route route) {
+		List<PlayerColor> colors = new ArrayList<>();
+		for (Rail r : this.routes.get(route).getRails()) {
+			if(r.getOwner() == null)
+				colors.add(null);
+			else
+				colors.add(r.getOwner().getColor());
+		}
+		return colors;
+	}
+
+	@Override
+	public int getNumberOfCardsInTrainDeck() {
+		if(playerID == SERVER_ID) {
+			return trainDeck.getDownfaceCardsCount();
+		} else {
+			return clientCardsInTrainDeck;
+		}
+	}
+
+	@Override
+	public int getNumberOfCardsInTicketDeck() {
+		if(playerID == SERVER_ID) {
+			return ticketDeck.getCardsCount();
+		} else {
+			return clientCardsInTicketDeck;
+		}
+	}
+
+	@Override
+	public List<TrainColor> getUpfaceTrainCards() {
+		if(playerID == SERVER_ID) {
+			List<TrainColor> cards = new ArrayList<>();
+			for (int i = 0; i < 5; i++) {
+				cards.add(trainDeck.getUpfaceCardColor(i));
+			}
+			return cards;
+		} else {
+			return new ArrayList<>(clientUpfaceTrainCards);
+		}
+	}
+
+	@Override
+	public List<TicketCard> getMyTicketCards() {
+		return new ArrayList<>(players.get(playerID).getTicketCards());
+	}
+
+	@Override
+	public List<Integer> getMyTrainCards() {
+		List<Integer> counts = new ArrayList<>();
+		Player p = players.get(playerID);
+		for (TrainColor c : TrainColor.values()) {
+			counts.add(p.getTrainCardCount(c));
+		}
+		return counts;
+	}
+
+	@Override
+	public List<Integer> getPlayerScores() {
+		List<Integer> scores = new ArrayList<>();
+		for (Player p : players) {
+			scores.add(p.getScore());
+		}
+		return scores;
+	}
+
+	@Override
+	public List<PlayerColor> getPlayerColors() {
+		List<PlayerColor> colors = new ArrayList<>();
+		for (Player p : players) {
+			colors.add(p.getColor());
+		}
+		return colors;
+	}
+
+	@Override
+	public int getMyID() {
+		return playerID;
+	}
+	
+	@Override
+	public List<TicketCard> getChoosableTicketCards() {
+		return lastTicketCards;
+	}
+
+	// </editor-fold>
+	
 	
 	
 	// ======================= Input messages from GUI. =======================
@@ -156,17 +325,16 @@ public class Controller implements GUIHandler {
 	public String startNewServer() {
 		playerID = 1;
 		currPlayerID = 1;
-		routes = new HashMap<>();
 		for (shared.Route r : shared.Route.values()) {
 			routes.put(r, Factory.newRoute(r));
 		}
 		pf = Factory.newPathfinder(new ArrayList<>(routes.values()));
-		players = new ArrayList<>();
 		players.add(Factory.newPlayer());
 		trainDeck = Factory.newTrainDeck();
 		ticketDeck = Factory.newTicketDeck();
 		
 		server = Server.GetServer();
+		server.setOpcodeHandler(oh);
 		server.startServer(PORT);
 		String ip = server.GetServerAddress();
 		return ip;
@@ -175,6 +343,7 @@ public class Controller implements GUIHandler {
 	@Override
 	public boolean connectToServer(String ip) {
 		client = new Client();
+		client.setOpcodeHandler(oh);
 		boolean success = client.startClient(ip, PORT);
 		if(success) {
 			float maxWaitSecs = 5;
@@ -188,6 +357,17 @@ public class Controller implements GUIHandler {
 			if(client.GetClientID() == -100)
 				return false;
 			playerID = client.GetClientID();
+			
+			for (shared.Route r : shared.Route.values()) {
+				routes.put(r, Factory.newRoute(r));
+			}
+			/*for (int j = 1; j <= playerID; j++) {
+				players.add(Factory.newPlayer());
+			}*/
+			clientUpfaceTrainCards = new ArrayList<>();
+			for (int j = 0; j < 5; j++) {
+				clientUpfaceTrainCards.add(null);
+			}
 		}
 		return success;
 	}
@@ -195,12 +375,52 @@ public class Controller implements GUIHandler {
 	@Override
 	public boolean startGame() {
 		if(server.GetConnectedClients() > 0){
+			for (int i = 1; i <= players.size(); i++) {
+				Player p = players.get(i - 1);
+				// give trains
+				p.setRemainingTrainsCount(45);
+				// give train cards
+				trainDeck.shuffleDownfaceCards();
+				for (int j = 0; j < 4; j++) {
+					TrainCard trCard = trainDeck.drawDownfaceCard();
+					p.addTrainCards(trCard.getColor(), 1);
+				}
+				// give ticket cards
+				ticketDeck.shuffleCards();
+				List<TicketCard> tiCards = new ArrayList<>();
+				for (int j = 0; j < 3; j++) {
+					tiCards.add(ticketDeck.drawCard());
+				}
+				clientUpdateGainTicketCards(i, tiCards);
+			}
+			broadcastDeckStates();
 			server.StartMatch();
+			clientUpdateGameStarted();
 			return true;
 		}
 		else {
 			return false;
 		}
+	}
+	
+	@Override
+	public void chooseColor(PlayerColor color) {
+		if(playerID != SERVER_ID)
+			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_COLOR,
+					color.name()));
+		else
+			_chooseColor(playerID, color);
+	}
+	void _chooseColor(int senderID, PlayerColor color) {
+		if(senderID != currPlayerID)
+			return;
+		for (Player p : players)
+			if(p.getColor() != null && p.getColor() == color)
+				return;
+		
+		players.get(currPlayerID).setColor(color);
+		clientUpdateColorChose(playerID, color);
+		nextPlayer();
 	}
 	
 	@Override
@@ -210,14 +430,15 @@ public class Controller implements GUIHandler {
 		else
 			_drawTrainCard(playerID);
 	}
-	void _drawTrainCard(int senderIndex) {
-		if(senderIndex != currPlayerID || trainDeck.getDownfaceCardsCount() == 0
-				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN))
+	void _drawTrainCard(int senderID) {
+		if(senderID != currPlayerID || trainDeck.getDownfaceCardsCount() == 0
+				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN)
+				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
 			return;
 		
 		TrainCard card = trainDeck.drawDownfaceCard();
-		players.get(senderIndex).addTrainCards(card.getColor(), 1);
-		guiUpdateGainTrainCard(senderIndex, card.getColor());
+		players.get(senderID).addTrainCards(card.getColor(), 1);
+		clientUpdateGainTrainCard(senderID, card.getColor());
 		broadcastDeckStates();
 		if(state == State.CHOOSING) {
 			if(trainDeck.getDownfaceCardsCount() == 0 && !trainDeck.hasUpfaceNonLocomotiveCard())
@@ -237,16 +458,17 @@ public class Controller implements GUIHandler {
 		else
 			_drawTrainCard(playerID, index);
 	}
-	void _drawTrainCard(int senderIndex, int index) {
-		if(senderIndex != currPlayerID || !trainDeck.upfaceCardIsExists(index)
-				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN))
+	void _drawTrainCard(int senderID, int index) {
+		if(senderID != currPlayerID || !trainDeck.upfaceCardIsExists(index)
+				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN)
+				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
 			return;
 		if(state == State.DRAWING_2ND_TRAIN && trainDeck.upfaceCardIsLocomotive(index))
 			return;
 		
 		TrainCard card = trainDeck.drawUpfaceCard(index);
-		players.get(senderIndex).addTrainCards(card.getColor(), 1);
-		guiUpdateGainTrainCard(senderIndex, card.getColor());
+		players.get(senderID).addTrainCards(card.getColor(), 1);
+		clientUpdateGainTrainCard(senderID, card.getColor());
 		broadcastDeckStates();
 		if(state == State.CHOOSING) {
 			if(trainDeck.upfaceCardIsLocomotive(index))
@@ -265,9 +487,9 @@ public class Controller implements GUIHandler {
 		else
 			_drawTicketCards(playerID);
 	}
-	void _drawTicketCards(int senderIndex) {
-		if(senderIndex != currPlayerID || ticketDeck.getCardsCount() == 0 
-				|| state != State.CHOOSING)
+	void _drawTicketCards(int senderID) {
+		if(senderID != currPlayerID || ticketDeck.getCardsCount() == 0 
+				|| state != State.CHOOSING || !gameStarted || colorChosingTurn || gameFinished)
 			return;
 		
 		List<TicketCard> cards = new ArrayList<>();
@@ -275,8 +497,8 @@ public class Controller implements GUIHandler {
 			if(ticketDeck.getCardsCount() > 0)
 				cards.add(ticketDeck.drawCard());
 		}
-		players.get(senderIndex).getTicketCards().addAll(cards);
-		guiUpdateGainTicketCards(senderIndex, cards);
+		players.get(senderID).getTicketCards().addAll(cards);
+		clientUpdateGainTicketCards(senderID, cards);
 		broadcastDeckStates();
 		state = State.THROWING_TICKET;
 	}
@@ -288,15 +510,15 @@ public class Controller implements GUIHandler {
 		else
 			_throwTicketCards(playerID, cards);
 	}
-	void _throwTicketCards(int senderIndex, List<TicketCard> cards) {
-		if(senderIndex != currPlayerID || state != State.THROWING_TICKET)
+	void _throwTicketCards(int senderID, List<TicketCard> cards) {
+		if(senderID != currPlayerID || state != State.THROWING_TICKET)
 			return;
 		
 		for (TicketCard c : cards) {
 			ticketDeck.discardCardIntoDeck(c);
-			guiUpdateLooseTicketCard(senderIndex, c);
+			clientUpdateLooseTicketCard(senderID, c);
 		}
-		players.get(senderIndex).getTicketCards().removeAll(cards);
+		players.get(senderID).getTicketCards().removeAll(cards);
 		broadcastDeckStates();
 		nextPlayer();
 	}
@@ -309,8 +531,9 @@ public class Controller implements GUIHandler {
 		else
 			_claimRoute(playerID, route);
 	}
-	void _claimRoute(int senderIndex, shared.Route route) {
-		if(senderIndex != currPlayerID || state != State.CHOOSING)
+	void _claimRoute(int senderID, shared.Route route) {
+		if(senderID != currPlayerID || state != State.CHOOSING
+				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
 			return;
 		
 		Player player = players.get(currPlayerID);
@@ -339,14 +562,15 @@ public class Controller implements GUIHandler {
 			player.setRemainingTrainsCount(player.getRemainingTrainsCount() - rail.getLength());
 			player.addScore(r.getScoreValue());
 			// notify GUIs to change the route's color
-			for (int i = 0; i < players.size(); i++) {
+			for (int i = 1; i <= players.size(); i++) {
 				Player owner1 = r.getRails().get(0).getOwner();
 				PlayerColor c1 = owner1 == null ? null : owner1.getColor();
 				Player owner2 = r.getRails().size() < 2 ? null : r.getRails().get(0).getOwner();
 				PlayerColor c2 = owner2 == null ? null : owner2.getColor();
-				guiUpdateRouteClaimed(i, route, c1, c2);
+				clientUpdateRouteClaimed(i, route, c1, c2);
 			}
 			broadcastDeckStates();
+			checkLastTurn();
 			nextPlayer();
 			return;
 		}
@@ -356,138 +580,209 @@ public class Controller implements GUIHandler {
 	
 	
 	
-	// ======================= Update messages to GUI. =======================
-	// <editor-fold desc="to GUIUpdate interface">
+	// ===================== Update messages to client. =======================
+	// <editor-fold desc="non-interface message methods">
 	
-	private void guiUpdateYourTurnStarted(int recipID) {
+	private void clientUpdateColorChose(int playerID, PlayerColor color) {
+		for (int i = 1; i <= players.size(); i++) {
+			oh.sendTo(i, new Opcode(SERVER_ID, Opcode.Action.UPDATE_COLOR_CHOSE,
+					playerID, color.name()));
+		}
+		_clientUpdateColorChose(playerID, color);
+	}
+	void _clientUpdateColorChose(int playerID, PlayerColor color) {
+		players.get(playerID).setColor(color);
+		
+		// turn ended?
+		for (Player p : players) {
+			if(p.getColor() == null)
+				return;
+		}
+		colorChosingTurn = false;
+		initialDrawTurn = true;
+	}
+	
+	void _clientUpdatePlayerCount(int n) {
+		for (int i = players.size(); i < n; i++) {
+			players.add(Factory.newPlayer());
+		}
+	}
+	
+	private void clientUpdateGameStarted() {
+		for (int i = 1; i <= players.size(); i++) {
+			oh.sendTo(i, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAME_STARTED));
+		}
+		_clientUpdateGameStarted();
+	}
+	void _clientUpdateGameStarted() {
+		gameStarted = true;
+		colorChosingTurn = true;
+	}
+	
+	private void clientUpdateYourTurnStarted(int recipID) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_YOUR_TURN_STARTED));
 		else
-			_guiUpdateYourTurnStarted();
+			_clientUpdateYourTurnStarted();
 	}
-	void _guiUpdateYourTurnStarted() {
-		gui.updateYourTurnStarted();
+	void _clientUpdateYourTurnStarted() {
+		currPlayerID = playerID;
+		isMyTurn = true;
 	}
 	
-	private void guiUpdateYourTurnEnded(int recipID) {
+	private void clientUpdateYourTurnEnded(int recipID) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_YOUR_TURN_ENDED));
 		else
-			_guiUpdateYourTurnEnded();
+			_clientUpdateYourTurnEnded();
 	}
-	void _guiUpdateYourTurnEnded() {
-		gui.updateYourTurnEnded();
+	void _clientUpdateYourTurnEnded() {
+		isMyTurn = false;
 	}
 	
-	private void guiUpdateRouteClaimed(int recipID, shared.Route route, PlayerColor color1, PlayerColor color2) {
+	private void clientUpdateRouteClaimed(int recipID, shared.Route route, PlayerColor color1, PlayerColor color2) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_ROUTE_CLAIMED, 
 					route.name(), 
 					color1 == null ? "" : color1.name(), 
 					color2 == null ? "" : color2.name()));
 		else
-			_guiUpdateRouteClaimed(route, color1, color2);
+			_clientUpdateRouteClaimed(route, color1, color2);
 	}
-	void _guiUpdateRouteClaimed(shared.Route route, PlayerColor color1, PlayerColor color2) {
-		List<shared.PlayerColor> colors = new ArrayList<>();
-		colors.add(color1);
-		colors.add(color2);
-		gui.updateRouteClaimed(route, colors);
+	void _clientUpdateRouteClaimed(shared.Route route, PlayerColor color1, PlayerColor color2) {
+		List<Rail> rails = routes.get(route).getRails();
+		// HACK
+		for (Player p : players) {
+			if(p.getColor() == color1) {
+				rails.get(0).setOwner(p);
+			}
+			if(p.getColor() == color2 && color2 != null) {
+				rails.get(1).setOwner(p);
+			}
+		}
 	}
 	
-	private void guiUpdateTrainDeck(int recipID, int numberOfCards) {
+	private void clientUpdateTrainDeck(int recipID, int numberOfCards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_TRAIN_DECK,
 					numberOfCards));
 		else
-			_guiUpdateTrainDeck(numberOfCards);
+			_clientUpdateTrainDeck(numberOfCards);
 	}
-	void _guiUpdateTrainDeck(int numberOfCards) {
-		gui.updateTrainDeck(numberOfCards);
+	void _clientUpdateTrainDeck(int numberOfCards) {
+		clientCardsInTrainDeck = numberOfCards;
 	}
 	
-	private void guiUpdateUpfaceTrainCards(int recipID, List<TrainColor> cards) {
+	private void clientUpdateUpfaceTrainCards(int recipID, List<TrainColor> cards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_UPFACE_TRAIN_CARDS,
-					0, 0, 0, 0,
+					0, 0, 0, 0, 0,
 					cards.get(0) == null ? "" : cards.get(0).name(), 
 					cards.get(1) == null ? "" : cards.get(1).name(), 
 					cards.get(2) == null ? "" : cards.get(2).name(), 
 					cards.get(3) == null ? "" : cards.get(3).name(), 
 					cards.get(4) == null ? "" : cards.get(4).name()));
 		else
-			_guiUpdateUpfaceTrainCards(cards);
+			_clientUpdateUpfaceTrainCards(cards);
 	}
-	void _guiUpdateUpfaceTrainCards(List<TrainColor> cards) {
-		gui.updateUpfaceTrainCards(cards);
+	void _clientUpdateUpfaceTrainCards(List<TrainColor> cards) {
+		clientUpfaceTrainCards = cards;
 	}
 	
-	private void guiUpdateTicketDeck(int recipID, int numberOfCards) {
+	private void clientUpdateTicketDeck(int recipID, int numberOfCards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_TICKET_DECK,
 					numberOfCards));
 		else
-			_guiUpdateTicketDeck(numberOfCards);
+			_clientUpdateTicketDeck(numberOfCards);
 	}
-	void _guiUpdateTicketDeck(int numberOfCards) {
-		gui.updateTicketDeck(numberOfCards);
+	void _clientUpdateTicketDeck(int numberOfCards) {
+		clientCardsInTicketDeck = numberOfCards;
 	}
 	
-	private void guiUpdateGainTrainCard(int recipID, TrainColor card) {
+	private void clientUpdateGainTrainCard(int recipID, TrainColor card) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAIN_TRAIN_CARD,
 					card.name()));
 		else
-			_guiUpdateGainTrainCard(card);
+			_clientUpdateGainTrainCard(card);
 	}
-	void _guiUpdateGainTrainCard(TrainColor card) {
-		gui.gainTrainCard(card);
+	void _clientUpdateGainTrainCard(TrainColor card) {
+		players.get(playerID).addTrainCards(card, 1);
 	}
 	
-	private void guiUpdateGainTicketCards(int recipID, List<TicketCard> cards) {
+	private void clientUpdateGainTicketCards(int recipID, List<TicketCard> cards) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAIN_TICKET_CARDS,
-					cards.get(0) == null ? "" : cards.get(0).name(),
-					cards.get(1) == null ? "" : cards.get(1).name(),
-					cards.get(2) == null ? "" : cards.get(2).name() ));
+					cards.size() < 1 || cards.get(0) == null ? "" : cards.get(0).name(),
+					cards.size() < 2 || cards.get(1) == null ? "" : cards.get(1).name(),
+					cards.size() < 3 || cards.get(2) == null ? "" : cards.get(2).name() ));
 		else
-			_guiUpdateGainTicketCards(cards);
+			_clientUpdateGainTicketCards(cards);
 	}
-	void _guiUpdateGainTicketCards(List<TicketCard> cards) {
-		gui.gainTicketCards(cards);
+	void _clientUpdateGainTicketCards(List<TicketCard> cards) {
+		players.get(playerID).getTicketCards().addAll(cards);
+		lastTicketCards = cards;
 	}
 	
-	private void guiUpdateLooseTrainCard(int recipID, TrainColor card, int n) {
+	private void clientUpdateLooseTrainCard(int recipID, TrainColor card, int n) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_LOOSE_TRAIN_CARD,
 					n, card.name()));
 		else
-			_guiUpdateLooseTrainCard(card, n);
+			_clientUpdateLooseTrainCard(card, n);
 	}
-	void _guiUpdateLooseTrainCard(TrainColor card, int n) {
-		gui.looseTrainCard(card, n);
+	void _clientUpdateLooseTrainCard(TrainColor card, int n) {
+		players.get(playerID).removeTrainCards(card, n);
 	}
 	
-	private void guiUpdateLooseTicketCard(int recipID, TicketCard card) {
+	private void clientUpdateLooseTicketCard(int recipID, TicketCard card) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_LOOSE_TICKET_CARD,
 					card.name()));
 		else
-			_guiUpdateLooseTicketCard(card);
+			_clientUpdateLooseTicketCard(card);
 	}
-	void _guiUpdateLooseTicketCard(TicketCard card) {
-		gui.looseTicketCard(card);
+	void _clientUpdateLooseTicketCard(TicketCard card) {
+		players.get(playerID).getTicketCards().remove(card);
 	}
 	
-	private void guiUpdateScore(int recipID, int score) {
+	private void clientUpdateScores(int recipID, List<Integer> scores) {
 		if(this.playerID != recipID)
 			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_SCORE,
-					score));
+					scores.size() < 1 || scores.get(0) == null ? 0 : scores.get(0),
+					scores.size() < 2 || scores.get(1) == null ? 0 : scores.get(1),
+					scores.size() < 3 || scores.get(2) == null ? 0 : scores.get(2),
+					scores.size() < 4 || scores.get(3) == null ? 0 : scores.get(3),
+					scores.size() < 5 || scores.get(4) == null ? 0 : scores.get(4),
+					"", "", "", "", ""));
 		else
-			_guiUpdateScore(score);
+			_clientUpdateScores(scores);
 	}
-	void _guiUpdateScore(int score) {
-		gui.updateScore(score);
+	void _clientUpdateScores(List<Integer> scores) {
+		for (int i = 1; i < players.size(); i++) {
+			Player p = players.get(i);
+			int currScore = p.getScore();
+			p.addScore(scores.remove(0) - currScore);
+		}
+	}
+	
+	private void clientUpdateInitTurnEnd(int recipID) {
+		if(this.playerID != recipID)
+			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_INIT_TURN_END));
+		_clientUpdateInitTurnEnd();
+	}
+	void _clientUpdateInitTurnEnd() {
+		initialDrawTurn = false;
+	}
+	
+	private void clientUpdateGameFinished(int recipID) {
+		if(this.playerID != recipID)
+			oh.sendTo(recipID, new Opcode(SERVER_ID, Opcode.Action.UPDATE_GAME_FINISHED));
+		_clientUpdateGameFinished();
+	}
+	void _clientUpdateGameFinished() {
+		gameFinished = true;
 	}
 	
 	// </editor-fold>

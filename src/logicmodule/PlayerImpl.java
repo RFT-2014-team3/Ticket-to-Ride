@@ -17,7 +17,7 @@ class PlayerImpl implements Player {
 	private List<TicketCard> ticketCards;
 	private int remainingTrains = 45;
 	private int score = 0;
-	private PlayerColor color;
+	private PlayerColor color = null;
 	
 	public PlayerImpl() {
 		trainCards = new HashMap<>();

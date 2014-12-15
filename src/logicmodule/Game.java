@@ -1,11 +1,13 @@
 package logicmodule;
 
+import view.MainFrame;
+
 /**
  * @author Kerekes Zoltán
  */
 public class Game {
 	public static void main(String[] args) {
-		GUIHandler controller = Controller.getInstance();
-		//controller.
+		GUIHandler con = Controller.getInstance();
+		MainFrame mf = MainFrame.getInstance();
 	}
 }

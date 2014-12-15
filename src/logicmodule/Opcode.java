@@ -13,6 +13,12 @@ public class Opcode implements Serializable {
 		SELECT_TICKET_DECK,
 		SELECT_CLAIM_ROUTE,
 		SELECT_THROW_TICKET_CARDS,
+		SELECT_COLOR,
+		UPDATE_COLOR_CHOSE,
+		UPDATE_INIT_TURN_END,
+		UPDATE_GAME_FINISHED,
+		UPDATE_PLAYER_COUNT,
+		UPDATE_GAME_STARTED,
 		UPDATE_YOUR_TURN_STARTED,
 		UPDATE_YOUR_TURN_ENDED,
 		UPDATE_ROUTE_CLAIMED,
@@ -35,10 +41,10 @@ public class Opcode implements Serializable {
 	 */
 	private int recipientID = -1000;
 	private Action action;
-	private int i1, i2, i3, i4;
+	private int i1, i2, i3, i4, i5;
 	private String s1, s2, s3, s4, s5;
 
-	public Opcode(int senderID, Action action, int i1, int i2, int i3, int i4, 
+	public Opcode(int senderID, Action action, int i1, int i2, int i3, int i4, int i5,
 			String s1, String s2, String s3, String s4, String s5) {
 		this.senderID = senderID;
 		this.action = action;
@@ -46,6 +52,7 @@ public class Opcode implements Serializable {
 		this.i2 = i2;
 		this.i3 = i3;
 		this.i4 = i4;
+		this.i5 = i5;
 		this.s1 = s1;
 		this.s2 = s2;
 		this.s3 = s3;
@@ -53,19 +60,19 @@ public class Opcode implements Serializable {
 		this.s5 = s5;
 	}
 	public Opcode(int senderID, Action action) {
-		this(senderID, action, 0, 0, 0, 0, "", "", "", "", "");
+		this(senderID, action, 0, 0, 0, 0, 0, "", "", "", "", "");
 	}
 	public Opcode(int senderID, Action action, int i1) {
-		this(senderID, action, i1, 0, 0, 0, "", "", "", "", "");
+		this(senderID, action, i1, 0, 0, 0, 0, "", "", "", "", "");
 	}
 	public Opcode(int senderID, Action action, String s1) {
-		this(senderID, action, 0, 0, 0, 0, s1, "", "", "", "");
+		this(senderID, action, 0, 0, 0, 0, 0, s1, "", "", "", "");
 	}
 	public Opcode(int senderID, Action action, int i1, String s1) {
-		this(senderID, action, i1, 0, 0, 0, s1, "", "", "", "");
+		this(senderID, action, i1, 0, 0, 0, 0, s1, "", "", "", "");
 	}
 	public Opcode(int senderID, Action action, String s1, String s2, String s3) {
-		this(senderID, action, 0, 0, 0, 0, s1, s2, s3, "", "");
+		this(senderID, action, 0, 0, 0, 0, 0, s1, s2, s3, "", "");
 	}
 	
 	public void setRecipientID(int id) {
@@ -98,6 +105,10 @@ public class Opcode implements Serializable {
 
 	public int getI4() {
 		return i4;
+	}
+
+	public int getI5() {
+		return i5;
 	}
 
 	public String getS1() {
