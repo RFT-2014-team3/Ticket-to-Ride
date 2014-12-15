@@ -391,6 +391,7 @@ public class Controller implements GUIHandler {
 				for (int j = 0; j < 4; j++) {
 					TrainCard trCard = trainDeck.drawDownfaceCard();
 					p.addTrainCards(trCard.getColor(), 1);
+					clientUpdateGainTrainCard(i, trCard.getColor());
 				}
 				// give ticket cards
 				ticketDeck.shuffleCards();
@@ -398,6 +399,7 @@ public class Controller implements GUIHandler {
 				for (int j = 0; j < 3; j++) {
 					tiCards.add(ticketDeck.drawCard());
 				}
+				p.getTicketCards().addAll(tiCards);
 				clientUpdateGainTicketCards(i, tiCards);
 			}
 			broadcastDeckStates();
@@ -715,6 +717,8 @@ public class Controller implements GUIHandler {
 			_clientUpdateGainTrainCard(card);
 	}
 	void _clientUpdateGainTrainCard(TrainColor card) {
+		if(playerID == SERVER_ID)
+			return;
 		players.get(playerID - 1).addTrainCards(card, 1);
 	}
 	
@@ -728,8 +732,10 @@ public class Controller implements GUIHandler {
 			_clientUpdateGainTicketCards(cards);
 	}
 	void _clientUpdateGainTicketCards(List<TicketCard> cards) {
-		players.get(playerID - 1).getTicketCards().addAll(cards);
 		lastTicketCards = cards;
+		if(playerID == SERVER_ID)
+			return;
+		players.get(playerID - 1).getTicketCards().addAll(cards);
 	}
 	
 	private void clientUpdateLooseTrainCard(int recipID, TrainColor card, int n) {
@@ -740,6 +746,8 @@ public class Controller implements GUIHandler {
 			_clientUpdateLooseTrainCard(card, n);
 	}
 	void _clientUpdateLooseTrainCard(TrainColor card, int n) {
+		if(playerID == SERVER_ID)
+			return;
 		players.get(playerID - 1).removeTrainCards(card, n);
 	}
 	
@@ -751,6 +759,8 @@ public class Controller implements GUIHandler {
 			_clientUpdateLooseTicketCard(card);
 	}
 	void _clientUpdateLooseTicketCard(TicketCard card) {
+		if(playerID == SERVER_ID)
+			return;
 		players.get(playerID - 1).getTicketCards().remove(card);
 	}
 	
