@@ -139,7 +139,8 @@ public class Client extends NetComponent implements IClient {
 					}
 
 					/** Added by: Kerekes Zoltán */
-					Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, idFromServer));
+					if(idFromServer != -100 && idFromServer <= 5)
+						Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, idFromServer));
 					
 					clientID = idFromServer;
 				}

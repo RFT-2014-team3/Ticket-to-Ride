@@ -329,6 +329,9 @@ public class Controller implements GUIHandler {
 		
 		playerID = 1;
 		currPlayerID = 1;
+		state = State.CHOOSING;
+		clientUpdateYourTurnStarted(currPlayerID);
+		
 		for (shared.Route r : shared.Route.values()) {
 			routes.put(r, Factory.newRoute(r));
 		}
@@ -357,7 +360,8 @@ public class Controller implements GUIHandler {
 					i++;
 				} catch (InterruptedException ex) {}
 			}
-			if(client.GetClientID() == -100)
+			int id = client.GetClientID();
+			if(id == -100 || id > 5)
 				return false;
 			playerID = client.GetClientID();
 			
@@ -377,7 +381,7 @@ public class Controller implements GUIHandler {
 	
 	@Override
 	public boolean startGame() {
-		if(server.GetConnectedClients() > 0){
+		if(server.GetConnectedClients() > 0 && !gameStarted) {
 			for (int i = 1; i <= players.size(); i++) {
 				Player p = players.get(i - 1);
 				// give trains

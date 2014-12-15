@@ -25,6 +25,8 @@ class TrainDeckImpl implements TrainDeck {
 		for(int i = 0; i < 14; i++)
 			downfaceCards.add(Factory.newLocomotiveCard());
 		upfaceCards = new TrainCard[5];
+		shuffleDownfaceCards();
+		fillUpfaceCards();
 	}
 
 	@Override
@@ -89,7 +91,7 @@ class TrainDeckImpl implements TrainDeck {
 
 	@Override
 	public boolean upfaceCardIsExists(int index) {
-		return upfaceCards != null;
+		return upfaceCards[index] != null;
 	}
 
 	@Override
