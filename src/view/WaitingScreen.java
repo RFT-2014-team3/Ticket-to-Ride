@@ -12,6 +12,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import logicmodule.Controller;
+import logicmodule.GUIHandler;
 
 public class WaitingScreen extends JPanel {
 
@@ -20,7 +21,7 @@ public class WaitingScreen extends JPanel {
 	private final JLabel nofWaiting = new JLabel();
 	private final JButton start = new JButton();
 	Timer timer = new Timer();
-	Controller con = Controller.getInstance();
+	GUIHandler con = Controller.getInstance();
 	
 	public WaitingScreen(boolean isHost){
 		if(isHost){
@@ -58,8 +59,7 @@ public class WaitingScreen extends JPanel {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(logicmodule.Controller.getInstance().startGame())
-					MainFrame.getInstance().setPanel(new GamePanel());
+				con.startGame();
 			}
 		});
 		
