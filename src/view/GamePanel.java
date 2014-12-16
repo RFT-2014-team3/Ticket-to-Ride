@@ -1,10 +1,12 @@
 package view;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
@@ -13,14 +15,23 @@ import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+import javax.swing.AbstractButton;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
+
+import logicmodule.Controller;
+import shared.TicketCard;
 
 public class GamePanel extends JPanel {
 
@@ -32,7 +43,7 @@ public class GamePanel extends JPanel {
 		setBackground(Color.WHITE);
 		
 		int oldH = 0, newH = 0;
-		
+		System.out.println("game panel");
 		try {
 			map = ImageIO.read(getClass().getClassLoader().getResourceAsStream("map.jpg"));
 			oldH = map.getHeight();
@@ -74,7 +85,60 @@ public class GamePanel extends JPanel {
 		c.gridx = 2;
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(gameDet, c);
+
+		System.out.println(Controller.getInstance().getMyID());
 		
+		showThrowTicketsDialog(Controller.getInstance().getChoosableTicketCards());
+	}
+	
+	private void showThrowTicketsDialog(List<TicketCard> ticketCards){
+		final JDialog dialog = new JDialog();
+		dialog.setMinimumSize(new Dimension(300, 200));
+		dialog.setUndecorated(true);
+		
+		final ButtonGroup group = new ButtonGroup();
+		JPanel radioPanel = new JPanel(new GridLayout(0, 1));
+		
+		for(TicketCard card : ticketCards){
+			JRadioButton button = new JRadioButton(card.name());
+			button.setSelected(false);
+			
+			group.add(button);
+			radioPanel.add(button);
+		}
+	        
+	    JButton buttonOK = new JButton("OK");
+	    buttonOK.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					List<TicketCard> cards = new ArrayList<TicketCard>();
+					String name = getSelectedButton();
+					cards.add(name == null ? null : TicketCard.valueOf(name));
+					Controller.getInstance().throwTicketCards(cards);
+					dialog.dispose();
+					
+				}
+				
+				private String getSelectedButton(){
+					for (Enumeration<AbstractButton> buttons = group.getElements(); buttons.hasMoreElements();) {
+			            AbstractButton button = buttons.nextElement();
+
+			            if (button.isSelected()) {
+			                return button.getText();
+			            }
+			        }
+					
+					return null;
+				}
+			});
+	        radioPanel.add(buttonOK);
+
+	        dialog.add(radioPanel);
+	        
+		 dialog.setLocationRelativeTo(null);
+		 dialog.setVisible(true);
+		 
 	}
 	
 	private BufferedImage resize(BufferedImage img) { 

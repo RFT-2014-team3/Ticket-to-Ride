@@ -98,6 +98,9 @@ public class GameDetailsPanel extends JPanel {
 		add(trainsDeck);
 		
 		for(TrainColor tc : Controller.getInstance().getUpfaceTrainCards()){
+			if(tc == null){
+				continue;
+			}
 			final JLabel card = new JLabel(new ImageIcon(resize(loadImage("trains/" + tc), 0.25)));
 			card.addMouseListener(new MouseListener() {
 				
