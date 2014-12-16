@@ -15,7 +15,7 @@ import shared.TrainColor;
 // TODO [logic] Maybe need to stop server/client on exit.
 
 /**
- * @author Kerekes Zoltán
+ * @author Kerekes ZoltĂˇn
  */
 public class Controller implements GUIHandler {
 
@@ -520,7 +520,7 @@ public class Controller implements GUIHandler {
 			_throwTicketCards(playerID, cards);
 	}
 	void _throwTicketCards(int senderID, List<TicketCard> cards) {
-		if(senderID != currPlayerID || state != State.THROWING_TICKET)
+		if(senderID != currPlayerID || (state != State.THROWING_TICKET && !initialDrawTurn))
 			return;
 		
 		for (TicketCard c : cards) {
