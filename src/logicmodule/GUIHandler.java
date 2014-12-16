@@ -78,7 +78,7 @@ public interface GUIHandler {
 	/**
 	 * @return True if players now choosing color.
 	 */
-	boolean isColorChosingTurn();
+	//boolean isColorChosingTurn();
 	
 	/**
 	 * @return True if game finished and all score summarized.

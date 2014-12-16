@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import netsubmodul.Client;
 import netsubmodul.Server;
 import shared.City;
@@ -15,7 +16,7 @@ import shared.TrainColor;
 // TODO [logic] Maybe need to stop server/client on exit.
 
 /**
- * @author Kerekes ZoltĂˇn
+ * @author Kerekes Zoltán
  */
 public class Controller implements GUIHandler {
 
@@ -46,7 +47,7 @@ public class Controller implements GUIHandler {
 	private boolean isMyTurn;
 	private State state = State.THROWING_TICKET;
 	private boolean gameStarted = false;
-	private boolean colorChosingTurn = false;
+	//private boolean colorChosingTurn = false;
 	private boolean initialDrawTurn = false;
 	private boolean lastTurn = false;
 	private int lastTurnPlayerID;
@@ -218,10 +219,10 @@ public class Controller implements GUIHandler {
 		return initialDrawTurn;
 	}
 
-	@Override
+	/*@Override
 	public boolean isColorChosingTurn() {
 		return colorChosingTurn;
-	}
+	}*/
 	
 	@Override
 	public boolean isGameFinished() {
@@ -329,7 +330,7 @@ public class Controller implements GUIHandler {
 		
 		playerID = 1;
 		currPlayerID = 1;
-		state = State.CHOOSING;
+		//state = State.CHOOSING;
 		clientUpdateYourTurnStarted(currPlayerID);
 		
 		for (shared.Route r : shared.Route.values()) {
@@ -382,6 +383,8 @@ public class Controller implements GUIHandler {
 	@Override
 	public boolean startGame() {
 		if(server.GetConnectedClients() > 0 && !gameStarted) {
+			List<PlayerColor> plColors = new ArrayList<>(Arrays.asList(PlayerColor.values()));
+			Random rand = new Random();
 			for (int i = 1; i <= players.size(); i++) {
 				Player p = players.get(i - 1);
 				// give trains
@@ -401,6 +404,10 @@ public class Controller implements GUIHandler {
 				}
 				p.getTicketCards().addAll(tiCards);
 				clientUpdateGainTicketCards(i, tiCards);
+				// "choose" color
+				PlayerColor chosenColor = plColors.remove(rand.nextInt(plColors.size()));
+				p.setColor(chosenColor);
+				clientUpdateColorChose(i, chosenColor);
 			}
 			broadcastDeckStates();
 			server.StartMatch();
@@ -442,7 +449,7 @@ public class Controller implements GUIHandler {
 	void _drawTrainCard(int senderID) {
 		if(senderID != currPlayerID || trainDeck.getDownfaceCardsCount() == 0
 				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN)
-				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
+				|| !gameStarted /*|| colorChosingTurn*/ || initialDrawTurn || gameFinished)
 			return;
 		
 		TrainCard card = trainDeck.drawDownfaceCard();
@@ -470,7 +477,7 @@ public class Controller implements GUIHandler {
 	void _drawTrainCard(int senderID, int index) {
 		if(senderID != currPlayerID || !trainDeck.upfaceCardIsExists(index)
 				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN)
-				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
+				|| !gameStarted /*|| colorChosingTurn*/ || initialDrawTurn || gameFinished)
 			return;
 		if(state == State.DRAWING_2ND_TRAIN && trainDeck.upfaceCardIsLocomotive(index))
 			return;
@@ -498,7 +505,7 @@ public class Controller implements GUIHandler {
 	}
 	void _drawTicketCards(int senderID) {
 		if(senderID != currPlayerID || ticketDeck.getCardsCount() == 0 
-				|| state != State.CHOOSING || !gameStarted || colorChosingTurn || gameFinished)
+				|| state != State.CHOOSING || !gameStarted /*|| colorChosingTurn*/ || gameFinished)
 			return;
 		
 		List<TicketCard> cards = new ArrayList<>();
@@ -542,7 +549,7 @@ public class Controller implements GUIHandler {
 	}
 	void _claimRoute(int senderID, shared.Route route) {
 		if(senderID != currPlayerID || state != State.CHOOSING
-				|| !gameStarted || colorChosingTurn || initialDrawTurn || gameFinished)
+				|| !gameStarted /*|| colorChosingTurn*/ || initialDrawTurn || gameFinished)
 			return;
 		
 		Player player = players.get(currPlayerID - 1);
@@ -602,13 +609,13 @@ public class Controller implements GUIHandler {
 	void _clientUpdateColorChose(int playerID, PlayerColor color) {
 		players.get(playerID - 1).setColor(color);
 		
-		// turn ended?
+		/*// turn ended?
 		for (Player p : players) {
 			if(p.getColor() == null)
 				return;
 		}
 		colorChosingTurn = false;
-		initialDrawTurn = true;
+		initialDrawTurn = true;*/
 	}
 	
 	void _clientUpdatePlayerCount(int n) {
@@ -625,7 +632,8 @@ public class Controller implements GUIHandler {
 	}
 	void _clientUpdateGameStarted() {
 		gameStarted = true;
-		colorChosingTurn = true;
+		//colorChosingTurn = true;
+		initialDrawTurn = true;
 	}
 	
 	private void clientUpdateYourTurnStarted(int recipID) {
