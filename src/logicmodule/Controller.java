@@ -70,6 +70,7 @@ public class Controller implements GUIHandler {
 	
 	private void nextPlayer() {
 		clientUpdateYourTurnEnded(currPlayerID);
+		
 		if(currPlayerID == players.size())
 			currPlayerID = 1;
 		else
@@ -522,7 +523,10 @@ public class Controller implements GUIHandler {
 	@Override
 	public void throwTicketCards(List<TicketCard> cards) {
 		if(playerID != SERVER_ID)
-			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_THROW_TICKET_CARDS));
+			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_THROW_TICKET_CARDS,
+					cards.size() < 1 ? "" : cards.get(0).name(),
+					cards.size() < 2 ? "" : cards.get(1).name(),
+					cards.size() < 3 ? "" : cards.get(2).name() ));
 		else
 			_throwTicketCards(playerID, cards);
 	}
@@ -643,7 +647,6 @@ public class Controller implements GUIHandler {
 			_clientUpdateYourTurnStarted();
 	}
 	void _clientUpdateYourTurnStarted() {
-		currPlayerID = playerID;
 		isMyTurn = true;
 	}
 	
