@@ -367,6 +367,8 @@ public class Controller implements GUIHandler {
 			int id = client.GetClientID();
 			if(id == -100 || id > 5)
 				return false;
+                        else
+                            client.Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, id));
 			playerID = client.GetClientID();
 			
 			for (shared.Route r : shared.Route.values()) {

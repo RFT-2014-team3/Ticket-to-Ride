@@ -138,10 +138,13 @@ public class Client extends NetComponent implements IClient {
 						e.printStackTrace();
 					}
 
-					/** Added by: Kerekes Zoltán */
-					if(idFromServer != -100 && idFromServer <= 5)
-						Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, idFromServer));
+                                        
+					//handling to high player number moved to server side
+                                        /** Added by: Kerekes Zoltán */
+					//if(idFromServer != -100 && idFromServer <= 5)
+					//	Send(new Opcode(1, Opcode.Action.UPDATE_PLAYER_COUNT, idFromServer));
 					
+                                        
 					clientID = idFromServer;
 				}
 

@@ -98,8 +98,9 @@ public class Server extends NetComponent implements IServer {
 
 	public void StartMatch() {
 		
+            if(listening)
 		stopServerListening();
-		matchStarted = true;
+            matchStarted = true;
 
 	}
 
@@ -169,7 +170,14 @@ public class Server extends NetComponent implements IServer {
 				connectedClients.add(t);
 				t.setDaemon(true);
 				t.start();
-			}
+			
+                                //5 players max
+                                if (id > 5) {
+                                    
+                                    stopServerListening();
+                                    
+                                }
+                        }
 			
 		} catch (IOException e) {
 			
