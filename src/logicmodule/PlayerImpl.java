@@ -11,7 +11,7 @@ import shared.TrainColor;
 /**
  * @author Kerekes Zoltán
  */
-class PlayerImpl implements Player {
+public class PlayerImpl implements Player {
 
 	private Map<TrainColor, Integer> trainCards;
 	private List<TicketCard> ticketCards;

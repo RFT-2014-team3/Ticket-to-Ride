@@ -6,12 +6,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+
 import netsubmodul.Client;
 import netsubmodul.Server;
 import shared.City;
 import shared.PlayerColor;
 import shared.TicketCard;
 import shared.TrainColor;
+import view.MainFrame;
 
 // TODO [logic] Maybe need to stop server/client on exit.
 
@@ -455,6 +457,7 @@ public class Controller implements GUIHandler {
 		
 		TrainCard card = trainDeck.drawDownfaceCard();
 		players.get(senderID - 1).addTrainCards(card.getColor(), 1);
+		MainFrame.getInstance().showTrainCard(card.getColor().name());
 		clientUpdateGainTrainCard(senderID, card.getColor());
 		broadcastDeckStates();
 		if(state == State.CHOOSING) {
@@ -661,6 +664,7 @@ public class Controller implements GUIHandler {
 	}
 	void _clientUpdateYourTurnEnded() {
 		isMyTurn = false;
+		
 	}
 	
 	private void clientUpdateRouteClaimed(int recipID, shared.Route route, PlayerColor color1, PlayerColor color2) {
@@ -795,7 +799,9 @@ public class Controller implements GUIHandler {
 			Player p = players.get(i);
 			int currScore = p.getScore();
 			p.addScore(scores.remove(0) - currScore);
+			MainFrame.getInstance().updateTablePositions(p.getColor(), p.getScore());
 		}
+		
 	}
 	
 	private void clientUpdateInitTurnEnd(int recipID) {
@@ -814,6 +820,10 @@ public class Controller implements GUIHandler {
 	}
 	void _clientUpdateGameFinished() {
 		gameFinished = true;
+	}
+	
+	public Player getPlayerById(int id){
+		return players.get(id);
 	}
 	
 	// </editor-fold>

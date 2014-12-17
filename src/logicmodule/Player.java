@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author Kerekes Zoltán
  */
-interface Player {
+public interface Player {
 	void addTrainCards(TrainColor color, int n);
 	List<TrainCard> removeTrainCards(TrainColor color, int n);
 	int getTrainCardCount(TrainColor color);

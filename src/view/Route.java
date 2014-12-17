@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.RenderingHints;
@@ -12,9 +13,11 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 
 import logicmodule.Controller;
+import shared.PlayerColor;
 
 public class Route {
 
@@ -71,8 +74,27 @@ public class Route {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if(clickAlphaValue(icon, e.getX(), e.getY()) != 0){
-					Controller.getInstance().claimRoute(shared.Route.valueOf(id));
+					if(!isRouteClaimed(shared.Route.valueOf(id))){
+						Controller.getInstance().claimRoute(shared.Route.valueOf(id));
+					} else{
+						JDialog dialog = new JDialog();
+						JLabel label = new JLabel("Már foglalt útvonal!");
+						dialog.add(label);
+						dialog.setMinimumSize(new Dimension(300, 100));
+						dialog.setLocationRelativeTo(null);
+						dialog.setVisible(true);
+					}
 				} 
+			}
+			
+			private boolean isRouteClaimed(shared.Route r){
+				for(PlayerColor color : Controller.getInstance().getRouteOwnerColors(r)){
+					if(color != null){
+						return true;
+					}
+				}
+				
+				return false;
 			}
 		});
 	}

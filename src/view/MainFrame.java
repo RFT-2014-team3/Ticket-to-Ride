@@ -6,6 +6,8 @@ import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import shared.PlayerColor;
+
 public class MainFrame extends JFrame {
 	
 	JPanel currentPanel;
@@ -35,5 +37,17 @@ public class MainFrame extends JFrame {
 		c.removeAll();
 		c.add(currentPanel);
 		setContentPane(c);
+	}
+	
+	public void showTrainCard(String name){
+		if(currentPanel instanceof GamePanel){
+			((GamePanel) currentPanel).showTrainCard(name);
+		}
+	}
+	
+	public void updateTablePositions(PlayerColor color, int position){
+		if(currentPanel instanceof GamePanel){
+			((GamePanel) currentPanel).updateTablePosition(color, position);
+		}
 	}
 }

@@ -64,7 +64,7 @@ public class GameDetailsPanel extends JPanel {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				con.drawTicketCards();
-				((GamePanel)MainFrame.getInstance().currentPanel).waitForTickets();
+				((GamePanel)MainFrame.getInstance().currentPanel).waitForTickets(false);
 			}
 		});
 		
