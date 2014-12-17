@@ -470,7 +470,7 @@ public class Controller implements GUIHandler {
 	@Override
 	public void drawTrainCard(int index) {
 		if(playerID != SERVER_ID)
-			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_TRAIN_DECK,
+			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_TRAIN_CARD,
 					index));
 		else
 			_drawTrainCard(playerID, index);
