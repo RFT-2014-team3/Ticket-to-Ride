@@ -35,6 +35,7 @@ import javax.swing.JRadioButton;
 import logicmodule.Controller;
 import logicmodule.GUIHandler;
 import shared.TicketCard;
+import shared.TrainColor;
 
 public class GamePanel extends JPanel {
 
@@ -43,6 +44,7 @@ public class GamePanel extends JPanel {
 	private BufferedImage map = null;
 	private GUIHandler con = Controller.getInstance();
 	private boolean waiting = false;
+	List<TrainColor> drawedUpfaceCards;
 	
 	public GamePanel(){
 		setBackground(Color.WHITE);
@@ -91,8 +93,30 @@ public class GamePanel extends JPanel {
 		add(gameDet, c);
 		
 		waitForTickets();
+		updateLoop(c);
 	}
 	
+	/**	Added by: Kerekes Zoltán */
+	private void updateLoop(final GridBagConstraints c) {
+		drawedUpfaceCards = new ArrayList<>(con.getUpfaceTrainCards());
+		setDoubleBuffered(true);
+		
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(drawedUpfaceCards.equals(con.getUpfaceTrainCards()))
+					return;
+				drawedUpfaceCards = new ArrayList<>(con.getUpfaceTrainCards());
+				remove(gameDet);
+				gameDet = new GameDetailsPanel();
+				add(gameDet, c);
+				validate();
+				repaint();
+			}
+		}, 0, 16);
+	}
+		
 	/**	Added by: Kerekes Zoltán */
 	void waitForTickets() {
 		if(waiting)
