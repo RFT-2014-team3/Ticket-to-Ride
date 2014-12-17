@@ -86,7 +86,7 @@ class TrainDeckImpl implements TrainDeck {
 
 	@Override
 	public boolean upfaceCardIsLocomotive(int index) {
-		return upfaceCards[index] instanceof LocomotiveCard;
+		return upfaceCards[index].getColor() == TrainColor.GREY;
 	}
 
 	@Override
@@ -135,7 +135,7 @@ class TrainDeckImpl implements TrainDeck {
 	@Override
 	public boolean hasUpfaceNonLocomotiveCard() {
 		for (TrainCard c : upfaceCards) {
-			if(c != null && !(c instanceof LocomotiveCard))
+			if(c != null && c.getColor() != TrainColor.GREY)
 				return true;
 		}
 		return false;

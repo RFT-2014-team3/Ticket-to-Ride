@@ -478,23 +478,22 @@ public class Controller implements GUIHandler {
 	void _drawTrainCard(int senderID, int index) {
 		if(senderID != currPlayerID || !trainDeck.upfaceCardIsExists(index)
 				|| (state != State.CHOOSING && state != State.DRAWING_2ND_TRAIN)
-				|| !gameStarted /*|| colorChosingTurn*/ || initialDrawTurn || gameFinished)
-			return;
-		if(state == State.DRAWING_2ND_TRAIN && trainDeck.upfaceCardIsLocomotive(index))
+				|| !gameStarted /*|| colorChosingTurn*/ || initialDrawTurn || gameFinished
+				|| (state == State.DRAWING_2ND_TRAIN && trainDeck.upfaceCardIsLocomotive(index)))
 			return;
 		
-		TrainCard card = trainDeck.drawUpfaceCard(index);
-		players.get(senderID - 1).addTrainCards(card.getColor(), 1);
-		clientUpdateGainTrainCard(senderID, card.getColor());
-		broadcastDeckStates();
 		if(state == State.CHOOSING) {
 			if(trainDeck.upfaceCardIsLocomotive(index))
 				nextPlayer();
 			else
 				state = State.DRAWING_2ND_TRAIN;
-		} else {
+		} else if(state == State.DRAWING_2ND_TRAIN) {
 			nextPlayer();
 		}
+		TrainCard card = trainDeck.drawUpfaceCard(index);
+		players.get(senderID - 1).addTrainCards(card.getColor(), 1);
+		clientUpdateGainTrainCard(senderID, card.getColor());
+		broadcastDeckStates();
 	}
 
 	@Override
