@@ -147,7 +147,8 @@ public interface GUIHandler {
 	
 	/**
 	 * Lastly gained ticket cards. Can discard 1 or 2. 
-	 * @return Choosable/discardable ticket cards.
+	 * @return Choosable/discardable ticket cards. 
+	 * Null if response not yet receied from the server.
 	 */
 	List<shared.TicketCard> getChoosableTicketCards();
 	

@@ -522,11 +522,12 @@ public class Controller implements GUIHandler {
 
 	@Override
 	public void throwTicketCards(List<TicketCard> cards) {
+		lastTicketCards = null;
 		if(playerID != SERVER_ID)
 			oh.sendTo(SERVER_ID, new Opcode(playerID, Opcode.Action.SELECT_THROW_TICKET_CARDS,
-					cards.size() < 1 ? "" : cards.get(0).name(),
-					cards.size() < 2 ? "" : cards.get(1).name(),
-					cards.size() < 3 ? "" : cards.get(2).name() ));
+					cards.size() < 1 || cards.get(0) == null ? "" : cards.get(0).name(),
+					cards.size() < 2 || cards.get(1) == null ? "" : cards.get(1).name(),
+					cards.size() < 3 || cards.get(2) == null ? "" : cards.get(2).name() ));
 		else
 			_throwTicketCards(playerID, cards);
 	}
@@ -535,6 +536,8 @@ public class Controller implements GUIHandler {
 			return;
 		
 		for (TicketCard c : cards) {
+			if(c == null)
+				continue;
 			ticketDeck.discardCardIntoDeck(c);
 			clientUpdateLooseTicketCard(senderID, c);
 		}
