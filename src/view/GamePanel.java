@@ -42,6 +42,7 @@ public class GamePanel extends JPanel {
 	private GameDetailsPanel gameDet;
 	private BufferedImage map = null;
 	private GUIHandler con = Controller.getInstance();
+	private boolean waiting = false;
 	
 	public GamePanel(){
 		setBackground(Color.WHITE);
@@ -94,6 +95,9 @@ public class GamePanel extends JPanel {
 	
 	/**	Added by: Kerekes Zoltán */
 	void waitForTickets() {
+		if(waiting)
+			return;
+		waiting = true;
 		Timer timer = new Timer();
 		timer.schedule(new TimerTask() {
 			@Override
@@ -132,7 +136,7 @@ public class GamePanel extends JPanel {
 					cards.add(name == null ? null : TicketCard.valueOf(name));
 					Controller.getInstance().throwTicketCards(cards);
 					dialog.dispose();
-					
+					waiting = false;
 				}
 				
 				private String getSelectedButton(){
