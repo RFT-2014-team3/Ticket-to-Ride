@@ -18,6 +18,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import logicmodule.Controller;
+import logicmodule.GUIHandler;
 import shared.TrainColor;
 
 public class GameDetailsPanel extends JPanel {
@@ -25,10 +26,11 @@ public class GameDetailsPanel extends JPanel {
 	private JLabel gameDetails;
 	private JLabel ticketsDeck;
 	private JLabel trainsDeck;
-	private List<JLabel> upfaceTrains = new ArrayList<JLabel>();
+	private List<JLabel> upfaceTrains = new ArrayList<>();
+	private GUIHandler con = Controller.getInstance();
 	
 	public GameDetailsPanel(){
-		setLayout(new GridLayout(8, 1));
+		setLayout(new GridLayout(9, 1));
 		setBackground(Color.WHITE);
 		
 		gameDetails = new JLabel("Játék adatok");
@@ -61,7 +63,7 @@ public class GameDetailsPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Controller.getInstance().drawTicketCards();
+				con.drawTicketCards();
 			}
 		});
 		
@@ -90,18 +92,25 @@ public class GameDetailsPanel extends JPanel {
 			
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				Controller.getInstance().drawTrainCard();
+				con.drawTrainCard();
 			}
 		});
 		
 		add(ticketsDeck);
 		add(trainsDeck);
 		
-		for(TrainColor tc : Controller.getInstance().getUpfaceTrainCards()){
+		final JLabel phCard = new JLabel(new ImageIcon(resize(loadImage("placeholder"), 0.25)));
+		add(phCard);
+		for(TrainColor tc : con.getUpfaceTrainCards()){
 			if(tc == null){
+				upfaceTrains.add(phCard);
+				add(phCard);
 				continue;
 			}
-			final JLabel card = new JLabel(new ImageIcon(resize(loadImage("trains/" + tc), 0.25)));
+			double ratio = 0.35;
+			if(tc == TrainColor.GREY)
+				ratio *= 0.51;
+			final JLabel card = new JLabel(new ImageIcon(resize(loadImage("trains/" + tc), ratio)));
 			card.addMouseListener(new MouseListener() {
 				
 				@Override
@@ -118,18 +127,17 @@ public class GameDetailsPanel extends JPanel {
 				
 				@Override
 				public void mouseExited(MouseEvent e) {
-					trainsDeck.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+					card.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 				}
 				
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					trainsDeck.setCursor(new Cursor(Cursor.HAND_CURSOR));
+					card.setCursor(new Cursor(Cursor.HAND_CURSOR));
 				}
 				
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					Controller.getInstance().drawTrainCard(upfaceTrains.indexOf(card));
-					
+					con.drawTrainCard(upfaceTrains.indexOf(card));
 				}
 			});
 			upfaceTrains.add(card);
