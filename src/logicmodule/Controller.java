@@ -584,6 +584,7 @@ public class Controller implements GUIHandler {
 			// success
 			player.setRemainingTrainsCount(player.getRemainingTrainsCount() - rail.getLength());
 			player.addScore(r.getScoreValue());
+			rail.setOwner(player);
 			// notify GUIs to change the route's color
 			for (int i = 1; i <= players.size(); i++) {
 				Player owner1 = r.getRails().get(0).getOwner();
