@@ -31,6 +31,7 @@ class TrainDeckImpl implements TrainDeck {
 
 	@Override
 	public int getDownfaceCardsCount() {
+		useDiscardedCardsIfDownfacesEmpty();
 		return downfaceCards.size();
 	}
 
@@ -79,6 +80,8 @@ class TrainDeckImpl implements TrainDeck {
 			}
 			if(getDownfaceCardsCount() < 5)
 				return;
+			if(repeats == 9)
+				return;
 			for (int i = 0; i < 5; i++)
 				upfaceCards[i] = drawDownfaceCard();
 		}
@@ -123,6 +126,7 @@ class TrainDeckImpl implements TrainDeck {
 	@Override
 	public void discardCardIntoDeck(TrainCard card) {
 		discardedCards.add(card);
+		fillUpfaceCards();
 	}
 
 	@Override
@@ -142,7 +146,7 @@ class TrainDeckImpl implements TrainDeck {
 	}
 
 	private void useDiscardedCardsIfDownfacesEmpty() {
-		if(getDownfaceCardsCount() == 0) {
+		if(downfaceCards.isEmpty()) {
 			shuffleDiscardedCards();
 			useDiscardedCards();
 		}
