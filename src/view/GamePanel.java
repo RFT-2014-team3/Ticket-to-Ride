@@ -19,6 +19,8 @@ import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.List;
 import java.util.Properties;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 import javax.swing.AbstractButton;
@@ -31,6 +33,7 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 import logicmodule.Controller;
+import logicmodule.GUIHandler;
 import shared.TicketCard;
 
 public class GamePanel extends JPanel {
@@ -38,12 +41,12 @@ public class GamePanel extends JPanel {
 	private PlayerDetailsPanel playerDet;
 	private GameDetailsPanel gameDet;
 	private BufferedImage map = null;
+	private GUIHandler con = Controller.getInstance();
 	
 	public GamePanel(){
 		setBackground(Color.WHITE);
 		
 		int oldH = 0, newH = 0;
-		System.out.println("game panel");
 		try {
 			map = ImageIO.read(getClass().getClassLoader().getResourceAsStream("map.jpg"));
 			oldH = map.getHeight();
@@ -85,10 +88,22 @@ public class GamePanel extends JPanel {
 		c.gridx = 2;
 		c.anchor = GridBagConstraints.FIRST_LINE_START;
 		add(gameDet, c);
-
-		System.out.println(Controller.getInstance().getMyID());
 		
-		showThrowTicketsDialog(Controller.getInstance().getChoosableTicketCards());
+		waitForTickets();
+	}
+	
+	/**	Added by: Kerekes Zoltán */
+	void waitForTickets() {
+		Timer timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				if(con.isMyTurn() && con.getChoosableTicketCards() != null) {
+					showThrowTicketsDialog(con.getChoosableTicketCards());
+					this.cancel();
+				}
+			}
+		}, 0, 100);
 	}
 	
 	private void showThrowTicketsDialog(List<TicketCard> ticketCards){

@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 
 public class MainFrame extends JFrame {
 	
-	private JPanel currentPanel;
+	JPanel currentPanel;
 	
 	private static final MainFrame frame = new MainFrame();
 
