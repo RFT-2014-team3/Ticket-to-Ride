@@ -1,6 +1,7 @@
 package netsubmodul;
 
 import logicmodule.Opcode;
+import logicmodule.OpcodeHandler;
 /**
  * @author bs
  */
@@ -38,4 +39,11 @@ public interface IClient {
 	 * @return Client ID based on connection order
 	 */
 	int GetClientID();
+        
+        /**
+         * Setting the handler to decode incoming messages. We should refactor this
+         * with dependency injection.
+         * @param op the handler who will handle the incoming messages
+         */
+        void setOpcodeHandler(OpcodeHandler op);
 }

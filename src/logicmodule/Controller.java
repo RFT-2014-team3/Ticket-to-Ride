@@ -7,8 +7,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import netsubmodul.Client;
+import netsubmodul.IClient;
+import netsubmodul.IServer;
 import netsubmodul.Server;
+import netsubmodul.Client;
 import shared.City;
 import shared.PlayerColor;
 import shared.TicketCard;
@@ -33,8 +35,8 @@ public class Controller implements GUIHandler {
 	private static final int SERVER_ID = Opcode.SERVER_ID;
 	private OpcodeHandler oh = OpcodeHandler.getInstance();
 	private static final int PORT = 9999;
-	Server server;
-	Client client;
+	IServer server;
+	IClient client;
 	
 	// server and client
 	private Pathfinder pf;
